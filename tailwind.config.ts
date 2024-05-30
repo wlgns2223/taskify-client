@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: "#5534DA",
+      },
       maxWidth: {
         pc: "1920px",
         tablet: "720px",
