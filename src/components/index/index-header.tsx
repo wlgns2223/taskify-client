@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const IndexHeader: React.FC = () => {
   return (
-    <header className="bg-neutral-700 p-4 h-[70px]">
+    <header className="bg-neutral-700 p-4 h-[70px] min-w-mobile">
       <div className="mx-auto max-w-pc flex items-center justify-between ">
         <Link href={"/"} className="">
           <Image src={logo} alt="logo" />

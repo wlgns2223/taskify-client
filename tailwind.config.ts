@@ -16,6 +16,12 @@ const config: Config = {
         tablet: "720px",
         mobile: "375px",
       },
+      minWidth: {
+        mobile: "375px",
+      },
+      backgroundImage: {
+        "section-one": "url('/images/section_one.png')",
+      },
     },
   },
   plugins: [],
