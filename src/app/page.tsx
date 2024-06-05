@@ -7,6 +7,7 @@ import dashBoard from "@/../public/images/dashboard.png";
 import invitation from "@/../public/images/invitation.png";
 import members from "@/../public/images/members.png";
 import IndexHeader from "../components/index/index-header";
+import ImageGridItem from "../components/index/image-grid-item";
 
 export default function Home() {
   return (
@@ -72,8 +73,34 @@ export default function Home() {
             </h3>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-y-12 lg:gap-y-0 lg:gap-x-8 mt-8">
               <div className="rounded-lg overflow-hidden">
-                <div className="h-[320px] lg:h-[260px] bg-neutral-500 flex justify-center items-center p-8">
-                  <Image src={dashBoard} alt="dash board image" />
+                <div className="relative h-[280px] lg:h-[260px] bg-neutral-500 flex justify-center items-center p-8">
+                  <ImageGridItem alt="dashboard image" src={dashBoard} />
+                </div>
+                <div className="p-8 bg-neutral-600 flex flex-col">
+                  <span className="font-semibold text-lg">
+                    {"대시보드 설정"}
+                  </span>
+                  <p className="mt-4">
+                    {"대시보드 사진과 이름을 변경할 수 있어요."}
+                  </p>
+                </div>
+              </div>
+              <div className="rounded-lg overflow-hidden">
+                <div className="relative h-[280px] lg:h-[260px] bg-neutral-500 flex justify-center items-center p-8">
+                  <ImageGridItem alt="invitation image" src={invitation} />
+                </div>
+                <div className="p-8 bg-neutral-600 flex flex-col">
+                  <span className="font-semibold text-lg">
+                    {"대시보드 설정"}
+                  </span>
+                  <p className="mt-4">
+                    {"대시보드 사진과 이름을 변경할 수 있어요."}
+                  </p>
+                </div>
+              </div>
+              <div className="rounded-lg overflow-hidden">
+                <div className="relative h-[280px] lg:h-[260px] bg-neutral-500 flex justify-center items-center p-8">
+                  <ImageGridItem alt="members image" src={members} />
                 </div>
                 <div className="p-8 bg-neutral-600 flex flex-col">
                   <span className="font-semibold text-lg">
@@ -88,7 +115,7 @@ export default function Home() {
           </section>
         </div>
       </main>
-      <footer>{"footer"}</footer>
+      <footer className="bg-neutral-700 h-20">{"footer"}</footer>
     </>
   );
 }
