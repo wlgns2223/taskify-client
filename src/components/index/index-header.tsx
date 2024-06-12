@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "@/../public/logo.svg";
+import logoText from "@/../public/logo-text.svg";
 import Link from "next/link";
 
 const IndexHeader: React.FC = () => {
@@ -7,7 +7,7 @@ const IndexHeader: React.FC = () => {
     <header className="bg-neutral-700 p-4 h-[70px] min-w-mobile">
       <div className="mx-auto max-w-pc flex items-center justify-between ">
         <Link href={"/"} className="">
-          <Image src={logo} alt="logo" />
+          <Image src={logoText} alt="logo" />
         </Link>
         <div className="flex text-neutral-50">
           <Link href={"/login"}>{"로그인"}</Link>
