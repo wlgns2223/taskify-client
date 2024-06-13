@@ -1,13 +1,23 @@
+"use client";
+
+import { useFormState } from "react-dom";
 import { JHInput } from "../../core/ui/jh-input";
+import { createUser } from "../../libs/signup/actions";
 
 export const SignupForm: React.FC = () => {
+  const [state, createUserAction] = useFormState(createUser, {
+    errors: {},
+  });
+
+  console.log(state);
+
   return (
-    <form>
+    <form action={createUserAction}>
       <ul className="text-neutral-700  space-y-4">
         <li>
           <label htmlFor="email">이메일</label>
           <JHInput
-            type="email"
+            type="text"
             id="email"
             name="email"
             placeholder="이메일을 입력해 주세요."
@@ -45,6 +55,7 @@ export const SignupForm: React.FC = () => {
           />
         </li>
       </ul>
+      <button>{"제출"}</button>
     </form>
   );
 };
