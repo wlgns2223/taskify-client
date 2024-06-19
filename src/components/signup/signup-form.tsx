@@ -3,13 +3,18 @@
 import { useFormState } from "react-dom";
 import { JHInput } from "../../core/ui/jh-input";
 import { createUser } from "../../libs/signup/actions";
+import { JhCheckbox } from "../../core/ui/jh-checkbox";
+import { useState } from "react";
+import { JhButton } from "../../core/ui/jh-button";
 
 export const SignupForm: React.FC = () => {
   const [state, createUserAction] = useFormState(createUser, {
     errors: {},
   });
 
-  console.log(state);
+  const [isTermChecked, setIsTermChecked] = useState<boolean>(false);
+
+  console.log(isTermChecked);
 
   return (
     <form action={createUserAction}>
@@ -54,8 +59,16 @@ export const SignupForm: React.FC = () => {
             className="mt-2"
           />
         </li>
+        <li>
+          <JhCheckbox checked={isTermChecked} onChange={setIsTermChecked}>
+            {"이용약관에 동의합니다."}{" "}
+          </JhCheckbox>
+        </li>
       </ul>
-      <button>{"제출"}</button>
+
+      <JhButton disabled={isTermChecked} className="w-full mt-5" type="submit">
+        {"가입하기"}
+      </JhButton>
     </form>
   );
 };
