@@ -8,13 +8,11 @@ import { useState } from "react";
 import { JhButton } from "../../core/ui/jh-button";
 
 export const SignupForm: React.FC = () => {
-  const [state, createUserAction] = useFormState(createUser, {
+  const [signUpFormState, createUserAction] = useFormState(createUser, {
     errors: {},
   });
 
   const [isTermChecked, setIsTermChecked] = useState<boolean>(false);
-
-  console.log(isTermChecked);
 
   return (
     <form action={createUserAction}>
@@ -66,7 +64,7 @@ export const SignupForm: React.FC = () => {
         </li>
       </ul>
 
-      <JhButton disabled={isTermChecked} className="w-full mt-5" type="submit">
+      <JhButton disabled={!isTermChecked} className="w-full mt-5" type="submit">
         {"가입하기"}
       </JhButton>
     </form>

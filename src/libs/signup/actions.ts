@@ -1,5 +1,6 @@
 "use server";
 
+import { apiHandler } from "../../core/network/fetch";
 import { SignUpDtoSchema, signUpDtoSchema } from "./dto";
 
 interface CreateFormState {
@@ -15,6 +16,8 @@ export const createUser = async (
   formState: CreateFormState,
   formData: FormData
 ): Promise<CreateFormState> => {
+  console.log("createUser");
+
   const schema: SignUpDtoSchema = {
     email: formData.get("email") as string,
     nickname: formData.get("nickname") as string,
@@ -29,11 +32,10 @@ export const createUser = async (
   }
 
   try {
-    new Promise((resolve) => {
-      setTimeout(() => {
-        resolve("fetch");
-      }, 2500);
+    const data = await apiHandler.post("/users", {
+      body: JSON.stringify(schema),
     });
+    console.log(data);
   } catch (e) {
     console.error(e);
   }
