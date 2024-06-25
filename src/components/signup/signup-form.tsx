@@ -12,6 +12,9 @@ export const SignupForm: React.FC = () => {
     errors: {},
   });
 
+  console.log(signUpFormState.statusCode);
+  console.log(signUpFormState.errors);
+
   const [isTermChecked, setIsTermChecked] = useState<boolean>(false);
 
   return (

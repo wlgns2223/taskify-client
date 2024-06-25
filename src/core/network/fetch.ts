@@ -1,9 +1,16 @@
+import { HTTPError } from "../error/http-error";
+
 const baseURl = "http://localhost:4000/api";
 
 type HeaderContentType =
   | "application/json"
   | "application/x-www-form-urlencoded"
   | "multipart/form-data";
+
+type NetworkError = {
+  message?: string;
+  path?: string;
+};
 
 class APIHanlder {
   private baseUrl: string;
@@ -18,22 +25,41 @@ class APIHanlder {
       ...options?.headers,
     };
 
-    const response = await fetch(`${this.baseUrl}${url}`, {
+    const _options: RequestInit = {
       ...options,
       headers,
-      body: options?.body
-        ? this.transformBody(
-            options.body,
-            headers["Content-Type" as keyof HeadersInit] as HeaderContentType
-          )
-        : undefined,
-    });
+    };
 
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
+    try {
+      const response = await fetch(`${this.baseUrl}${url}`, _options);
+
+      if (!response.ok) {
+        const error = (await response.json()) as NetworkError;
+        const defaultErrorMessage =
+          "원인을 알 수 없는 에러입니다. (에러메세지 없음)";
+        throw new HTTPError(
+          error.message ?? defaultErrorMessage,
+          response.status
+        );
+      }
+
+      return response.json() as T;
+    } catch (e) {
+      console.error("API Error");
+      console.error(e);
+      throw e;
+    }
+  }
+
+  private toBody(
+    contentType: HeaderContentType = "application/json",
+    body: any = {}
+  ) {
+    if (!body) {
+      return undefined;
     }
 
-    return response.json() as T;
+    return this.transformBody(body, contentType);
   }
 
   private transformBody(
@@ -63,10 +89,18 @@ class APIHanlder {
   public async get<T = any>(url: string, options?: RequestInit) {
     return await this.apiHandler<T>(url, options);
   }
-  public async post<T = any>(url: string, options?: RequestInit) {
-    return await this.apiHandler<T>(url, {
+  public async post<BodyType = any, ResponseType = ReturnType<typeof fetch>>(
+    url: string,
+    body: BodyType,
+    options?: Omit<RequestInit, "body">
+  ) {
+    const contentType = options?.headers?.[
+      "Content-Type" as keyof HeadersInit
+    ] as HeaderContentType | undefined;
+    return await this.apiHandler<ResponseType>(url, {
       method: "POST",
       ...options,
+      body: this.toBody(contentType, body),
     });
   }
 
