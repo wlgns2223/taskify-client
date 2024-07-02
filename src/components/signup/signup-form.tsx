@@ -1,65 +1,78 @@
 "use client";
 
 import { useFormState } from "react-dom";
-import { JHInput } from "../../core/ui/jh-input";
-import { createUser } from "../../libs/signup/actions";
+import { CreateFormFields, createUser } from "../../libs/signup/actions";
 import { JhCheckbox } from "../../core/ui/jh-checkbox";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { JhButton } from "../../core/ui/jh-button";
+import { SignupInput } from "./signup-input";
+
+type SignUpFormChildren = {
+  type: string;
+  id: string;
+  name: string;
+  placeholder: string;
+  error?: string;
+  label: string;
+};
 
 export const SignupForm: React.FC = () => {
-  const [signUpFormState, createUserAction] = useFormState(createUser, {
-    errors: {},
-  });
-
-  console.log(signUpFormState.statusCode);
-  console.log(signUpFormState.errors);
+  const [signUpFormState, createUserAction] = useFormState(createUser, {});
 
   const [isTermChecked, setIsTermChecked] = useState<boolean>(false);
 
+  const formChildren = useMemo<SignUpFormChildren[]>(
+    () => [
+      {
+        id: "email",
+        name: "email",
+        placeholder: "이메일을 입력해 주세요.",
+        type: "text",
+        label: "이메일",
+      },
+      {
+        id: "nickname",
+        name: "nickname",
+        placeholder: "닉네임을 입력해 주세요.",
+        type: "text",
+        label: "닉네임",
+      },
+      {
+        label: "비밀번호",
+        id: "password",
+        name: "password",
+        placeholder: "비밀번호를 입력해 주세요.",
+        type: "password",
+      },
+      {
+        label: "비밀번호 확인",
+        id: "repassword",
+        name: "repassword",
+        placeholder: "비밀번호를 다시 입력해 주세요.",
+        type: "password",
+      },
+    ],
+    []
+  );
+
+  const isSubmitDisabled = isTermChecked == false || signUpFormState?.errors;
+
   return (
     <form action={createUserAction}>
-      <ul className="text-neutral-700  space-y-4">
-        <li>
-          <label htmlFor="email">이메일</label>
-          <JHInput
-            type="text"
-            id="email"
-            name="email"
-            placeholder="이메일을 입력해 주세요."
-            className="mt-2"
-          />
-        </li>
-        <li>
-          <label htmlFor="nickname">닉네임</label>
-          <JHInput
-            type="text"
-            id="nickname"
-            name="nickname"
-            placeholder="닉네임을 입력해 주세요."
-            className="mt-2"
-          />
-        </li>
-        <li>
-          <label htmlFor="password">비밀번호</label>
-          <JHInput
-            type="password"
-            id="password"
-            name="password"
-            placeholder="패스워드를 입력해 주세요."
-            className="mt-2"
-          />
-        </li>
-        <li>
-          <label htmlFor="repassword">비밀번호 확인</label>
-          <JHInput
-            type="password"
-            id="repassword"
-            name="repassword"
-            placeholder="패스워드를 다시 입력해 주세요."
-            className="mt-2"
-          />
-        </li>
+      <ul className="text-neutral-700 space-y-4 ">
+        {formChildren.map((formField) => (
+          <li key={formField.id}>
+            <SignupInput
+              labeltxt={formField.label}
+              {...formField}
+              error={
+                signUpFormState?.errors?.fieldMessage?.[
+                  formField.name as keyof CreateFormFields
+                ]
+              }
+            />
+          </li>
+        ))}
         <li>
           <JhCheckbox checked={isTermChecked} onChange={setIsTermChecked}>
             {"이용약관에 동의합니다."}{" "}
@@ -67,7 +80,11 @@ export const SignupForm: React.FC = () => {
         </li>
       </ul>
 
-      <JhButton disabled={!isTermChecked} className="w-full mt-5" type="submit">
+      <JhButton
+        disabled={!!isSubmitDisabled}
+        className="w-full mt-5"
+        type="submit"
+      >
         {"가입하기"}
       </JhButton>
     </form>

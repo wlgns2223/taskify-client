@@ -7,4 +7,12 @@
 
 # TO DOs
 
-# 1.
+[ ] 회원가입 form 규칙
+[ ] 회원가입 form validation
+[ ] 회원가입 에러메세지
+
+[ ] 로그인 form 규칙
+[ ] 로그인 form validation
+[ ] 로그인 페이지
+[ ] 로그인 로직
+[ ] Auth 쿠키 핸들링 로직

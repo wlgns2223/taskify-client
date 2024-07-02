@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const SignUpPage: NextPage = () => {
   return (
-    <main className="py-48">
+    <main className="py-48 px-4">
       <div className="max-w-[520px] mx-auto">
         <WelcomLogo />
         <SignupForm />

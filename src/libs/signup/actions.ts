@@ -7,13 +7,14 @@ import { SignUpDtoSchema, signUpDtoSchema } from "./dto";
 interface ServerActionStatus<ErrorBody = any> {
   success?: boolean;
   errors?: {
-    message?: string;
-    errorBody?: ErrorBody;
+    networkMessage?: string;
+
+    fieldMessage?: ErrorBody;
   };
   statusCode?: number;
 }
 
-type CreateFormFields = {
+export type CreateFormFields = {
   email?: string[];
   nickname?: string[];
   password?: string[];
@@ -34,10 +35,20 @@ export const createUser = async (
   };
   const result = signUpDtoSchema.safeParse(schema);
 
-  // if (!result.success) {
-  //   formState.errors = result.error.flatten().fieldErrors;
-  //   return formState;
-  // }
+  if (!result.success) {
+    const errors: Partial<CreateFormFields> = {};
+    for (const key in result.error.flatten().fieldErrors) {
+      errors[key as keyof CreateFormFields] =
+        result.error.flatten().fieldErrors[key as keyof CreateFormFields];
+    }
+
+    formState.success = false;
+    formState.errors = {
+      fieldMessage: errors,
+    };
+
+    return formState;
+  }
 
   try {
     const response = await apiHandler.post<SignUpDtoSchema>("/users", schema);
@@ -53,7 +64,7 @@ export const createUser = async (
 
       formState.success = false;
       formState.errors = {
-        message: e.message,
+        networkMessage: e.message,
       };
       formState.statusCode = e.statusCode;
     } else {
