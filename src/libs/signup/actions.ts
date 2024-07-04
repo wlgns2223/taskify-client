@@ -2,17 +2,8 @@
 
 import { HTTPError } from "../../core/error/http-error";
 import { apiHandler } from "../../core/network/fetch";
+import { ServerActionStatus } from "../../core/serverAction/createServerAction";
 import { SignUpDtoSchema, signUpDtoSchema } from "./dto";
-
-interface ServerActionStatus<ErrorBody = any> {
-  success?: boolean;
-  errors?: {
-    networkMessage?: string;
-
-    fieldMessage?: ErrorBody;
-  };
-  statusCode?: number;
-}
 
 export type CreateFormFields = {
   email?: string[];

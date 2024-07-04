@@ -3,7 +3,7 @@
 import { useFormState } from "react-dom";
 import { CreateFormFields, createUser } from "../../libs/signup/actions";
 import { JhCheckbox } from "../../core/ui/jh-checkbox";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { JhButton } from "../../core/ui/jh-button";
 import { SignupInput } from "./signup-input";
 
@@ -55,8 +55,21 @@ export const SignupForm: React.FC = () => {
     []
   );
 
-  const isSubmitDisabled = isTermChecked == false || signUpFormState?.errors;
+  const [errors, setErrors] = useState<CreateFormFields>({});
+  const handleResetError = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrors({
+      ...errors,
+      [e.target.name]: undefined,
+    });
+  };
 
+  useEffect(() => {
+    if (signUpFormState.errors && signUpFormState.errors.fieldMessage) {
+      setErrors(signUpFormState.errors.fieldMessage);
+    }
+  }, [signUpFormState.errors]);
+
+  const isSubmitDisabled = isTermChecked == false;
   return (
     <form action={createUserAction}>
       <ul className="text-neutral-700 space-y-4 ">
@@ -64,12 +77,9 @@ export const SignupForm: React.FC = () => {
           <li key={formField.id}>
             <SignupInput
               labeltxt={formField.label}
+              onChange={handleResetError}
               {...formField}
-              error={
-                signUpFormState?.errors?.fieldMessage?.[
-                  formField.name as keyof CreateFormFields
-                ]
-              }
+              error={errors[formField.name as keyof CreateFormFields]}
             />
           </li>
         ))}
