@@ -1,6 +1,7 @@
 import Image from "next/image";
 import logoText from "@/../public/logo-text.svg";
 import Link from "next/link";
+import { PATH } from "../../core/path";
 
 const IndexHeader: React.FC = () => {
   return (
@@ -10,8 +11,8 @@ const IndexHeader: React.FC = () => {
           <Image src={logoText} alt="logo" />
         </Link>
         <div className="flex text-neutral-50">
-          <Link href={"/login"}>{"로그인"}</Link>
-          <Link className="ml-8" href={"/signup"}>
+          <Link href={PATH.signIn()}>{"로그인"}</Link>
+          <Link className="ml-8" href={PATH.signUp()}>
             {"회원가입"}
           </Link>
         </div>

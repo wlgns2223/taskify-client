@@ -1,3 +1,5 @@
+"use client";
+
 import { twMerge } from "tailwind-merge";
 import { JHInput, JHInputProps } from "../../core/ui/jh-input";
 import clsx from "clsx";
@@ -5,17 +7,18 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { JhButton } from "../../core/ui/jh-button";
 import { useRef, useState } from "react";
 
-interface SignUpInputProps extends JHInputProps {
+interface FormInputProps extends JHInputProps {
   labeltxt: string;
   error?: string[];
 }
 
-export const SignupInput: React.FC<SignUpInputProps> = ({
+export const FormInput: React.FC<FormInputProps> = ({
   labeltxt,
   error,
   ...props
 }) => {
   const inputClasses = twMerge(
+    "focus:outline focus:outline-primary",
     clsx({
       "border-red-400 border": !!error,
     })
@@ -39,9 +42,9 @@ export const SignupInput: React.FC<SignUpInputProps> = ({
             onClick={handleEyeClick}
           >
             {inputType === "text" ? (
-              <EyeIcon className="w-6 h-6 " />
+              <EyeIcon className="w-6 h-6 text-neutral-400 " />
             ) : (
-              <EyeSlashIcon className="w-6 h-6 " />
+              <EyeSlashIcon className="w-6 h-6 text-neutral-400  " />
             )}
           </JhButton>
         )}
