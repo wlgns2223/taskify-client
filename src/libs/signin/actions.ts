@@ -14,7 +14,7 @@ type SignInFormState = ServerActionStatus<SignInFormFields>;
 export const signIn = async (
   formState: SignInFormState,
   formData: FormData
-) => {
+): Promise<SignInFormState> => {
   const schema: SignInDtoSchema = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
@@ -38,6 +38,7 @@ export const signIn = async (
     console.log({ response });
     formState.success = true;
     formState.errors = undefined;
+    return formState;
   } catch (e) {
     if (e instanceof HTTPError) {
       console.error("HTTP Error");
@@ -52,7 +53,6 @@ export const signIn = async (
       console.error("Server action Error");
       throw e;
     }
+    return formState;
   }
-
-  return formState;
 };

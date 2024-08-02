@@ -5,4 +5,8 @@ export const PATH = {
   signIn() {
     return "/signin";
   },
+
+  myDashBoard() {
+    return "/mydashboard";
+  },
 };

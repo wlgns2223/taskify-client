@@ -27,28 +27,25 @@ class APIHanlder {
 
     const _options: RequestInit = {
       ...options,
+      credentials: "include",
       headers,
     };
 
-    try {
-      const response = await fetch(`${this.baseUrl}${url}`, _options);
+    const response = await fetch(`${this.baseUrl}${url}`, _options);
 
-      if (!response.ok) {
-        const error = (await response.json()) as NetworkError;
-        const defaultErrorMessage =
-          "원인을 알 수 없는 에러입니다. (에러메세지 없음)";
-        throw new HTTPError(
-          error.message ?? defaultErrorMessage,
-          response.status
-        );
-      }
+    console.log(response.headers);
 
-      return response.json() as T;
-    } catch (e) {
-      console.error("API Error");
-      console.error(e);
-      throw e;
+    if (!response.ok) {
+      const error = (await response.json()) as NetworkError;
+      const defaultErrorMessage =
+        "원인을 알 수 없는 에러입니다. (에러메세지 없음)";
+      throw new HTTPError(
+        error.message ?? defaultErrorMessage,
+        response.status
+      );
     }
+
+    return response.json() as T;
   }
 
   private toBody(

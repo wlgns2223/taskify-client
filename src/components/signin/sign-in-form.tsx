@@ -5,9 +5,18 @@ import { FormInput } from "../signup/signup-input";
 import { JhButton } from "../../core/ui/jh-button";
 import { useFormState } from "react-dom";
 import { signIn } from "../../libs/signin/actions";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
+import { PATH } from "../../core/path";
 
 const SignInForm: NextPage = () => {
   const [signInFormState, signInAction] = useFormState(signIn, {});
+
+  useEffect(() => {
+    if (!!signInFormState.success) {
+      redirect(PATH.myDashBoard());
+    }
+  }, [signInFormState]);
 
   return (
     <form className="mt-9" action={signInAction}>
