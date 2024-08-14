@@ -14,8 +14,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(PATH.signIn(), request.url));
   }
 
-  await handleToken(request);
+  const result = await handleToken(request);
+  if (result === false) {
+    return NextResponse.redirect(new URL(PATH.signIn(), request.url));
+  }
 
-  console.log("middleware");
   return NextResponse.next();
 }

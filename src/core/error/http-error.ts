@@ -5,14 +5,28 @@ export const enum TokenExceptionType {
 }
 
 export class HTTPError extends Error {
-  public statusCode: number;
+  private _statusCode: number;
+  private _headers: unknown;
 
-  constructor(cause: TokenExceptionType | string, statusCode: number) {
+  constructor(
+    cause: TokenExceptionType | string,
+    statusCode: number,
+    headers: unknown
+  ) {
     super(cause);
-    this.statusCode = statusCode;
+    this._statusCode = statusCode;
+    this._headers = headers;
   }
 
   get message(): TokenExceptionType {
     return this.message as TokenExceptionType;
+  }
+
+  get statusCode(): number {
+    return this._statusCode;
+  }
+
+  get headers(): unknown {
+    return this._headers;
   }
 }

@@ -12,6 +12,12 @@ type NetworkError = {
   path?: string;
 };
 
+type ReturnType<T> = {
+  data: T;
+  headers: Headers;
+  statusCode: number;
+};
+
 class APIHanlder {
   private baseUrl: string;
 
@@ -33,19 +39,24 @@ class APIHanlder {
 
     const response = await fetch(`${this.baseUrl}${url}`, _options);
 
-    console.log(response.headers);
-
     if (!response.ok) {
       const error = (await response.json()) as NetworkError;
       const defaultErrorMessage =
         "원인을 알 수 없는 에러입니다. (에러메세지 없음)";
       throw new HTTPError(
         error.message ?? defaultErrorMessage,
-        response.status
+        response.status,
+        response.headers
       );
     }
 
-    return response.json() as T;
+    const returnValue: ReturnType<T> = {
+      data: await response.json(),
+      headers: response.headers,
+      statusCode: response.status,
+    };
+
+    return returnValue;
   }
 
   private toBody(
@@ -86,7 +97,7 @@ class APIHanlder {
   public async get<T = any>(url: string, options?: RequestInit) {
     return await this.apiHandler<T>(url, options);
   }
-  public async post<BodyType = any, ResponseType = ReturnType<typeof fetch>>(
+  public async post<BodyType = any, ResponseType = any>(
     url: string,
     body: BodyType,
     options?: Omit<RequestInit, "body">
