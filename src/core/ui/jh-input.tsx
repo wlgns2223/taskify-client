@@ -4,10 +4,12 @@ import { twMerge } from "tailwind-merge";
 
 export interface JHInputProps extends HTMLProps<HTMLInputElement> {}
 
-export const JHInput: React.FC<JHInputProps> = ({ className, ...props }) => {
-  const classes = twMerge(
-    clsx("border border-neutral-300 rounded-lg p-4 w-full", className)
-  );
+export const JHInput = forwardRef<HTMLInputElement, JHInputProps>(
+  ({ className, ...props }, ref) => {
+    const classes = twMerge(
+      clsx("border border-neutral-300 rounded-lg p-4 w-full", className)
+    );
 
-  return <input className={classes} {...props} />;
-};
+    return <input ref={ref} className={classes} {...props} />;
+  }
+);

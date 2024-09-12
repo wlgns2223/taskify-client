@@ -6,4 +6,11 @@ export enum AuthTokenType {
 export enum AuthTokenStatus {
   EXPIRED = "EXPIRED",
   INVALID = "INVALID",
+  UNDEFINED = "UNDEFINED",
+}
+
+export enum TokenHandleResult {
+  SUCCESS,
+  RENEW,
+  FAIL,
 }

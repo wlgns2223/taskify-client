@@ -2,8 +2,9 @@ import Link from "next/link";
 import { WelcomLogo } from "../../components/signup/logo";
 import { PATH } from "../../core/path";
 import SignInForm from "../../components/signin/sign-in-form";
+import { NextPage } from "next";
 
-export const SignInPage = () => {
+const SignInPage: NextPage = () => {
   return (
     <main className="py-48 px-4">
       <div className="max-w-[520px] mx-auto">

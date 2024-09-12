@@ -35,7 +35,6 @@ export const signIn = async (
       END_POINT.auth.signIn(),
       schema
     );
-    console.log({ response });
     formState.success = true;
     formState.errors = undefined;
     return formState;

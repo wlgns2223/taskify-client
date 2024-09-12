@@ -97,6 +97,7 @@ class APIHanlder {
   public async get<T = any>(url: string, options?: RequestInit) {
     return await this.apiHandler<T>(url, options);
   }
+
   public async post<BodyType = any, ResponseType = any>(
     url: string,
     body: BodyType,

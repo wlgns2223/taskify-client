@@ -29,10 +29,12 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@headlessui/react", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:2.0.4"],\
           ["@heroicons/react", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:2.1.3"],\
+          ["@types/http-status-codes", "npm:1.2.0"],\
           ["@types/node", "npm:20.14.1"],\
           ["@types/react", "npm:18.3.3"],\
           ["@types/react-dom", "npm:18.3.0"],\
           ["clsx", "npm:2.1.1"],\
+          ["http-status-codes", "npm:2.3.0"],\
           ["next", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:14.2.3"],\
           ["postcss", "npm:8.4.38"],\
           ["react", "npm:18.3.1"],\
@@ -644,6 +646,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/http-status-codes", [\
+      ["npm:1.2.0", {\
+        "packageLocation": "../../../../../.yarn/berry/cache/@types-http-status-codes-npm-1.2.0-a68e4175ba-10c0.zip/node_modules/@types/http-status-codes/",\
+        "packageDependencies": [\
+          ["@types/http-status-codes", "npm:1.2.0"],\
+          ["http-status-codes", "npm:2.3.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/node", [\
       ["npm:20.14.1", {\
         "packageLocation": "../../../../../.yarn/berry/cache/@types-node-npm-20.14.1-7c3e8b32e3-10c0.zip/node_modules/@types/node/",\
@@ -1239,6 +1251,15 @@ const RAW_RUNTIME_STATE =
           ["http-proxy-agent", "npm:7.0.2"],\
           ["agent-base", "npm:7.1.1"],\
           ["debug", "virtual:c9e1a4b59e37cb479517edede3bf2093b28c0ca1a9d0e517f3c345075bd1e468980b94b4957e389116607ee7155441dfd7d09e19a4229d5d09bcf06244401590#npm:4.3.6"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["http-status-codes", [\
+      ["npm:2.3.0", {\
+        "packageLocation": "../../../../../.yarn/berry/cache/http-status-codes-npm-2.3.0-2ae4a17e36-10c0.zip/node_modules/http-status-codes/",\
+        "packageDependencies": [\
+          ["http-status-codes", "npm:2.3.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2420,10 +2441,12 @@ const RAW_RUNTIME_STATE =
           ["taskify-client", "workspace:."],\
           ["@headlessui/react", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:2.0.4"],\
           ["@heroicons/react", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:2.1.3"],\
+          ["@types/http-status-codes", "npm:1.2.0"],\
           ["@types/node", "npm:20.14.1"],\
           ["@types/react", "npm:18.3.3"],\
           ["@types/react-dom", "npm:18.3.0"],\
           ["clsx", "npm:2.1.1"],\
+          ["http-status-codes", "npm:2.3.0"],\
           ["next", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:14.2.3"],\
           ["postcss", "npm:8.4.38"],\
           ["react", "npm:18.3.1"],\

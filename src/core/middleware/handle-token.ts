@@ -1,94 +1,72 @@
 "use server";
-import { NextRequest, NextResponse } from "next/server";
-import { apiHandler } from "../network/fetch";
-import { cookies, headers } from "next/headers";
-import { HTTPError, TokenExceptionType } from "../error/http-error";
+
+import { NextRequest } from "next/server";
+import { HTTPError } from "../error/http-error";
 import { match } from "ts-pattern";
-import { AuthTokenStatus, AuthTokenType } from "./types/auth-status";
-
-/**
- *
- * @returns ( ACCESS TOKEN , Expired ) or ( ACCESS TOKEN , Invalid )
- */
-const verifyToken = async () => {
-  const result = await apiHandler.post<any, { message: string }>(
-    "/auth/verify",
-    {},
-    {
-      credentials: "include",
-      headers: {
-        Cookie: cookies().toString(),
-      },
-    }
-  );
-  return result;
-};
-
-export const enum HttpStatusCode {
-  OK = 200,
-  UNAUTHORIZED = 401,
-}
+import {
+  AuthTokenStatus,
+  AuthTokenType,
+  TokenHandleResult,
+} from "./types/auth-status";
+import { verifyToken } from "./auth-api/verify-token";
+import { StatusCodes } from "http-status-codes";
 
 export const handleToken = async (request: NextRequest) => {
   try {
     const res = await verifyToken();
-    if (res.statusCode === HttpStatusCode.OK) {
-      return true;
+    if (res.statusCode === StatusCodes.OK) {
+      return TokenHandleResult.SUCCESS;
     }
   } catch (e) {
+    console.error("verify failed");
     return match(e)
       .when((e): e is HTTPError => e instanceof HTTPError, handleVerifyFail)
       .otherwise((e) => {
         console.error("default error");
-        console.error(e);
-        return false;
+        return TokenHandleResult.FAIL;
       });
   }
-  return false;
+  return TokenHandleResult.FAIL;
 };
 
 const handleVerifyFail = (httpError: HTTPError) => {
+  console.error("handle verify failed");
   return match(httpError.statusCode)
-    .with(HttpStatusCode.UNAUTHORIZED, () => handleUnauthorizeError(httpError))
+    .with(StatusCodes.UNAUTHORIZED, () => handleUnauthorizeError(httpError))
     .otherwise(() => {
       console.error("다른 에러");
-      return false;
+      return TokenHandleResult.FAIL;
     });
 };
 
 const handleUnauthorizeError = (httpError: HTTPError) => {
+  console.log("handle unauthorize error");
   return match(httpError.headers)
     .when(
       (headers) =>
         headers instanceof Headers && headers.has("www-authenticate"),
       handleErrorByRealm
     )
-    .otherwise(() => false);
+    .otherwise(() => TokenHandleResult.FAIL);
 };
 
 const handleErrorByRealm = (headers: Headers) => {
   const { realm, error } = extractRealmAndStatus(headers);
-  console.log({ realm, error });
+
+  console.log("realm", realm, error);
+
   return match([realm, error])
     .with(
       [AuthTokenType.ACCESS_TOKEN, AuthTokenStatus.EXPIRED],
-      handleRenewToken
+      () => TokenHandleResult.RENEW
     )
-    .otherwise(() => {
-      console.log("모든 쿠키 삭제");
-      return false;
-    });
+    .with(
+      [AuthTokenType.ACCESS_TOKEN, AuthTokenStatus.UNDEFINED],
+      () => TokenHandleResult.RENEW
+    )
+    .otherwise(() => TokenHandleResult.FAIL);
 };
 
-const handleRenewToken = async () => {
-  try {
-    console.log("access token 재발급");
-    return true;
-  } catch (e) {
-    console.log("모든 쿠키 삭제");
-    return false;
-  }
-};
 const extractRealmAndStatus = (header: Headers) => {
   const authHeader = header.get("www-authenticate")!;
   const realm = getTokenInfo<AuthTokenType>(authHeader, "realm");

@@ -9,4 +9,13 @@ export const PATH = {
   myDashBoard() {
     return "/mydashboard";
   },
+  verifyToken() {
+    return "/auth/verify";
+  },
+  renewToken() {
+    return "/auth/renew";
+  },
+  deleteAuthCookie() {
+    return "/auth/cookie-delete";
+  },
 };
