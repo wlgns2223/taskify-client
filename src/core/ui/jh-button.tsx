@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 
 interface JhButtonProps extends Omit<HTMLProps<HTMLButtonElement>, "type"> {
   type?: "button" | "submit";
-  variants?: "normal" | "reset";
+  variants?: "normal" | "reset" | "outline";
 }
 
 export const JhButton: React.FC<PropsWithChildren<JhButtonProps>> = ({
@@ -15,9 +15,10 @@ export const JhButton: React.FC<PropsWithChildren<JhButtonProps>> = ({
 }) => {
   const classes = twMerge(
     clsx(
+      "py-3 px-4 text-neutral-50 rounded-lg cursor-pointer",
       {
-        "py-3 px-4 bg-primary text-neutral-50 rounded-lg cursor-pointer":
-          variants === "normal",
+        "bg-primary": variants === "normal",
+        "text-neutral-700 border border-primary": variants === "outline",
       },
       {
         "bg-neutral-400": props.disabled,

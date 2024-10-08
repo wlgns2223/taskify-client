@@ -12,6 +12,7 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#5534DA",
+        "primary-light": "#F1EFFD",
       },
       maxWidth: {
         pc: "1920px",
