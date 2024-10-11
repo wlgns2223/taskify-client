@@ -1,6 +1,7 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { JhButton } from "../../../core/ui/jh-button";
 import { EmptyBoard } from "../../../components/my-dashboard/empty-board";
+import Image from "next/image";
 
 const MyDashBoard: React.FC = () => {
   return (
