@@ -12,6 +12,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
         </header>
         <div className="bg-neutral-100 h-full p-10">{children}</div>
       </main>
+      <div id="modal_portal" />
     </div>
   );
 };

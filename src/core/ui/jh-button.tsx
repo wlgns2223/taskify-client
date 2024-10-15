@@ -2,7 +2,8 @@ import clsx from "clsx";
 import { HTMLProps, PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface JhButtonProps extends Omit<HTMLProps<HTMLButtonElement>, "type"> {
+export interface JhButtonProps
+  extends Omit<HTMLProps<HTMLButtonElement>, "type"> {
   type?: "button" | "submit";
   variants?: "normal" | "reset" | "outline";
 }
