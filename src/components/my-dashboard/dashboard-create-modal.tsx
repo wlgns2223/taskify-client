@@ -4,10 +4,23 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import { useModal } from "../../core/hooks/useModal";
 import { JhButton } from "../../core/ui/jh-button";
 import { JhModal } from "../../core/ui/modal/jh-modal";
-import { DashboardCreateContent } from "./dashboard-create-content";
+import { DashboardCreateContent, colors } from "./dashboard-create-content";
+import { useState } from "react";
+import { CreateDashBoardDtoSchema } from "../../libs/dashboard/createDashBoardDto";
+import { createDashBoard } from "../../libs/dashboard/create-dashboard";
 
 export const DashboardCreateModal: React.FC = () => {
   const modalHookProps = useModal();
+  const [dashBoardCreateDto, setDashBoardCreateDto] =
+    useState<CreateDashBoardDtoSchema>({
+      title: "",
+      color: colors[0].hex,
+    });
+
+  const handleCreateDashboard = () => {
+    createDashBoard(dashBoardCreateDto);
+  };
+
   return (
     <>
       <JhButton
@@ -22,9 +35,12 @@ export const DashboardCreateModal: React.FC = () => {
         className="w-full max-w-[540px]"
         isOpen={modalHookProps.isOpen}
         onClose={() => modalHookProps.setIsOpen(false)}
-        text="모달"
+        onConfirm={handleCreateDashboard}
       >
-        {<DashboardCreateContent />}
+        <DashboardCreateContent
+          dashboardCreateDto={dashBoardCreateDto}
+          setDashBoardCreateDto={setDashBoardCreateDto}
+        />
       </JhModal>
     </>
   );

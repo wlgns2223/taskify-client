@@ -6,8 +6,6 @@ import { JhCheckbox } from "../../core/ui/jh-checkbox";
 import { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { JhButton } from "../../core/ui/jh-button";
 import { FormInput } from "./signup-input";
-import { twMerge } from "tailwind-merge";
-import clsx from "clsx";
 
 type SignUpFormChildren = {
   type: string;
@@ -48,6 +46,10 @@ const formChildren: SignUpFormChildren[] = [
     type: "password",
   },
 ];
+/**
+ *
+ * useFormState와 Server Action 사용
+ */
 
 export const SignupForm: React.FC = () => {
   const [isTermChecked, setIsTermChecked] = useState<boolean>(false);

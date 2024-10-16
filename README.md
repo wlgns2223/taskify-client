@@ -9,14 +9,7 @@
 
 - formState를 직접 초기화하여 리렌더링 시키는 방법은 없어서 formState의 에러를 상태로 담았다.
 
-# TO DOs
+# TO-DOs
 
-[ ] 쿠키 credential: true 이유 공부하기
-[ ] 로그인 form 규칙
-[ ] Auth 쿠키 핸들링 로직
-
-# middleware 토큰 검증로직
-
-[] access token 유효 -> next()
-[] access token 만료 -> refresh token 검증
-[] refresh token 만료 -> 로그인 페이지로 이동
+[ ] api 요청시 access token 만료시 refresh token으로 재발급
+[ ] create dashboard useMutation으로 로직 개발

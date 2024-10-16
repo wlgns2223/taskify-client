@@ -6,24 +6,22 @@ import { twMerge } from "tailwind-merge";
 import { JhButton, JhButtonProps } from "../jh-button";
 import { ModalPortal } from "./modal-portal";
 import { Transition, TransitionChild } from "@headlessui/react";
-import { ModalHookProps } from "../../hooks/useModal";
-import { on } from "events";
 
 interface ModalProps extends HTMLProps<HTMLDivElement> {
   buttonProps?: JhButtonProps;
+  confirmText?: string;
   onConfirm?: () => void;
   onClose?: () => void;
   isOpen: boolean;
-  text?: string;
 }
 
 export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
   buttonProps,
+  confirmText = "생성",
   children,
   onConfirm,
   onClose,
   isOpen,
-  text,
   ...props
 }) => {
   return (
@@ -67,8 +65,11 @@ export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
                   >
                     {"취소"}
                   </JhButton>
-                  <JhButton className="flex-1 sm:flex-none min-w-32">
-                    {"생성"}
+                  <JhButton
+                    className="flex-1 sm:flex-none min-w-32"
+                    onClick={onConfirm}
+                  >
+                    {confirmText}
                   </JhButton>
                 </div>
               </div>

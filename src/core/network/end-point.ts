@@ -4,4 +4,7 @@ export const END_POINT = {
       return "/auth/signin";
     },
   },
+  dashboard() {
+    return "/dashboards";
+  },
 };

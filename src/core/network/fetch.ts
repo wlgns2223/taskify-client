@@ -1,6 +1,6 @@
 import { HTTPError } from "../error/http-error";
 
-const baseURl = "http://localhost:4000/api";
+const baseURl = "http://localhost:4000/api/1";
 
 type HeaderContentType =
   | "application/json"
