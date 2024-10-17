@@ -17,5 +17,5 @@ export const createDashBoard = async (
     END_POINT.dashboard(),
     createDashboardDto
   );
-  console.log(res.data);
+  return res.data;
 };

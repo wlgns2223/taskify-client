@@ -8,6 +8,9 @@ import { DashboardCreateContent, colors } from "./dashboard-create-content";
 import { useState } from "react";
 import { CreateDashBoardDtoSchema } from "../../libs/dashboard/createDashBoardDto";
 import { createDashBoard } from "../../libs/dashboard/create-dashboard";
+import { useMutation } from "@tanstack/react-query";
+import { ToastContainer } from "react-toastify";
+import { useToast } from "../../core/hooks/useToast";
 
 export const DashboardCreateModal: React.FC = () => {
   const modalHookProps = useModal();
@@ -17,8 +20,17 @@ export const DashboardCreateModal: React.FC = () => {
       color: colors[0].hex,
     });
 
-  const handleCreateDashboard = () => {
-    createDashBoard(dashBoardCreateDto);
+  const { notify } = useToast();
+  const { mutateAsync: createDashboardMutation } = useMutation({
+    mutationFn: createDashBoard,
+  });
+
+  const handleCreateDashboard = async () => {
+    try {
+      await createDashboardMutation(dashBoardCreateDto);
+    } catch (e: any) {
+      notify(e.message);
+    }
   };
 
   return (
@@ -42,6 +54,7 @@ export const DashboardCreateModal: React.FC = () => {
           setDashBoardCreateDto={setDashBoardCreateDto}
         />
       </JhModal>
+      <ToastContainer />
     </>
   );
 };

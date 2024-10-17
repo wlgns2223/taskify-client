@@ -1,3 +1,4 @@
+import { StatusCodes } from "http-status-codes";
 import { HTTPError } from "../error/http-error";
 
 const baseURl = "http://localhost:4000/api/1";
@@ -25,6 +26,16 @@ class APIHanlder {
     this.baseUrl = baseUrl;
   }
 
+  private async refreshTokens() {
+    const res = await fetch(`${this.baseUrl}/auth/client-renew`, {
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      throw new HTTPError("토큰 갱신에 실패했습니다.", res.status, res.headers);
+    }
+  }
+
   private async apiHandler<T = any>(url: string, options?: RequestInit) {
     const headers: HeadersInit = {
       "Content-Type": "application/json",
@@ -37,7 +48,12 @@ class APIHanlder {
       headers,
     };
 
-    const response = await fetch(`${this.baseUrl}${url}`, _options);
+    let response = await fetch(`${this.baseUrl}${url}`, _options);
+
+    if (response.status === StatusCodes.UNAUTHORIZED) {
+      await this.refreshTokens();
+      response = await fetch(`${this.baseUrl}${url}`, _options);
+    }
 
     if (!response.ok) {
       const error = (await response.json()) as NetworkError;

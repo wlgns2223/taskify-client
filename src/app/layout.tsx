@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFonts from "next/font/local";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ReactQueryProvider } from "../core/providers/react-query-provider";
 
 export const metadata: Metadata = {
   title: "Taskify",
@@ -20,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={pretendardFont.className}>{children}</body>
+      <body className={pretendardFont.className}>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+      </body>
     </html>
   );
 }
