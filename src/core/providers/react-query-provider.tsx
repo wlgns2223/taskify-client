@@ -13,6 +13,7 @@ export const ReactQueryProvider: React.FC<PropsWithChildren> = ({
         defaultOptions: {
           queries: {
             staleTime: 1000 * 60,
+            throwOnError: true,
           },
         },
       })

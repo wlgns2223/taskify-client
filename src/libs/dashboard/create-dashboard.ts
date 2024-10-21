@@ -3,7 +3,11 @@ import { apiHandler } from "../../core/network/fetch";
 import {
   CreateDashBoardDtoSchema,
   createDashBoardDtoSchema,
-} from "./createDashBoardDto";
+} from "./dto/createDashboards.dto";
+import {
+  ReadDashboardsDtoSchema,
+  readDashboardsDtoSchema,
+} from "./dto/readDashboards.dto";
 
 export const createDashBoard = async (
   createDashboardDto: CreateDashBoardDtoSchema
@@ -17,5 +21,18 @@ export const createDashBoard = async (
     END_POINT.dashboard(),
     createDashboardDto
   );
+  return res.data;
+};
+
+export const readDashboards = async (
+  readDashboardDto: ReadDashboardsDtoSchema
+) => {
+  const result = readDashboardsDtoSchema.safeParse(readDashboardDto);
+  if (!result.success) {
+    console.log(result.error);
+    throw new Error(result.error.message);
+  }
+
+  const res = await apiHandler.get(END_POINT.dashboard(readDashboardDto));
   return res.data;
 };

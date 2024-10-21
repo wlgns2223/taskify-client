@@ -8,19 +8,17 @@ import { ModalPortal } from "./modal-portal";
 import { Transition, TransitionChild } from "@headlessui/react";
 
 interface ModalProps extends HTMLProps<HTMLDivElement> {
-  buttonProps?: JhButtonProps;
+  confirmButtonProps?: JhButtonProps;
+  closeButtonProps?: JhButtonProps;
   confirmText?: string;
-  onConfirm?: () => void;
-  onClose?: () => void;
   isOpen: boolean;
 }
 
 export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
-  buttonProps,
   confirmText = "생성",
+  confirmButtonProps,
+  closeButtonProps,
   children,
-  onConfirm,
-  onClose,
   isOpen,
   ...props
 }) => {
@@ -39,7 +37,7 @@ export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
             >
               <div
                 className="absolute inset-0 bg-neutral-800  hover:cursor-pointer"
-                onClick={onClose}
+                onClick={(e: any) => closeButtonProps?.onClick?.(e)}
               />
             </TransitionChild>
             <TransitionChild
@@ -61,13 +59,13 @@ export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
                   <JhButton
                     className="flex-1 sm:flex-none min-w-32"
                     variants="outline"
-                    onClick={onClose}
+                    {...closeButtonProps}
                   >
                     {"취소"}
                   </JhButton>
                   <JhButton
                     className="flex-1 sm:flex-none min-w-32"
-                    onClick={onConfirm}
+                    {...confirmButtonProps}
                   >
                     {confirmText}
                   </JhButton>

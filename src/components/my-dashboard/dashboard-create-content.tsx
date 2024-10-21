@@ -1,6 +1,6 @@
 import { Dispatch, MouseEvent, SetStateAction } from "react";
 import { JHInput } from "../../core/ui/jh-input";
-import { CreateDashBoardDtoSchema } from "../../libs/dashboard/createDashBoardDto";
+import { CreateDashBoardDtoSchema } from "../../libs/dashboard/dto/createDashboards.dto";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { match } from "ts-pattern";
 

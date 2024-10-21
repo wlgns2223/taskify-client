@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { colors } from "../../components/my-dashboard/dashboard-create-content";
+import { colors } from "../../../components/my-dashboard/dashboard-create-content";
 
 export const createDashBoardDtoSchema = z.object({
   title: z
