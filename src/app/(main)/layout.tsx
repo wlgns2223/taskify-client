@@ -1,19 +1,35 @@
+import { cookies } from "next/headers";
 import { PropsWithChildren } from "react";
+import { PATH } from "../../core/path";
+import { redirect } from "next/navigation";
+import { userService } from "../../core/user/user.service";
+import { UserProvider } from "../../core/user/context";
 
-const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  if (!accessToken) {
+    redirect(PATH.signIn());
+  }
+
+  const userInfo = await userService.getUser(accessToken);
+
   return (
-    <div className="flex min-w-96">
-      <aside className="w-16 md:w-40 lg:w-[300px] border border-l-0 border-y-0 border-r-neutral-200 h-screen p-4">
-        {"aside"}
-      </aside>
-      <main className="flex-1 ">
-        <header className="w-full flex items-center h-[70px] px-10 py-4 border border-x-0 border-t-0  border-b-neutral-200">
-          {"header"}
-        </header>
-        <div className="bg-neutral-100 h-full p-10">{children}</div>
-      </main>
-      <div id="modal_portal" />
-    </div>
+    <UserProvider userInfo={userInfo}>
+      <div className="flex min-w-96">
+        <aside className="w-16 md:w-40 lg:w-[300px] border border-l-0 border-y-0 border-r-neutral-200 h-screen p-4">
+          {"aside"}
+        </aside>
+        <main className="flex-1 ">
+          <header className="w-full flex items-center h-[70px] px-10 py-4 border border-x-0 border-t-0  border-b-neutral-200">
+            {"header"}
+          </header>
+          <div className="bg-neutral-100 h-full p-10">{children}</div>
+        </main>
+        <div id="modal_portal" />
+      </div>
+    </UserProvider>
   );
 };
 

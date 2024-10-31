@@ -1,14 +1,12 @@
 import { EmptyBoard } from "../../../components/my-dashboard/empty-board";
-import { PropsWithChildren } from "react";
-import { CurrentDashboards } from "../../../components/my-dashboard/dashboard-create";
+import { PropsWithChildren, Suspense } from "react";
+import { CurrentDashboards } from "../../../components/my-dashboard/current-dashboards";
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
-  hydrate,
 } from "@tanstack/react-query";
-import { queryKeys } from "../../../core/ui/query-keys/dashboards.key";
-import { readDashboards } from "../../../libs/dashboard/create-dashboard";
+import { queryOptions } from "../../../libs/dashboard/query-options";
 
 const MyDashBoard: React.FC<PropsWithChildren> = ({ children }) => {
   return <div>{children}</div>;
@@ -17,13 +15,11 @@ export default async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: queryKeys.all,
-    queryFn: () =>
-      readDashboards({
-        cursor: "0",
-        limit: 5,
-        direction: "next",
-      }),
+    ...queryOptions.readDashboards({
+      cursor: null,
+      limit: 6,
+      direction: "next",
+    }),
   });
 
   return (

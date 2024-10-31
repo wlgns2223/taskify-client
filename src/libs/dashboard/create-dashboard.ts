@@ -29,7 +29,6 @@ export const readDashboards = async (
 ) => {
   const result = readDashboardsDtoSchema.safeParse(readDashboardDto);
   if (!result.success) {
-    console.log(result.error);
     throw new Error(result.error.message);
   }
 

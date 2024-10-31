@@ -26,7 +26,7 @@ export const JhButton: React.FC<PropsWithChildren<JhButtonProps>> = ({
         "text-neutral-700 border border-primary": variants === "outline",
       },
       {
-        "bg-neutral-400 cursor-wait ": props.disabled || !!loading,
+        "bg-neutral-400 text-neutral-200": props.disabled || !!loading,
       },
 
       props.className

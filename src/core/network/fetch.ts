@@ -1,5 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { HTTPError } from "../error/http-error";
+import { PATH } from "../path";
+import { redirect } from "next/navigation";
 
 const baseURl = "http://localhost:4000/api/1";
 
@@ -19,7 +21,7 @@ type ReturnType<T> = {
   statusCode: number;
 };
 
-class APIHanlder {
+export class APIHanlder {
   private baseUrl: string;
 
   constructor(baseUrl: string) {
@@ -51,8 +53,16 @@ class APIHanlder {
     let response = await fetch(`${this.baseUrl}${url}`, _options);
 
     if (response.status === StatusCodes.UNAUTHORIZED) {
-      await this.refreshTokens();
-      response = await fetch(`${this.baseUrl}${url}`, _options);
+      try {
+        await this.refreshTokens();
+        response = await fetch(`${this.baseUrl}${url}`, _options);
+      } catch (e) {
+        if (typeof window !== "undefined") {
+          window.location.href = PATH.signIn();
+        } else {
+          // redirect(PATH.signIn());
+        }
+      }
     }
 
     if (!response.ok) {

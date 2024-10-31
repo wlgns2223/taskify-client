@@ -1,10 +1,11 @@
-"use client";
-
 import { ToastContainer } from "react-toastify";
 import { ModalHookProps } from "../../core/hooks/useModal";
 import { JhModal } from "../../core/ui/modal/jh-modal";
 import { useCreateDashboard } from "../../libs/dashboard/useCreateDashboard";
 import { DashboardCreateContent } from "./dashboard-create-content";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryOptions } from "../../libs/dashboard/query-options";
+import { defaultReadDashboardsDto } from "./dashboards";
 
 interface DashboardCreateContentProps {
   modalHookProps: ModalHookProps;
@@ -13,6 +14,16 @@ interface DashboardCreateContentProps {
 export const DashboardCreateModal: React.FC<DashboardCreateContentProps> = ({
   modalHookProps,
 }) => {
+  const queryClient = useQueryClient();
+
+  const refetchDashboards = () => {
+    queryClient.invalidateQueries({
+      queryKey: [
+        ...queryOptions.readDashboards(defaultReadDashboardsDto).queryKey,
+      ],
+    });
+  };
+
   const {
     handleCreateDashboard,
     isPending,
@@ -21,6 +32,7 @@ export const DashboardCreateModal: React.FC<DashboardCreateContentProps> = ({
   } = useCreateDashboard({
     onSuccess: () => {
       modalHookProps.setIsOpen(false);
+      refetchDashboards();
     },
   });
   return (

@@ -11,9 +11,21 @@ export const END_POINT = {
   dashboard(dto?: ReadDashboardsDtoSchema) {
     const baseUrl = "/dashboards";
     if (dto) {
-      const queryParams = qs.stringify(dto);
+      const cursor =
+        dto.direction === "next" ? dto.cursor?.next : dto.cursor?.prev;
+      const queryParams = qs.stringify({
+        cursor,
+        limit: dto.limit,
+        direction: dto.direction,
+      });
+
       return `${baseUrl}?${queryParams}`;
     }
     return baseUrl;
+  },
+  user: {
+    me(accessToken: string) {
+      return `/users/me?accessToken=${accessToken}`;
+    },
   },
 };
