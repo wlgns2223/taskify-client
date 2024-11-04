@@ -8,6 +8,10 @@ const queryKeys = {
 };
 
 export const queryOptions = {
+  all: () => ({
+    queryKey: queryKeys.all,
+    queryFn: () => {},
+  }),
   readDashboards: (readDashboardDto: ReadDashboardsDtoSchema) => ({
     queryKey: [...queryKeys.all, readDashboardDto],
     queryFn: () => dashboardService.readDashboards(readDashboardDto),

@@ -4,6 +4,7 @@ import { PATH } from "../../core/path";
 import { redirect } from "next/navigation";
 import { userService } from "../../core/user/user.service";
 import { UserProvider } from "../../core/user/context";
+import { SideMenu } from "../../core/side-menu/side-menu";
 
 const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
   const cookieStore = cookies();
@@ -18,9 +19,7 @@ const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
   return (
     <UserProvider userInfo={userInfo}>
       <div className="flex min-w-96">
-        <aside className="w-16 md:w-40 lg:w-[300px] border border-l-0 border-y-0 border-r-neutral-200 h-screen p-4">
-          {"aside"}
-        </aside>
+        <SideMenu />
         <main className="flex-1 ">
           <header className="w-full flex items-center h-[70px] px-10 py-4 border border-x-0 border-t-0  border-b-neutral-200">
             {"header"}

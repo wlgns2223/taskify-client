@@ -18,20 +18,23 @@ export const JhButton: React.FC<PropsWithChildren<JhButtonProps>> = ({
   loading = false,
   ...props
 }) => {
-  const classes = twMerge(
-    clsx(
-      "py-3 px-4 text-neutral-50 rounded-lg cursor-pointer",
-      {
-        "bg-primary": variants === "normal",
-        "text-neutral-700 border border-primary": variants === "outline",
-      },
-      {
-        "bg-neutral-400 text-neutral-200": props.disabled || !!loading,
-      },
+  const classes =
+    variants === "reset"
+      ? props.className
+      : twMerge(
+          clsx(
+            "py-3 px-4 text-neutral-50 rounded-lg cursor-pointer",
+            {
+              "bg-primary": variants === "normal",
+              "text-neutral-700 border border-primary": variants === "outline",
+            },
+            {
+              "bg-neutral-400 text-neutral-200": props.disabled || !!loading,
+            },
 
-      props.className
-    )
-  );
+            props.className
+          )
+        );
 
   return (
     <button

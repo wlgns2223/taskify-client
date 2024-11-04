@@ -1,5 +1,4 @@
 import { match } from "ts-pattern";
-import { JhButton } from "../../core/ui/jh-button";
 import {
   Dashboard,
   ReadDashboardsDtoSchema,
@@ -10,6 +9,7 @@ import { DashboardPagesNumber, PAGE_SIZE } from "./dashboard-pages-number";
 import { useState } from "react";
 import { useUserContext } from "../../core/user/context";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 interface DashboardsProps {}
 
@@ -34,9 +34,9 @@ export const Dashboards: React.FC<DashboardsProps> = ({}) => {
         <ul className="grid grid-cols-3 grid-rows-2 gap-3 mt-3">
           {data!.dashboards.map((dashboard: Dashboard) => (
             <li key={dashboard.id}>
-              <JhButton
-                className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] h-[70px] px-4 py-5"
-                variants="outline"
+              <Link
+                href={`/dashboard/${dashboard.id}`}
+                className="flex justify-center items-center border border-neutral-200 bg-white w-full max-w-[330px] h-[70px] px-4 py-5 rounded-md "
               >
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center">
@@ -53,7 +53,7 @@ export const Dashboards: React.FC<DashboardsProps> = ({}) => {
                   </div>
                   <p>{">"}</p>
                 </div>
-              </JhButton>
+              </Link>
             </li>
           ))}
         </ul>
