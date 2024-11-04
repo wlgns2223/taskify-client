@@ -1,23 +1,23 @@
 "use client";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { queryOptions } from "../../libs/dashboard/query-options";
-import {
-  ReadDashboardsDtoSchema,
-  ReadDashboardsResponse,
-} from "../../libs/dashboard/dto/readDashboards.dto";
-import { defaultReadDashboardsDto } from "../../components/my-dashboard/dashboards";
-import { JhButton } from "../ui/jh-button";
 import { useSideMenu } from "./useSideMenu";
+import { useIntersectionObserver } from "usehooks-ts";
+import { useEffect } from "react";
 
 export const SideDashboards: React.FC = () => {
-  const { data: dashboards, fetchNextPage } = useSideMenu();
+  const { data: dashboards, fetchNextPage, hasNextPage } = useSideMenu();
+  const { isIntersecting, ref } = useIntersectionObserver();
+
+  useEffect(() => {
+    if (isIntersecting && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [isIntersecting, hasNextPage]);
 
   return (
-    <>
-      <JhButton onClick={() => fetchNextPage()}>{"페치"}</JhButton>
-      <ul className="mt-3 h-full overflow-scroll">
+    <div className="mt-3 overflow-scroll flex-1">
+      <ul className="">
         {dashboards.map((dashboard, index) => (
           <Link
             href={`/dashboard/`}
@@ -34,7 +34,7 @@ export const SideDashboards: React.FC = () => {
           </Link>
         ))}
       </ul>
-      <div />
-    </>
+      <div ref={ref} className="w-full h-1" />
+    </div>
   );
 };
