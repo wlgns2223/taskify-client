@@ -13,9 +13,11 @@ export const SideMenu: React.FC = () => {
         <Image src={logoText} alt="logo" className="" />
       </Link>
 
-      <div className="flex mt-16 items-center justify-between">
-        <p className="text-neutral-600">{"Dash Boards"}</p>
-        <JhButton variants="reset" className="p-2 -mr-2">
+      <div className="flex mt-16 items-center justify-center md:justify-between">
+        <p className="text-neutral-600 text-xs lg:text-base hidden md:block px-2">
+          {"Dash Boards"}
+        </p>
+        <JhButton variants="reset" className="p-2 md:-mr-2">
           <PlusCircleIcon className="w-5 h-5 text-neutral-400" />
         </JhButton>
       </div>
