@@ -18,7 +18,7 @@ export const createDashBoard = async (
   }
 
   const res = await apiHandler.post<CreateDashBoardDtoSchema>(
-    END_POINT.dashboard(),
+    END_POINT.dashboard.create(),
     createDashboardDto
   );
   return res.data;
@@ -32,6 +32,6 @@ export const readDashboards = async (
     throw new Error(result.error.message);
   }
 
-  const res = await apiHandler.get(END_POINT.dashboard(readDashboardDto));
+  const res = await apiHandler.get(END_POINT.dashboard.read(readDashboardDto));
   return res.data;
 };

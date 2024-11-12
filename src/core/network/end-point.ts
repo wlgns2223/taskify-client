@@ -8,20 +8,40 @@ export const END_POINT = {
       return "/auth/signin";
     },
   },
-  dashboard(dto?: ReadDashboardsDtoSchema) {
-    const baseUrl = "/dashboards";
-    if (dto) {
-      const cursor =
-        dto.direction === "next" ? dto.cursor?.next : dto.cursor?.prev;
-      const queryParams = qs.stringify({
-        cursor,
-        limit: dto.limit,
-        direction: dto.direction,
-      });
+  dashboard: {
+    create() {
+      return "/dashboards";
+    },
+    read(dto?: ReadDashboardsDtoSchema) {
+      const baseUrl = "/dashboards";
+      if (dto) {
+        const cursor =
+          dto.direction === "next" ? dto.cursor?.next : dto.cursor?.prev;
+        const queryParams = qs.stringify({
+          cursor,
+          limit: dto.limit,
+          direction: dto.direction,
+        });
 
-      return `${baseUrl}?${queryParams}`;
-    }
-    return baseUrl;
+        return `${baseUrl}?${queryParams}`;
+      }
+      return baseUrl;
+    },
+    detail(id: string) {
+      return `/dashboards/${id}`;
+    },
+  },
+  columns: {
+    create() {
+      return "/columns";
+    },
+    read(dashboardId: string) {
+      return `/columns?dashboardId=${dashboardId}`;
+    },
+
+    swap(dashboardId: string) {
+      return `/columns/swap/${dashboardId}`;
+    },
   },
   user: {
     me(accessToken: string) {

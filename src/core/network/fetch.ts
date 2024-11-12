@@ -139,8 +139,19 @@ export class APIHanlder {
     });
   }
 
-  public async put<T = any>(url: string, options?: RequestInit) {
-    return await this.apiHandler<T>(url, { method: "PUT", ...options });
+  public async put<BodyType = any, ResponseType = any>(
+    url: string,
+    body: BodyType,
+    options?: Omit<RequestInit, "body">
+  ) {
+    const contentType = options?.headers?.[
+      "Content-Type" as keyof HeadersInit
+    ] as HeaderContentType | undefined;
+    return await this.apiHandler<ResponseType>(url, {
+      method: "PUT",
+      ...options,
+      body: this.toBody(contentType, body),
+    });
   }
 
   public async delete<T = any>(url: string, options?: RequestInit) {

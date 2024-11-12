@@ -1,4 +1,5 @@
 import { Service } from "../../core/network/service";
+import { ReadColumnDto } from "./dto/columns.dto";
 import {
   CreateDashBoardDtoSchema,
   createDashBoardDtoSchema,
@@ -8,6 +9,7 @@ import {
   ReadDashboardsResponse,
   readDashboardsDtoSchema,
 } from "./dto/readDashboards.dto";
+import { SwapColumnsDtoSchema } from "./dto/swapColumns.dto";
 
 class DashboardService extends Service {
   constructor() {
@@ -21,7 +23,7 @@ class DashboardService extends Service {
     }
 
     const res = await this.apiHandler.post<CreateDashBoardDtoSchema>(
-      this.endPoints.dashboard(),
+      this.endPoints.dashboard.create(),
       createDashboardDto
     );
     return res.data;
@@ -34,7 +36,25 @@ class DashboardService extends Service {
     }
 
     const res = await this.apiHandler.get<ReadDashboardsResponse>(
-      this.endPoints.dashboard(readDashboardDto)
+      this.endPoints.dashboard.read(readDashboardDto)
+    );
+    return res.data;
+  }
+
+  async getColumnsByDashboardId(id: string) {
+    const res = await this.apiHandler.get<ReadColumnDto[]>(
+      this.endPoints.columns.read(id)
+    );
+    return res.data;
+  }
+
+  async swapColumnsPosition(
+    dashboardId: string,
+    swapColumnsPosition: SwapColumnsDtoSchema
+  ) {
+    const res = await this.apiHandler.put<SwapColumnsDtoSchema>(
+      this.endPoints.columns.swap(dashboardId),
+      swapColumnsPosition
     );
     return res.data;
   }

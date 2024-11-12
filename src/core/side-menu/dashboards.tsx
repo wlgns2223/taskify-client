@@ -24,7 +24,7 @@ export const SideDashboards: React.FC = () => {
         {dashboards.map((dashboard, index) => (
           <li key={dashboard.id}>
             <Link
-              href={`/dashboard/`}
+              href={`/dashboard/${dashboard.id}`}
               className="flex justify-center md:justify-start w-full max-w-[330px] h-[45px] px-2 py-3 hover:bg-primary-light hover:rounded-md"
             >
               <div className="flex items-center">
