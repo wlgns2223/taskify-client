@@ -67,6 +67,7 @@ export const DashboardCreateContent: React.FC<DashboardCreateContentProps> = ({
           placeholder="새로운 프로젝트"
           className="w-full mt-3"
           onChange={handleTitleChange}
+          value={dashboardCreateDto.title}
         />
       </div>
       <ul className="flex mt-6 -ml-3" onClick={handleColorChange}>

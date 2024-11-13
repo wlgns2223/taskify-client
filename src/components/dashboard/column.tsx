@@ -12,9 +12,7 @@ const Column: React.FC<ColumnProps> = ({ column }) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="w-2 h-2 bg-primary rounded-full" />
-          <span className="ml-2 text-lg font-bold">
-            {column.name + " " + column.position}
-          </span>
+          <span className="ml-2 text-lg font-bold">{column.name}</span>
           <span className="flex justify-center items-center p-1 bg-neutral-200 text-sm rounded-[4px] text-neutral-700 w-5 h-5 ml-3  ">
             {"3"}
           </span>

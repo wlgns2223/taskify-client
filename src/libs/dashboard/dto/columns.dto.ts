@@ -10,3 +10,11 @@ const Column = z.object({
 });
 
 export type ReadColumnDto = z.infer<typeof Column>;
+
+const CreateColumnDto = Column.omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type CreateColumnDtoSchema = z.infer<typeof CreateColumnDto>;

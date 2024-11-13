@@ -1,5 +1,5 @@
 import { Service } from "../../core/network/service";
-import { ReadColumnDto } from "./dto/columns.dto";
+import { CreateColumnDtoSchema, ReadColumnDto } from "./dto/columns.dto";
 import {
   CreateDashBoardDtoSchema,
   createDashBoardDtoSchema,
@@ -55,6 +55,14 @@ class DashboardService extends Service {
     const res = await this.apiHandler.put<SwapColumnsDtoSchema>(
       this.endPoints.columns.swap(dashboardId),
       swapColumnsPosition
+    );
+    return res.data;
+  }
+
+  async createColumn(createColumn: CreateColumnDtoSchema) {
+    const res = await this.apiHandler.post<CreateColumnDtoSchema>(
+      this.endPoints.columns.create(),
+      createColumn
     );
     return res.data;
   }

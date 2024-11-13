@@ -6,6 +6,7 @@ import { JhButton } from "../../core/ui/jh-button";
 import { DashboardCreateModal } from "./dashboard-create-modal";
 import { Suspense } from "react";
 import { Dashboards } from "./dashboards";
+import { ToastContainer } from "react-toastify";
 
 export const CurrentDashboards: React.FC = () => {
   const modalHookProps = useModal();
@@ -27,6 +28,7 @@ export const CurrentDashboards: React.FC = () => {
         </Suspense>
       </div>
       <DashboardCreateModal modalHookProps={modalHookProps} />
+      <ToastContainer />
     </>
   );
 };
