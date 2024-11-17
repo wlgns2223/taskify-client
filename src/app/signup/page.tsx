@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { WelcomLogo } from "../../components/signup/logo";
 import { SignupForm } from "../../components/signup/signup-form";
 import Link from "next/link";
-import { PATH } from "../../core/path";
+import { PATH } from "../../core/types/path";
 
 const SignUpPage: NextPage = () => {
   return (

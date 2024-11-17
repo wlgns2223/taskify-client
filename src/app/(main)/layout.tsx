@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { PropsWithChildren } from "react";
-import { PATH } from "../../core/path";
+import { PATH } from "../../core/types/path";
 import { redirect } from "next/navigation";
 import { userService } from "../../core/user/user.service";
 import { UserProvider } from "../../core/user/context";

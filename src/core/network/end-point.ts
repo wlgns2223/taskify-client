@@ -42,6 +42,12 @@ export const END_POINT = {
     swap(dashboardId: string) {
       return `/columns/swap/${dashboardId}`;
     },
+    update(id: string) {
+      return `/columns/${id}`;
+    },
+    delete(columnId: number, dashboardId: number) {
+      return `/columns/${columnId}?dashboardId=${dashboardId}`;
+    },
   },
   user: {
     me(accessToken: string) {

@@ -1,5 +1,9 @@
 import { Service } from "../../core/network/service";
-import { CreateColumnDtoSchema, ReadColumnDto } from "./dto/columns.dto";
+import {
+  CreateColumnDtoSchema,
+  ReadColumnDto,
+  UpdateColumnDtoSchema,
+} from "./dto/columns.dto";
 import {
   CreateDashBoardDtoSchema,
   createDashBoardDtoSchema,
@@ -63,6 +67,21 @@ class DashboardService extends Service {
     const res = await this.apiHandler.post<CreateColumnDtoSchema>(
       this.endPoints.columns.create(),
       createColumn
+    );
+    return res.data;
+  }
+
+  async updateColumn(id: string, newColumn: UpdateColumnDtoSchema) {
+    const res = await this.apiHandler.put<UpdateColumnDtoSchema>(
+      this.endPoints.columns.update(id),
+      newColumn
+    );
+    return res.data;
+  }
+
+  async useDeleteColumn(columnId: number, dashboardId: number) {
+    const res = await this.apiHandler.delete(
+      this.endPoints.columns.delete(columnId, dashboardId)
     );
     return res.data;
   }

@@ -30,13 +30,13 @@ export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
             <TransitionChild
               enter="transition ease-out duration-200"
               enterFrom="opacity-0 "
-              enterTo="opacity-30 "
+              enterTo="opacity-100"
               leave="transition ease-in duration-150"
-              leaveFrom="opacity-30"
+              leaveFrom="opacity-100"
               leaveTo="opacity-0 "
             >
               <div
-                className="absolute inset-0 bg-neutral-800  hover:cursor-pointer"
+                className="absolute inset-0 bg-neutral-800/30  hover:cursor-pointer"
                 onClick={(e: any) => closeButtonProps?.onClick?.(e)}
               />
             </TransitionChild>

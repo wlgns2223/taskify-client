@@ -18,3 +18,9 @@ const CreateColumnDto = Column.omit({
 });
 
 export type CreateColumnDtoSchema = z.infer<typeof CreateColumnDto>;
+export type UpdateColumnDtoSchema = z.infer<typeof Column>;
+export const DeleteColumnDtoSchema = Column.pick({
+  id: true,
+  dashboardId: true,
+});
+export type DeleteColumnDtoSchema = z.infer<typeof DeleteColumnDtoSchema>;

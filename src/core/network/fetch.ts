@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import { HTTPError } from "../error/http-error";
-import { PATH } from "../path";
+import { PATH } from "../types/path";
 import { redirect } from "next/navigation";
 
 const baseURl = "http://localhost:4000/api/1";

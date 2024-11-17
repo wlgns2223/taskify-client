@@ -3,7 +3,7 @@ import { handleToken } from "./core/middleware/handle-token";
 import { TokenHandleResult } from "./core/middleware/types/auth-status";
 import { handleFailedCookie } from "./core/middleware/auth-api/delete-cookie";
 import { handleRenewToken } from "./core/middleware/auth-api/renew-token";
-import { PATH } from "./core/path";
+import { PATH } from "./core/types/path";
 
 export const config = {
   matcher: [PATH.myDashBoard()],

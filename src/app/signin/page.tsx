@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { WelcomLogo } from "../../components/signup/logo";
-import { PATH } from "../../core/path";
+import { PATH } from "../../core/types/path";
 import SignInForm from "../../components/signin/sign-in-form";
 import { NextPage } from "next";
 

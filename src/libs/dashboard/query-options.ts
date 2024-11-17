@@ -1,4 +1,8 @@
 import { dashboardService } from "./dashboard.service";
+import {
+  DeleteColumnDtoSchema,
+  UpdateColumnDtoSchema,
+} from "./dto/columns.dto";
 import { ReadDashboardsDtoSchema } from "./dto/readDashboards.dto";
 
 const queryKeys = {
@@ -19,5 +23,16 @@ export const queryOptions = {
   getColumnsBydashboardId: (id: string) => ({
     queryKey: [...queryKeys.columnsByDashboardId(id)],
     queryFn: () => dashboardService.getColumnsByDashboardId(id),
+  }),
+  updateColumn: () => ({
+    queryFn: (column: UpdateColumnDtoSchema) =>
+      dashboardService.updateColumn(column.id.toString(), column),
+  }),
+  deleteColumn: () => ({
+    queryFn: (deleteColumnDto: DeleteColumnDtoSchema) =>
+      dashboardService.useDeleteColumn(
+        deleteColumnDto.id,
+        deleteColumnDto.dashboardId
+      ),
   }),
 };

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import logoText from "@/../public/logo-text.svg";
 import Link from "next/link";
-import { PATH } from "../../core/path";
+import { PATH } from "../../core/types/path";
 
 const IndexHeader: React.FC = () => {
   return (

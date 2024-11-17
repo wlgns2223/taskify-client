@@ -7,7 +7,7 @@ import { useFormState } from "react-dom";
 import { signIn } from "../../libs/signin/actions";
 import { useEffect, useRef } from "react";
 import { redirect } from "next/navigation";
-import { PATH } from "../../core/path";
+import { PATH } from "../../core/types/path";
 import { DevComponentWrapper } from "../../core/dev/dev-component-wrapper";
 import { KeyInputHack } from "../../core/dev/keyboard-input-hack";
 import { useKeyInputHack } from "../../core/dev/hooks/useKeyboardHack";

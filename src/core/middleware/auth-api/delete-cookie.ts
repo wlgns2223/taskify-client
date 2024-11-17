@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PATH } from "../../path";
+import { PATH } from "../../types/path";
 
 export const handleFailedCookie = (request: NextRequest) => {
   const response = NextResponse.redirect(new URL(PATH.signIn(), request.url));

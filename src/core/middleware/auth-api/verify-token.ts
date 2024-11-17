@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { apiHandler } from "../../network/fetch";
-import { PATH } from "../../path";
+import { PATH } from "../../types/path";
 
 /**
  *

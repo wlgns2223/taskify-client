@@ -29,7 +29,6 @@ export const useColumns = (dashboardId: string) => {
       });
       queryClient.setQueryData(
         queryOptions.getColumnsBydashboardId(dashboardId).queryKey,
-
         (oldData: ReadColumnDto[]) =>
           appendColumn(oldData, {
             ...createColumnDto,

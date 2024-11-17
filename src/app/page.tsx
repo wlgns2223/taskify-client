@@ -8,6 +8,7 @@ import invitation from "@/../public/images/invitation.png";
 import members from "@/../public/images/members.png";
 import IndexHeader from "../components/index/index-header";
 import ImageGridItem from "../components/index/image-grid-item";
+import { PATH } from "../core/types/path";
 
 export default function Home() {
   return (
@@ -28,7 +29,7 @@ export default function Home() {
             </div>
             <Link
               className="py-4 bg-primary w-[280px] rounded-lg text-center text-neutral-50 text-lg font-semibold mt-16"
-              href={"/login"}
+              href={PATH.signIn()}
             >
               {"로그인 하기"}
             </Link>
