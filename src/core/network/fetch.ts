@@ -76,8 +76,13 @@ export class APIHanlder {
       );
     }
 
+    const isJsonResponse = response.headers
+      .get("Content-Type")
+      ?.includes("application/json");
     const returnValue: ReturnType<T> = {
-      data: await response.json(),
+      data: isJsonResponse
+        ? await response.json()
+        : ((await response.text()) as any),
       headers: response.headers,
       statusCode: response.status,
     };

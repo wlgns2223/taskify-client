@@ -1,6 +1,7 @@
 import { match } from "ts-pattern";
 import { ReadDashboardsDtoSchema } from "../../libs/dashboard/dto/readDashboards.dto";
 import qs from "qs";
+import { read } from "fs";
 
 export const END_POINT = {
   auth: {
@@ -47,6 +48,11 @@ export const END_POINT = {
     },
     delete(columnId: number, dashboardId: number) {
       return `/columns/${columnId}?dashboardId=${dashboardId}`;
+    },
+  },
+  todos: {
+    read(columnId: string) {
+      return `/todos?columnId=${columnId}`;
     },
   },
   user: {

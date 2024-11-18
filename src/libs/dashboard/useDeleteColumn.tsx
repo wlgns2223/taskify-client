@@ -43,6 +43,7 @@ export const useDeleteColumn = () => {
           context.previousColumns
         );
       }
+      console.error(err);
 
       notify(err.message);
     },

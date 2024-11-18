@@ -85,6 +85,11 @@ class DashboardService extends Service {
     );
     return res.data;
   }
+
+  async getTodosByColumnId(columnId: string) {
+    const res = await this.apiHandler.get(this.endPoints.todos.read(columnId));
+    return res.data;
+  }
 }
 
 export const dashboardService = new DashboardService();

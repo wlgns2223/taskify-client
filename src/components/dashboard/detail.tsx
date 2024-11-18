@@ -14,12 +14,16 @@ import { SwapColumnsDtoSchema } from "../../libs/dashboard/dto/swapColumns.dto";
 import { useColumns } from "../../libs/dashboard/useColumns";
 import { ColumnCreateModal } from "./column-create-modal";
 import { useModal } from "../../core/hooks/useModal";
+import { PropsWithChildren } from "react";
+import { Todos } from "./todos";
 
 interface DetailPageProps {
   dashboardId: string;
 }
 
-const Detail: React.FC<DetailPageProps> = ({ dashboardId }) => {
+const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
+  dashboardId,
+}) => {
   const { columns, swapColumnsMutation, createColumnMutation } =
     useColumns(dashboardId);
 
@@ -61,22 +65,17 @@ const Detail: React.FC<DetailPageProps> = ({ dashboardId }) => {
                 ref={provided.innerRef}
               >
                 {columns.map((column: ReadColumnDto) => (
-                  <Draggable
-                    key={column.id}
-                    draggableId={column.id.toString()}
-                    index={column.position}
-                  >
-                    {(provided) => (
-                      <li
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="px-2 min-w-[300px] border-r"
-                      >
-                        <Column column={column} />
-                      </li>
-                    )}
-                  </Draggable>
+                  <li key={column.id} className="px-2 min-w-[300px] border-r">
+                    <Draggable
+                      draggableId={column.id.toString()}
+                      index={column.position}
+                    >
+                      {(provided) => (
+                        <Column column={column} provided={provided} />
+                      )}
+                    </Draggable>
+                    <Todos columnId={column.id} />
+                  </li>
                 ))}
                 {provided.placeholder}
                 <li className="ml-2 min-w-[300px]">

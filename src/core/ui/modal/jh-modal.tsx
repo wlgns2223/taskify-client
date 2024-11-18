@@ -11,11 +11,13 @@ interface ModalProps extends HTMLProps<HTMLDivElement> {
   confirmButtonProps?: JhButtonProps;
   closeButtonProps?: JhButtonProps;
   confirmText?: string;
+  cancelText?: string;
   isOpen: boolean;
 }
 
 export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
   confirmText = "생성",
+  cancelText = "취소",
   confirmButtonProps,
   closeButtonProps,
   children,
@@ -57,15 +59,25 @@ export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
                 {children}
                 <div className="flex justify-between sm:justify-end gap-3 mt-6">
                   <JhButton
-                    className="flex-1 sm:flex-none min-w-32"
+                    className={twMerge(
+                      clsx(
+                        "flex-1 sm:flex-none min-w-32",
+                        closeButtonProps?.className
+                      )
+                    )}
                     variants="outline"
                     {...closeButtonProps}
                   >
-                    {"취소"}
+                    {cancelText}
                   </JhButton>
                   <JhButton
-                    className="flex-1 sm:flex-none min-w-32"
                     {...confirmButtonProps}
+                    className={twMerge(
+                      clsx(
+                        "flex-1 sm:flex-none min-w-32",
+                        confirmButtonProps?.className
+                      )
+                    )}
                   >
                     {confirmText}
                   </JhButton>

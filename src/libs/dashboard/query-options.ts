@@ -9,6 +9,8 @@ const queryKeys = {
   all: ["dashboards"] as const,
   columnsByDashboardId: (dashboardId: string) =>
     [...queryKeys.all, dashboardId] as const,
+  todo: ["todos"] as const,
+  todosByColumnId: (columnId: string) => [...queryKeys.todo, columnId] as const,
 };
 
 export const queryOptions = {
@@ -34,5 +36,9 @@ export const queryOptions = {
         deleteColumnDto.id,
         deleteColumnDto.dashboardId
       ),
+  }),
+  getTodosByColumnId: (columnId: string) => ({
+    queryKey: [...queryKeys.todosByColumnId(columnId)],
+    queryFn: () => dashboardService.getTodosByColumnId(columnId),
   }),
 };
