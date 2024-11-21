@@ -18,30 +18,22 @@ const Column: React.FC<ColumnProps> = ({ column, provided }) => {
   return (
     <>
       <div
-        className="flex flex-col"
+        className="flex items-center justify-between"
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
       >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="w-2 h-2 bg-primary rounded-full" />
-            <span className="ml-2 text-lg font-bold">{column.name}</span>
-            <span className="flex justify-center items-center p-1 bg-neutral-200 text-sm rounded-[4px] text-neutral-700 w-5 h-5 ml-3  ">
-              {"3"}
-            </span>
-          </div>
-          <ColumnEditDropdown
-            handleOpenEdit={() => editColumnModal.setIsOpen(true)}
-            handleOpenDelete={() => deleteColumnModal.setIsOpen(true)}
-          />
+        <div className="flex items-center">
+          <div className="w-2 h-2 bg-primary rounded-full" />
+          <span className="ml-2 text-lg font-bold">{column.name}</span>
+          <span className="flex justify-center items-center p-1 bg-neutral-200 text-sm rounded-[4px] text-neutral-700 w-5 h-5 ml-3  ">
+            {"3"}
+          </span>
         </div>
-        <JhButton
-          className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] whitespace-nowrap mt-5"
-          variants="outline"
-        >
-          <PlusIcon className="w-4 h-4 text-primary bg-primary-light rounded-sm ml-3" />
-        </JhButton>
+        <ColumnEditDropdown
+          handleOpenEdit={() => editColumnModal.setIsOpen(true)}
+          handleOpenDelete={() => deleteColumnModal.setIsOpen(true)}
+        />
       </div>
       <ColumnEditModal modalProps={editColumnModal} column={column} />
       <ColumnDeleteModal modalProps={deleteColumnModal} column={column} />

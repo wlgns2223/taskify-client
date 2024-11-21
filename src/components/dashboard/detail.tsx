@@ -14,8 +14,9 @@ import { SwapColumnsDtoSchema } from "../../libs/dashboard/dto/swapColumns.dto";
 import { useColumns } from "../../libs/dashboard/useColumns";
 import { ColumnCreateModal } from "./column-create-modal";
 import { useModal } from "../../core/hooks/useModal";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, use, useState } from "react";
 import { Todos } from "./todos";
+import { TodoCreateModal } from "./todo-create-modal";
 
 interface DetailPageProps {
   dashboardId: string;
@@ -24,10 +25,12 @@ interface DetailPageProps {
 const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
   dashboardId,
 }) => {
+  const [selectedColumn, setSelectedColumn] = useState("");
   const { columns, swapColumnsMutation, createColumnMutation } =
     useColumns(dashboardId);
 
-  const modalProps = useModal();
+  const columnCreateModalProps = useModal();
+  const todoCreateModalProps = useModal();
 
   const handleDragend = async (result: DropResult) => {
     if (!result.destination) {
@@ -50,7 +53,12 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
       name,
       position: columns.length,
     });
-    modalProps.setIsOpen(false);
+    columnCreateModalProps.setIsOpen(false);
+  };
+
+  const handleOpenCreateTodoModal = (columnId: string) => {
+    setSelectedColumn(columnId);
+    todoCreateModalProps.setIsOpen(true);
   };
 
   return (
@@ -74,6 +82,15 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                         <Column column={column} provided={provided} />
                       )}
                     </Draggable>
+                    <JhButton
+                      className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] whitespace-nowrap mt-5"
+                      variants="outline"
+                      onClick={() =>
+                        handleOpenCreateTodoModal(column.id.toString())
+                      }
+                    >
+                      <PlusIcon className="w-4 h-4 text-primary bg-primary-light rounded-sm ml-3" />
+                    </JhButton>
                     <Todos columnId={column.id} />
                   </li>
                 ))}
@@ -82,7 +99,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                   <JhButton
                     className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] whitespace-nowrap"
                     variants="outline"
-                    onClick={() => modalProps.setIsOpen(true)}
+                    onClick={() => columnCreateModalProps.setIsOpen(true)}
                   >
                     <p>{"새로운 컬럼추가"}</p>
                     <PlusIcon className="w-4 h-4 text-primary bg-primary-light rounded-sm ml-3" />
@@ -93,8 +110,13 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
           </Droppable>
         </DragDropContext>
       </div>
+      <TodoCreateModal
+        modalProps={todoCreateModalProps}
+        columnId={selectedColumn}
+        dashboardId={dashboardId}
+      />
       <ColumnCreateModal
-        modalProps={modalProps}
+        modalProps={columnCreateModalProps}
         handleCreateColumn={handleCreateColumn}
       />
     </>
