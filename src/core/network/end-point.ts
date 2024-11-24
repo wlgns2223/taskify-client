@@ -6,7 +6,10 @@ import { read } from "fs";
 export const END_POINT = {
   auth: {
     signIn() {
-      return "/auth/signin";
+      return "/auth/signIn";
+    },
+    signUp() {
+      return "/auth/signUp";
     },
   },
   dashboard: {

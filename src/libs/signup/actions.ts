@@ -1,9 +1,14 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { HTTPError } from "../../core/error/http-error";
+import { END_POINT } from "../../core/network/end-point";
 import { apiHandler } from "../../core/network/fetch";
 import { ServerActionStatus } from "../../core/serverAction/createServerAction";
 import { SignUpDtoSchema, signUpDtoSchema } from "./dto";
+import { PATH } from "../../core/types/path";
+import { STATUS_CODES } from "http";
+import { StatusCodes } from "http-status-codes";
 
 export type CreateFormFields = {
   email?: string[];
@@ -42,10 +47,17 @@ export const createUser = async (
   }
 
   try {
-    const response = await apiHandler.post<SignUpDtoSchema>("/users", schema);
+    const response = await apiHandler.post<SignUpDtoSchema>(
+      END_POINT.auth.signUp(),
+      schema
+    );
 
     formState.success = true;
     formState.errors = undefined;
+    formState.statusCode = response.statusCode;
+    if (!!formState.success && response.statusCode === StatusCodes.CREATED) {
+      redirect(PATH.signIn());
+    }
   } catch (e) {
     console.error("Server action Error");
     if (e instanceof HTTPError) {
@@ -63,5 +75,6 @@ export const createUser = async (
       throw e;
     }
   }
+
   return formState;
 };
