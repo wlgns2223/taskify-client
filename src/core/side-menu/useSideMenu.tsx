@@ -1,5 +1,6 @@
 import {
   useInfiniteQuery,
+  useQuery,
   useSuspenseInfiniteQuery,
 } from "@tanstack/react-query";
 import {
@@ -10,7 +11,7 @@ import { defaultReadDashboardsDto } from "../../components/my-dashboard/dashboar
 import { queryOptions } from "../../libs/dashboard/query-options";
 
 export const useSideMenu = () => {
-  return useSuspenseInfiniteQuery({
+  return useInfiniteQuery({
     queryKey: queryOptions.all().queryKey,
     queryFn: (context) => {
       const infiniteReadDto: ReadDashboardsDtoSchema = {

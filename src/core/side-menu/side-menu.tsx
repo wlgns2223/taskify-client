@@ -21,9 +21,7 @@ export const SideMenu: React.FC = () => {
           <PlusCircleIcon className="w-5 h-5 text-neutral-400" />
         </JhButton>
       </div>
-      <Suspense fallback={<div>{"...loading"}</div>}>
-        <SideDashboards />
-      </Suspense>
+      <SideDashboards />
     </aside>
   );
 };

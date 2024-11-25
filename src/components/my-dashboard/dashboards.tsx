@@ -1,15 +1,18 @@
+"use client";
 import { match } from "ts-pattern";
 import {
   Dashboard,
   ReadDashboardsDtoSchema,
+  ReadDashboardsResponse,
 } from "../../libs/dashboard/dto/readDashboards.dto";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { queryOptions } from "../../libs/dashboard/query-options";
 import { DashboardPagesNumber, PAGE_SIZE } from "./dashboard-pages-number";
 import { useState } from "react";
 import { useUserContext } from "../../core/user/context";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { cookies } from "next/headers";
 
 interface DashboardsProps {}
 
@@ -23,10 +26,23 @@ export const Dashboards: React.FC<DashboardsProps> = ({}) => {
   const [readDashboardsDto, setReadDashboardsDto] =
     useState<ReadDashboardsDtoSchema>(defaultReadDashboardsDto);
 
-  const { data } = useSuspenseQuery({
+  const { data, isLoading } = useSuspenseQuery({
     ...queryOptions.readDashboards(readDashboardsDto),
   });
   const { userInfo } = useUserContext();
+
+  if (isLoading) return <div>loading...</div>;
+
+  const dashboards: ReadDashboardsResponse =
+    data ??
+    ({
+      cursor: {
+        next: null,
+        prev: null,
+      },
+      dashboards: [],
+      totalNumberOfData: 0,
+    } as ReadDashboardsResponse);
 
   return (
     <>
@@ -59,7 +75,7 @@ export const Dashboards: React.FC<DashboardsProps> = ({}) => {
         </ul>
       ))}
       <DashboardPagesNumber
-        readDashboardResponse={data}
+        readDashboardResponse={dashboards}
         setReadDashboardsDto={setReadDashboardsDto}
         readDashboardsDto={readDashboardsDto}
       />
