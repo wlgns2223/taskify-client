@@ -12,7 +12,6 @@ import { useState } from "react";
 import { useUserContext } from "../../core/user/context";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { cookies } from "next/headers";
 
 interface DashboardsProps {}
 
@@ -26,27 +25,15 @@ export const Dashboards: React.FC<DashboardsProps> = ({}) => {
   const [readDashboardsDto, setReadDashboardsDto] =
     useState<ReadDashboardsDtoSchema>(defaultReadDashboardsDto);
 
-  const { data, isLoading } = useSuspenseQuery({
+  const { data: dashboards } = useSuspenseQuery({
     ...queryOptions.readDashboards(readDashboardsDto),
   });
+
   const { userInfo } = useUserContext();
-
-  if (isLoading) return <div>loading...</div>;
-
-  const dashboards: ReadDashboardsResponse =
-    data ??
-    ({
-      cursor: {
-        next: null,
-        prev: null,
-      },
-      dashboards: [],
-      totalNumberOfData: 0,
-    } as ReadDashboardsResponse);
 
   return (
     <>
-      {match([data, readDashboardsDto.cursor]).otherwise(([data, _]) => (
+      {match([dashboards, readDashboardsDto.cursor]).otherwise(([data, _]) => (
         <ul className="grid grid-cols-3 grid-rows-2 gap-3 mt-3">
           {data!.dashboards.map((dashboard: Dashboard) => (
             <li key={dashboard.id}>

@@ -1,9 +1,9 @@
 import { StatusCodes } from "http-status-codes";
 import { HTTPError } from "../error/http-error";
 import { PATH } from "../types/path";
-import { redirect } from "next/navigation";
+import { isServer } from "@tanstack/react-query";
 
-const baseURl = "http://localhost:4000/api/1";
+export const baseURl = "http://localhost:4000/api/1";
 
 type HeaderContentType =
   | "application/json"
@@ -39,15 +39,23 @@ export class APIHanlder {
   }
 
   private async apiHandler<T = any>(url: string, options?: RequestInit) {
-    const headers: HeadersInit = {
-      "Content-Type": "application/json",
-      ...options?.headers,
-    };
+    const _headers = new Headers(options?.headers);
+    _headers.set("Content-Type", "application/json");
+
+    if (isServer) {
+      await import("next/headers").then(({ cookies }) => {
+        const _cookies = cookies().getAll();
+        const cookieArr = _cookies
+          .map((cookie) => `${cookie.name}=${cookie.value}`)
+          .join("; ");
+        _headers.set("Cookie", cookieArr);
+      });
+    }
 
     const _options: RequestInit = {
       ...options,
       credentials: "include",
-      headers,
+      headers: _headers,
     };
 
     let response = await fetch(`${this.baseUrl}${url}`, _options);

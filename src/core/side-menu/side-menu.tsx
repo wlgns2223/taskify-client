@@ -21,7 +21,11 @@ export const SideMenu: React.FC = () => {
           <PlusCircleIcon className="w-5 h-5 text-neutral-400" />
         </JhButton>
       </div>
-      <SideDashboards />
+      <Suspense
+        fallback={<div className="min-h-[152px] mt-3">{"...loading"}</div>}
+      >
+        <SideDashboards />
+      </Suspense>
     </aside>
   );
 };

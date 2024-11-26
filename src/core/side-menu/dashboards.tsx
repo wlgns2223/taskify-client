@@ -8,12 +8,7 @@ import { useUserContext } from "../user/context";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 
 export const SideDashboards: React.FC = () => {
-  const {
-    data: dashboards,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-  } = useSideMenu();
+  const { data: dashboards, fetchNextPage, hasNextPage } = useSideMenu();
   const { isIntersecting, ref } = useIntersectionObserver();
   const { userInfo } = useUserContext();
 
@@ -22,9 +17,6 @@ export const SideDashboards: React.FC = () => {
       fetchNextPage();
     }
   }, [isIntersecting, hasNextPage]);
-
-  if (isLoading)
-    return <div className="min-h-[152px] mt-3">{"...loading"}</div>;
 
   return (
     <div className="mt-3 overflow-scroll flex-1">

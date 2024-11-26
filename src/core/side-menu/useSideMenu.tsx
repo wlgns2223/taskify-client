@@ -11,7 +11,7 @@ import { defaultReadDashboardsDto } from "../../components/my-dashboard/dashboar
 import { queryOptions } from "../../libs/dashboard/query-options";
 
 export const useSideMenu = () => {
-  return useInfiniteQuery({
+  return useSuspenseInfiniteQuery({
     queryKey: queryOptions.all().queryKey,
     queryFn: (context) => {
       const infiniteReadDto: ReadDashboardsDtoSchema = {
