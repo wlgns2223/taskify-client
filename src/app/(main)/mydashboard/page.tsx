@@ -7,10 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { queryOptions } from "../../../libs/dashboard/query-options";
 import { DashboardPannel } from "../../../components/my-dashboard/dashboard-pannel";
-import {
-  Dashboards,
-  defaultReadDashboardsDto,
-} from "../../../components/my-dashboard/dashboards";
+import { Dashboards } from "../../../components/my-dashboard/dashboards";
 
 import { cookies } from "next/headers";
 import { ReadDashboardsResponse } from "../../../libs/dashboard/dto/readDashboards.dto";

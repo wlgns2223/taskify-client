@@ -5,7 +5,7 @@ import { useCreateDashboard } from "../../libs/dashboard/useCreateDashboard";
 import { DashboardCreateContent } from "./dashboard-create-content";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryOptions } from "../../libs/dashboard/query-options";
-import { defaultReadDashboardsDto } from "./dashboards";
+import { defaultOffsetPaginationReqDto } from "./dashboards";
 
 interface DashboardCreateContentProps {
   modalHookProps: ModalHookProps;
@@ -19,7 +19,7 @@ export const DashboardCreateModal: React.FC<DashboardCreateContentProps> = ({
   const refetchDashboards = () => {
     queryClient.invalidateQueries({
       queryKey: [
-        ...queryOptions.readDashboards(defaultReadDashboardsDto).queryKey,
+        ...queryOptions.readDashboards(defaultOffsetPaginationReqDto).queryKey,
       ],
     });
   };

@@ -9,8 +9,12 @@ import {
   createDashBoardDtoSchema,
 } from "./dto/createDashboards.dto";
 import {
+  Dashboard,
+  OffsetPaginationRequestDto,
+  OffsetPaginationResponseDto,
   ReadDashboardsDtoSchema,
   ReadDashboardsResponse,
+  offsetPaginationRequestDtoSchema,
   readDashboardsDtoSchema,
 } from "./dto/readDashboards.dto";
 import { SwapColumnsDtoSchema } from "./dto/swapColumns.dto";
@@ -33,15 +37,17 @@ class DashboardService extends Service {
     return res.data;
   }
 
-  async readDashboards(readDashboardDto: ReadDashboardsDtoSchema) {
-    const result = readDashboardsDtoSchema.safeParse(readDashboardDto);
+  async readDashboards(offsetPaginationReqDto: OffsetPaginationRequestDto) {
+    const result = offsetPaginationRequestDtoSchema.safeParse(
+      offsetPaginationReqDto
+    );
     if (!result.success) {
       throw new Error(result.error.message);
     }
 
-    const res = await this.apiHandler.get<ReadDashboardsResponse>(
-      this.endPoints.dashboard.read(readDashboardDto)
-    );
+    const res = await this.apiHandler.get<
+      OffsetPaginationResponseDto<Dashboard>
+    >(this.endPoints.dashboard.read(offsetPaginationReqDto));
     return res.data;
   }
 

@@ -1,9 +1,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { JhButton } from "../../core/ui/jh-button";
 import {
+  Dashboard,
+  OffsetPaginationRequestDto,
+  OffsetPaginationResponseDto,
   ReadDashboardsDtoSchema,
   ReadDashboardsResponse,
 } from "../../libs/dashboard/dto/readDashboards.dto";
+import { off } from "process";
 
 export const PAGE_SIZE = {
   first: 5,
@@ -11,42 +15,46 @@ export const PAGE_SIZE = {
 };
 
 interface DashboardPagesNumberProps {
-  setReadDashboardsDto: Dispatch<SetStateAction<ReadDashboardsDtoSchema>>;
-  readDashboardResponse: ReadDashboardsResponse;
-  readDashboardsDto: ReadDashboardsDtoSchema;
+  setOffsetPaginationReqDto: Dispatch<
+    SetStateAction<OffsetPaginationRequestDto>
+  >;
+  offsetPaginationReqDto: OffsetPaginationRequestDto;
+  offsetPaginationResponse: OffsetPaginationResponseDto<Dashboard>;
 }
 
 export const DashboardPagesNumber: React.FC<DashboardPagesNumberProps> = ({
-  readDashboardResponse,
-  setReadDashboardsDto,
-  readDashboardsDto,
+  setOffsetPaginationReqDto,
+  offsetPaginationReqDto,
+  offsetPaginationResponse,
 }) => {
   const handleNext = () => {
-    if (readDashboardResponse.cursor.next === null) return;
-    setReadDashboardsDto((prev) => ({
-      ...prev,
-      cursor: readDashboardResponse.cursor,
-      direction: "next",
-    }));
+    if (
+      offsetPaginationResponse.currentPage ===
+      offsetPaginationResponse.totalPage
+    )
+      return;
+    setOffsetPaginationReqDto({
+      ...offsetPaginationReqDto,
+      page: offsetPaginationResponse.currentPage + 1,
+    });
   };
 
   const handlePrev = () => {
-    if (readDashboardResponse.cursor.prev === null) return;
-    setReadDashboardsDto((prev) => ({
-      ...prev,
-      cursor: readDashboardResponse.cursor,
-      direction: "prev",
-    }));
+    if (offsetPaginationResponse.currentPage === 1) return;
+    setOffsetPaginationReqDto({
+      ...offsetPaginationReqDto,
+      page: offsetPaginationResponse.currentPage - 1,
+    });
   };
 
   return (
     <div className="flex items-center justify-end mt-3">
-      {/* <p>{"1 페이지 중 1"}</p> */}
+      <p>{`${offsetPaginationResponse.currentPage} 페이지 중 ${offsetPaginationResponse.totalPage}`}</p>
       <div className="ml-4 flex">
         <JhButton
           variants="outline"
           className="border border-neutral-200 bg-white w-10 h-10 flex justify-center items-center"
-          disabled={readDashboardResponse.cursor.prev === null}
+          disabled={!offsetPaginationResponse.hasPrevPage}
           onClick={handlePrev}
         >
           {"<"}
@@ -55,7 +63,7 @@ export const DashboardPagesNumber: React.FC<DashboardPagesNumberProps> = ({
           onClick={handleNext}
           variants="outline"
           className="border border-neutral-200 bg-white w-10 h-10 flex justify-center items-center"
-          disabled={readDashboardResponse.cursor.next === null}
+          disabled={!offsetPaginationResponse.hasNextPage}
         >
           {">"}
         </JhButton>

@@ -3,7 +3,6 @@ import logoText from "@/../public/logo-text-primary.svg";
 import Image from "next/image";
 import { JhButton } from "../ui/jh-button";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { SideDashboards } from "./dashboards";
 import { Suspense } from "react";
 
 export const SideMenu: React.FC = () => {
@@ -24,7 +23,7 @@ export const SideMenu: React.FC = () => {
       <Suspense
         fallback={<div className="min-h-[152px] mt-3">{"...loading"}</div>}
       >
-        <SideDashboards />
+        {/* <SideDashboards /> */}
       </Suspense>
     </aside>
   );

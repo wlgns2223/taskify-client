@@ -3,7 +3,10 @@ import {
   DeleteColumnDtoSchema,
   UpdateColumnDtoSchema,
 } from "./dto/columns.dto";
-import { ReadDashboardsDtoSchema } from "./dto/readDashboards.dto";
+import {
+  OffsetPaginationRequestDto,
+  ReadDashboardsDtoSchema,
+} from "./dto/readDashboards.dto";
 
 const queryKeys = {
   all: ["dashboards"] as const,
@@ -18,9 +21,9 @@ export const queryOptions = {
     queryKey: queryKeys.all,
     queryFn: () => {},
   }),
-  readDashboards: (readDashboardDto: ReadDashboardsDtoSchema) => ({
-    queryKey: [...queryKeys.all, readDashboardDto],
-    queryFn: () => dashboardService.readDashboards(readDashboardDto),
+  readDashboards: (offsetPaginationReqDto: OffsetPaginationRequestDto) => ({
+    queryKey: [...queryKeys.all, offsetPaginationReqDto],
+    queryFn: () => dashboardService.readDashboards(offsetPaginationReqDto),
   }),
   getColumnsBydashboardId: (id: string) => ({
     queryKey: [...queryKeys.columnsByDashboardId(id)],
