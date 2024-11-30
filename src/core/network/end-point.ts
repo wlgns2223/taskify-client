@@ -15,6 +15,11 @@ export const END_POINT = {
       return "/auth/signUp";
     },
   },
+  invitation: {
+    create() {
+      return "/invitations";
+    },
+  },
   dashboard: {
     create() {
       return "/dashboards";
@@ -25,6 +30,9 @@ export const END_POINT = {
       return `${baseUrl}?${queries}`;
     },
     detail(id: string) {
+      return `/dashboards/${id}`;
+    },
+    getByDashboardId(id: string) {
       return `/dashboards/${id}`;
     },
   },

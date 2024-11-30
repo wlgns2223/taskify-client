@@ -9,13 +9,14 @@ import {
   createDashBoardDtoSchema,
 } from "./dto/createDashboards.dto";
 import {
+  CreateInvitationDto,
+  CreateInvitationDtoSchema,
+} from "./dto/createInvitation.dto";
+import {
   Dashboard,
   OffsetPaginationRequestDto,
   OffsetPaginationResponseDto,
-  ReadDashboardsDtoSchema,
-  ReadDashboardsResponse,
   offsetPaginationRequestDtoSchema,
-  readDashboardsDtoSchema,
 } from "./dto/readDashboards.dto";
 import { SwapColumnsDtoSchema } from "./dto/swapColumns.dto";
 
@@ -48,6 +49,13 @@ class DashboardService extends Service {
     const res = await this.apiHandler.get<
       OffsetPaginationResponseDto<Dashboard>
     >(this.endPoints.dashboard.read(offsetPaginationReqDto));
+    return res.data;
+  }
+
+  async getDashboardById(id: string) {
+    const res = await this.apiHandler.get<Dashboard>(
+      this.endPoints.dashboard.getByDashboardId(id)
+    );
     return res.data;
   }
 
@@ -94,6 +102,19 @@ class DashboardService extends Service {
 
   async getTodosByColumnId(columnId: string) {
     const res = await this.apiHandler.get(this.endPoints.todos.read(columnId));
+    return res.data;
+  }
+
+  async createInvitation(createInvitationDto: CreateInvitationDto) {
+    const result = CreateInvitationDtoSchema.safeParse(createInvitationDto);
+    if (!result.success) {
+      throw new Error(result.error.flatten().fieldErrors.dashboardId?.[0]);
+    }
+
+    const res = await this.apiHandler.post<CreateInvitationDto>(
+      this.endPoints.invitation.create(),
+      createInvitationDto
+    );
     return res.data;
   }
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSideMenu } from "./useSideMenu";
 import { useIntersectionObserver } from "usehooks-ts";
 import { useEffect } from "react";
-import { useUserContext } from "../user/context";
+import { useUserContext } from "../../user/context";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 
 export const SideDashboards: React.FC = () => {

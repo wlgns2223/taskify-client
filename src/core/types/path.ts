@@ -9,6 +9,9 @@ export const PATH = {
   myDashBoard() {
     return "/mydashboard";
   },
+  dashboard() {
+    return "/dashboard";
+  },
   verifyToken() {
     return "/auth/verify";
   },
