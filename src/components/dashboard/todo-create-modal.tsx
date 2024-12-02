@@ -1,21 +1,10 @@
+"use client";
 import { Listbox, ListboxButton } from "@headlessui/react";
 import { BaseModalProps } from "../../core/types/base-modal";
 import { JhModal } from "../../core/ui/modal/jh-modal";
 import { useEffect, useState } from "react";
 import { CreateTodoDto } from "../../libs/dashboard/dto/createTodo.dto";
 import { useUserContext } from "../../core/user/context";
-import { set } from "zod";
-
-const users = [
-  {
-    id: 18,
-    nickname: "test",
-  },
-  {
-    id: 19,
-    nickname: "test",
-  },
-];
 
 interface TodoCreateModalProps extends BaseModalProps {
   dashboardId: string;
@@ -30,7 +19,7 @@ export const TodoCreateModal: React.FC<TodoCreateModalProps> = ({
   const { userInfo } = useUserContext();
   const [newTodo, setNewTodo] = useState<CreateTodoDto>({
     assigneeUserId: "",
-    assignerUserId: userInfo.id.toString(),
+    assignerUserId: "",
     columnId: columnId,
     dashboardId: dashboardId,
     content: "",
@@ -46,6 +35,8 @@ export const TodoCreateModal: React.FC<TodoCreateModalProps> = ({
       dashboardId,
     }));
   }, [columnId, dashboardId]);
+
+  console.log({ userInfo });
 
   return (
     <JhModal

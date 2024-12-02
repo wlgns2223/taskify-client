@@ -5,35 +5,40 @@ import { useModal } from "../../core/hooks/useModal";
 import { JhModal } from "../../core/ui/modal/jh-modal";
 import { JHInput } from "../../core/ui/jh-input";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 import { useUserContext } from "../../core/user/context";
 import { CreateInvitationDto } from "../../libs/dashboard/dto/createInvitation.dto";
 import { useToast } from "../../core/hooks/useToast";
 import { useMutation } from "@tanstack/react-query";
 import { dashboardService } from "../../libs/dashboard/dashboard.service";
+import { useDashboardContext } from "../../core/providers/dashboard-provider";
 
 export const InvitationHeaderButton: React.FC = () => {
   const modalHook = useModal();
   const [email, setEmail] = useState("");
-  const pathname = usePathname();
+
   const { userInfo } = useUserContext();
   const { notify } = useToast();
+  const { dashboard } = useDashboardContext();
   const { mutate } = useMutation({
     mutationFn: async (dto: CreateInvitationDto) =>
       await dashboardService.createInvitation(dto),
+    onError: (err) => {
+      notify(err.message);
+      setEmail("");
+    },
+    onSuccess: () => {
+      notify("초대 메일이 발송되었습니다.");
+      setEmail("");
+      modalHook.setIsOpen(false);
+    },
   });
 
   const handleCreateInvitation = () => {
-    const dashboardId = pathname.split("/").at(-1);
-    if (!dashboardId) {
-      notify("대시보드 정보를 불러 올 수 없습니다.");
-      return;
-    }
-
     const dto: CreateInvitationDto = {
       inviteeEmail: email,
-      dashboardId: parseInt(dashboardId, 10),
+      dashboardId: dashboard.id,
       inviterId: userInfo.id,
+      dashboardTitle: dashboard.title,
     };
 
     mutate(dto);

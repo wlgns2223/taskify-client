@@ -1,27 +1,16 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
-import { PATH } from "../types/path";
-import { userService } from "../user/user.service";
 import { UserProvider } from "../user/context";
 import { SideMenu } from "./side-menu/side-menu";
+import { User } from "../user/type";
 
 interface CommonLayoutProps {
   Header: React.ReactElement;
+  userInfo: User;
 }
 
 export const CommonLayout: React.FC<
   PropsWithChildren<CommonLayoutProps>
-> = async ({ children, Header }) => {
-  const cookieStore = cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
-
-  if (!accessToken) {
-    redirect(PATH.signIn());
-  }
-
-  const userInfo = await userService.getUser(accessToken);
-
+> = async ({ children, Header, userInfo }) => {
   return (
     <UserProvider userInfo={userInfo}>
       <div className="flex min-w-96">

@@ -1,4 +1,7 @@
 import { PropsWithChildren } from "react";
+import { User } from "../../user/type";
+
+export interface BaseHeaderProps {}
 
 export const BaseHeader: React.FC<PropsWithChildren> = ({ children }) => {
   return (

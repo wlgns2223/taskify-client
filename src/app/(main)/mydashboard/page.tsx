@@ -12,6 +12,7 @@ import { Dashboards } from "../../../components/my-dashboard/dashboards";
 import { cookies } from "next/headers";
 import { ReadDashboardsResponse } from "../../../libs/dashboard/dto/readDashboards.dto";
 import { END_POINT } from "../../../core/network/end-point";
+import { InvitationList } from "../../../components/my-dashboard/invitation-list";
 
 export default async () => {
   const queryClient = new QueryClient();
@@ -44,7 +45,11 @@ export default async () => {
         >
           <Dashboards />
         </Suspense>
-        <EmptyBoard />
+        <Suspense
+          fallback={<div className="min-h-[152px] mt-3">{"...loading"}</div>}
+        >
+          <InvitationList />
+        </Suspense>
       </DashboardPannel>
     </HydrationBoundary>
   );

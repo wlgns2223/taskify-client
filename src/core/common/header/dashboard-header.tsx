@@ -7,6 +7,8 @@ import { PropsWithChildren } from "react";
 import { redirect } from "next/navigation";
 import { PATH } from "../../types/path";
 import { userService } from "../../user/user.service";
+import { DashboardProvider } from "../../providers/dashboard-provider";
+import UserIcon from "./user-icon";
 
 export const DashboardHeader: React.FC<PropsWithChildren> = async ({
   children,
@@ -36,47 +38,44 @@ export const DashboardHeader: React.FC<PropsWithChildren> = async ({
   const userInfo = await userService.getUser(accessToken);
 
   return (
-    <header className="w-full  flex items-center h-[70px] px-10 py-4 border border-x-0 border-t-0  border-b-neutral-200">
-      <div className="flex items-center justify-between w-full h-full">
-        <span>{dashboard.title}</span>
-        <nav className="h-full">
-          <ul className="flex items-center h-full">
-            <li>
-              <Link
-                href={`/dashboard/${dashboard.id}/edit`}
-                as={"div"}
-                className="flex items-center px-4 py-2 border border-neutral-200 rounded-lg"
-              >
-                <Cog6ToothIcon className="w-5 h-5" />
-                <span className="text-nowrap ml-2 text-neutral-700">
-                  {"관리"}
-                </span>
-              </Link>
-            </li>
-            <li className="ml-4">{children}</li>
-            <li className="ml-10">
-              <div className="flex items-center pl-3">
-                {Array.from({ length: 5 }).map((_, idx) => (
-                  <div className="rounded-full w-9 h-9 flex items-center justify-center -ml-3 bg-red-400 border-[3px] border-neutral-50 ">
-                    {idx}
-                  </div>
-                ))}
-              </div>
-            </li>
-            <li className="h-full">
-              <div className="w-[2px] h-full bg-neutral-200 mx-8" />
-            </li>
-            <li>
-              <div className="flex items-center justify-center">
-                <div className="rounded-full w-9 h-9 flex items-center justify-center bg-red-400 border-[3px] border-neutral-50">
-                  {userInfo.email.split("")[0]}
+    <DashboardProvider dashboard={dashboard}>
+      <header className="w-full  flex items-center h-[70px] px-10 py-4 border border-x-0 border-t-0  border-b-neutral-200">
+        <div className="flex items-center justify-between w-full h-full">
+          <span>{dashboard.title}</span>
+          <nav className="h-full">
+            <ul className="flex items-center h-full">
+              <li>
+                <Link
+                  href={`/dashboard/${dashboard.id}/edit`}
+                  as={"div"}
+                  className="flex items-center px-4 py-2 border border-neutral-200 rounded-lg"
+                >
+                  <Cog6ToothIcon className="w-5 h-5" />
+                  <span className="text-nowrap ml-2 text-neutral-700">
+                    {"관리"}
+                  </span>
+                </Link>
+              </li>
+              <li className="ml-4">{children}</li>
+              <li className="ml-10">
+                <div className="flex items-center pl-3">
+                  {Array.from({ length: 5 }).map((_, idx) => (
+                    <div className="rounded-full w-9 h-9 flex items-center justify-center -ml-3 bg-red-400 border-[3px] border-neutral-50 ">
+                      {idx}
+                    </div>
+                  ))}
                 </div>
-                <span className="ml-3">{userInfo.nickname}</span>
-              </div>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+              </li>
+              <li className="h-full">
+                <div className="w-[2px] h-full bg-neutral-200 mx-8" />
+              </li>
+              <li>
+                <UserIcon userInfo={userInfo} />
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    </DashboardProvider>
   );
 };
