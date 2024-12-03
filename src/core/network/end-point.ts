@@ -1,10 +1,5 @@
-import { match } from "ts-pattern";
-import {
-  OffsetPaginationRequestDto,
-  ReadDashboardsDtoSchema,
-} from "../../libs/dashboard/dto/readDashboards.dto";
 import qs from "qs";
-import { read } from "fs";
+import { OffsetPaginationRequestDto } from "../../libs/dashboard/dto/offsetPagination.dto";
 
 export const END_POINT = {
   auth: {
@@ -18,6 +13,12 @@ export const END_POINT = {
   invitation: {
     create() {
       return "/invitations";
+    },
+    read(dto: OffsetPaginationRequestDto) {
+      const baseUrl = "/invitations";
+      const queries = qs.stringify(dto);
+
+      return `${baseUrl}?${queries}`;
     },
   },
   dashboard: {

@@ -1,20 +1,17 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { JhButton } from "../../core/ui/jh-button";
+import { Dashboard } from "../../libs/dashboard/dto/readDashboards.dto";
 import {
-  Dashboard,
   OffsetPaginationRequestDto,
   OffsetPaginationResponseDto,
-  ReadDashboardsDtoSchema,
-  ReadDashboardsResponse,
-} from "../../libs/dashboard/dto/readDashboards.dto";
-import { off } from "process";
+} from "../../libs/dashboard/dto/offsetPagination.dto";
 
 export const PAGE_SIZE = {
   first: 5,
   others: 6,
 };
 
-interface DashboardPagesNumberProps {
+interface PaginationButtonsProps {
   setOffsetPaginationReqDto: Dispatch<
     SetStateAction<OffsetPaginationRequestDto>
   >;
@@ -22,7 +19,7 @@ interface DashboardPagesNumberProps {
   offsetPaginationResponse: OffsetPaginationResponseDto<Dashboard>;
 }
 
-export const DashboardPagesNumber: React.FC<DashboardPagesNumberProps> = ({
+export const PaginationButtons: React.FC<PaginationButtonsProps> = ({
   setOffsetPaginationReqDto,
   offsetPaginationReqDto,
   offsetPaginationResponse,

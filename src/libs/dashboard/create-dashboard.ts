@@ -23,15 +23,3 @@ export const createDashBoard = async (
   );
   return res.data;
 };
-
-export const readDashboards = async (
-  readDashboardDto: ReadDashboardsDtoSchema
-) => {
-  const result = readDashboardsDtoSchema.safeParse(readDashboardDto);
-  if (!result.success) {
-    throw new Error(result.error.message);
-  }
-
-  const res = await apiHandler.get(END_POINT.dashboard.read(readDashboardDto));
-  return res.data;
-};

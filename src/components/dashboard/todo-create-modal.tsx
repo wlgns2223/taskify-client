@@ -36,8 +36,6 @@ export const TodoCreateModal: React.FC<TodoCreateModalProps> = ({
     }));
   }, [columnId, dashboardId]);
 
-  console.log({ userInfo });
-
   return (
     <JhModal
       isOpen={isOpen}

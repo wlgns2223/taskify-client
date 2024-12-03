@@ -1,19 +1,16 @@
 "use client";
-import { match } from "ts-pattern";
-import {
-  DEFAULT_PAGE_SIZE,
-  Dashboard,
-  OffsetPaginationRequestDto,
-  ReadDashboardsDtoSchema,
-  ReadDashboardsResponse,
-} from "../../libs/dashboard/dto/readDashboards.dto";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { queryOptions } from "../../libs/dashboard/query-options";
-import { DashboardPagesNumber, PAGE_SIZE } from "./dashboard-pages-number";
+import { PaginationButtons } from "./dashboard-pages-number";
 import { useState } from "react";
 import { useUserContext } from "../../core/user/context";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import {
+  DEFAULT_PAGE_SIZE,
+  OffsetPaginationRequestDto,
+} from "../../libs/dashboard/dto/offsetPagination.dto";
+import { Dashboard } from "../../libs/dashboard/dto/readDashboards.dto";
 
 interface DashboardsProps {}
 
@@ -61,7 +58,7 @@ export const Dashboards: React.FC<DashboardsProps> = ({}) => {
           </li>
         ))}
       </ul>
-      <DashboardPagesNumber
+      <PaginationButtons
         offsetPaginationReqDto={offsetPaginationReqDto}
         setOffsetPaginationReqDto={setOffsetPaginationReqDto}
         offsetPaginationResponse={offsetPaginationResponse}

@@ -12,12 +12,13 @@ import {
   CreateInvitationDto,
   CreateInvitationDtoSchema,
 } from "./dto/createInvitation.dto";
+import { InvitationSchema } from "./dto/invitations.dto";
 import {
-  Dashboard,
   OffsetPaginationRequestDto,
   OffsetPaginationResponseDto,
   offsetPaginationRequestDtoSchema,
-} from "./dto/readDashboards.dto";
+} from "./dto/offsetPagination.dto";
+import { Dashboard } from "./dto/readDashboards.dto";
 import { SwapColumnsDtoSchema } from "./dto/swapColumns.dto";
 
 class DashboardService extends Service {
@@ -115,6 +116,22 @@ class DashboardService extends Service {
       this.endPoints.invitation.create(),
       createInvitationDto
     );
+    return res.data;
+  }
+
+  async getInvitationsWithPagination(
+    offsetPaginationReqDto: OffsetPaginationRequestDto
+  ) {
+    const result = offsetPaginationRequestDtoSchema.safeParse(
+      offsetPaginationReqDto
+    );
+    if (!result.success) {
+      throw new Error(result.error.message);
+    }
+
+    const res = await this.apiHandler.get<
+      OffsetPaginationResponseDto<InvitationSchema>
+    >(this.endPoints.invitation.read(offsetPaginationReqDto));
     return res.data;
   }
 }

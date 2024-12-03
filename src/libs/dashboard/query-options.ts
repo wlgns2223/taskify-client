@@ -3,10 +3,8 @@ import {
   DeleteColumnDtoSchema,
   UpdateColumnDtoSchema,
 } from "./dto/columns.dto";
-import {
-  OffsetPaginationRequestDto,
-  ReadDashboardsDtoSchema,
-} from "./dto/readDashboards.dto";
+import { OffsetPaginationRequestDto } from "./dto/offsetPagination.dto";
+import { ReadDashboardsDtoSchema } from "./dto/readDashboards.dto";
 
 const queryKeys = {
   all: ["dashboards"] as const,
@@ -14,6 +12,7 @@ const queryKeys = {
     [...queryKeys.all, dashboardId] as const,
   todo: ["todos"] as const,
   todosByColumnId: (columnId: string) => [...queryKeys.todo, columnId] as const,
+  invitation: ["invitations"] as const,
 };
 
 export const queryOptions = {
@@ -47,5 +46,12 @@ export const queryOptions = {
   getTodosByColumnId: (columnId: string) => ({
     queryKey: [...queryKeys.todosByColumnId(columnId)],
     queryFn: () => dashboardService.getTodosByColumnId(columnId),
+  }),
+  getInvitationsWithPagination: (
+    offsetPaginationReqDto: OffsetPaginationRequestDto
+  ) => ({
+    queryKey: [...queryKeys.invitation, offsetPaginationReqDto],
+    queryFn: () =>
+      dashboardService.getInvitationsWithPagination(offsetPaginationReqDto),
   }),
 };
