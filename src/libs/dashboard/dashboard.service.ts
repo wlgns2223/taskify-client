@@ -46,7 +46,6 @@ class DashboardService extends Service {
     if (!result.success) {
       throw new Error(result.error.message);
     }
-
     const res = await this.apiHandler.get<
       OffsetPaginationResponseDto<Dashboard>
     >(this.endPoints.dashboard.read(offsetPaginationReqDto));

@@ -18,6 +18,8 @@ export const END_POINT = {
       const baseUrl = "/invitations";
       const queries = qs.stringify(dto);
 
+      console.log(`${baseUrl}?${queries}`);
+
       return `${baseUrl}?${queries}`;
     },
   },
@@ -25,7 +27,7 @@ export const END_POINT = {
     create() {
       return "/dashboards";
     },
-    read(dto?: OffsetPaginationRequestDto) {
+    read(dto: OffsetPaginationRequestDto) {
       const baseUrl = "/dashboards";
       const queries = qs.stringify(dto);
       return `${baseUrl}?${queries}`;

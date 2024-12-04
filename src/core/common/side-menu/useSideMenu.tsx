@@ -1,7 +1,7 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { OffsetPaginationRequestDto } from "../../../libs/dashboard/dto/readDashboards.dto";
 import { queryOptions } from "../../../libs/dashboard/query-options";
-import { defaultOffsetPaginationReqDto } from "../../../components/my-dashboard/dashboards";
+import { OffsetPaginationRequestDto } from "../../../libs/dashboard/dto/offsetPagination.dto";
+import { defaultOffsetPaginationReqDto } from "../../const/default-pagination";
 
 export const useSideMenu = () => {
   return useSuspenseInfiniteQuery({

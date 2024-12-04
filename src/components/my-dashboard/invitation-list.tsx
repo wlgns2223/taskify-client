@@ -4,19 +4,34 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { PropsWithChildren, useState } from "react";
 import { queryOptions } from "../../libs/dashboard/query-options";
 import { OffsetPaginationRequestDto } from "../../libs/dashboard/dto/offsetPagination.dto";
-import { defaultOffsetPaginationReqDto } from "./dashboards";
+import { defaultOffsetPaginationReqDto } from "../../core/const/default-pagination";
+import { match } from "ts-pattern";
+import { EmptyBoard } from "./empty-board";
+import { InvitationPendingList } from "./invitation-pending-list";
+import { PaginationButtons } from "./dashboard-pages-number";
+import { InvitationSchema } from "../../libs/dashboard/dto/invitations.dto";
 
 export const InvitationList: React.FC<PropsWithChildren> = ({ children }) => {
   const [offsetPaginationDto, setOffsetPaginationDto] =
     useState<OffsetPaginationRequestDto>(defaultOffsetPaginationReqDto);
-  const { data } = useSuspenseQuery({
+  const { data: invitationsWithPagination } = useSuspenseQuery({
     ...queryOptions.getInvitationsWithPagination(offsetPaginationDto),
   });
 
-  return (
-    <div className="flex px-6 py-8 bg-neutral-50 rounded-lg mt-11">
-      <p className="font-bold text-2xl">{"초대받은 대시보드"}</p>
-      <ul></ul>
-    </div>
-  );
+  return match(invitationsWithPagination.data.length)
+    .with(0, () => <EmptyBoard />)
+    .otherwise(() => (
+      <div>
+        <InvitationPendingList
+          offsetPaginationDto={offsetPaginationDto}
+          setOffsetPaginationDto={setOffsetPaginationDto}
+          invitationsWithPagination={invitationsWithPagination}
+        />
+        <PaginationButtons<InvitationSchema>
+          offsetPaginationReqDto={offsetPaginationDto}
+          setOffsetPaginationReqDto={setOffsetPaginationDto}
+          offsetPaginationResponse={invitationsWithPagination}
+        />
+      </div>
+    ));
 };

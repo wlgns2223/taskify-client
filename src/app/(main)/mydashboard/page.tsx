@@ -13,29 +13,52 @@ import { cookies } from "next/headers";
 import { ReadDashboardsResponse } from "../../../libs/dashboard/dto/readDashboards.dto";
 import { END_POINT } from "../../../core/network/end-point";
 import { InvitationList } from "../../../components/my-dashboard/invitation-list";
+import { apiHandler } from "../../../core/network/fetch";
+import { defaultOffsetPaginationReqDto } from "../../../core/const/default-pagination";
 
 export default async () => {
   const queryClient = new QueryClient();
 
-  // await queryClient.prefetchQuery({
-  //   queryKey: queryOptions.readDashboards(defaultReadDashboardsDto).queryKey,
-  //   queryFn: async () => {
-  //     const allCookieArr = cookies().getAll();
-  //     const allCookies = allCookieArr
-  //       .map((cookie) => `${cookie.name}=${cookie.value}`)
-  //       .join("; ");
-  //     const headers = new Headers();
-  //     headers.set("Content-Type", "application/json");
-  //     headers.set("Cookie", allCookies);
+  await queryClient.prefetchQuery({
+    queryKey: queryOptions.readDashboards(defaultOffsetPaginationReqDto)
+      .queryKey,
+    queryFn: async () => {
+      const allCookieArr = cookies().getAll();
+      const allCookies = allCookieArr
+        .map((cookie) => `${cookie.name}=${cookie.value}`)
+        .join("; ");
+      const headers = new Headers();
+      headers.set("Cookie", allCookies);
 
-  //     const res = await serverApiHandler.get<ReadDashboardsResponse>(
-  //       END_POINT.dashboard.read(),
-  //       { headers }
-  //     );
+      const res = await apiHandler.get<ReadDashboardsResponse>(
+        END_POINT.dashboard.read(defaultOffsetPaginationReqDto),
+        { headers }
+      );
 
-  //     return res.data;
-  //   },
-  // });
+      return res.data;
+    },
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: queryOptions.getInvitationsWithPagination(
+      defaultOffsetPaginationReqDto
+    ).queryKey,
+    queryFn: async () => {
+      const allCookieArr = cookies().getAll();
+      const allCookies = allCookieArr
+        .map((cookie) => `${cookie.name}=${cookie.value}`)
+        .join("; ");
+      const headers = new Headers();
+      headers.set("Cookie", allCookies);
+
+      const res = await apiHandler.get<ReadDashboardsResponse>(
+        END_POINT.invitation.read(defaultOffsetPaginationReqDto),
+        { headers }
+      );
+
+      return res.data;
+    },
+  });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

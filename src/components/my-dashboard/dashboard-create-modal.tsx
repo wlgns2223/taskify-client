@@ -5,7 +5,7 @@ import { useCreateDashboard } from "../../libs/dashboard/useCreateDashboard";
 import { DashboardCreateContent } from "./dashboard-create-content";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryOptions } from "../../libs/dashboard/query-options";
-import { defaultOffsetPaginationReqDto } from "./dashboards";
+import { defaultOffsetPaginationReqDto } from "../../core/const/default-pagination";
 
 interface DashboardCreateContentProps {
   modalHookProps: ModalHookProps;

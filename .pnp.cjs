@@ -32,6 +32,7 @@ const RAW_RUNTIME_STATE =
           ["@heroicons/react", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:2.1.3"],\
           ["@tanstack/react-query", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:5.59.15"],\
           ["@tanstack/react-query-devtools", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:5.59.15"],\
+          ["@tanstack/react-table", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:8.20.5"],\
           ["@types/http-status-codes", "npm:1.2.0"],\
           ["@types/node", "npm:20.14.1"],\
           ["@types/qs", "npm:6.9.16"],\
@@ -843,6 +844,33 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@tanstack/react-table", [\
+      ["npm:8.20.5", {\
+        "packageLocation": "../../../../../.yarn/berry/cache/@tanstack-react-table-npm-8.20.5-43d9c7c3a2-10c0.zip/node_modules/@tanstack/react-table/",\
+        "packageDependencies": [\
+          ["@tanstack/react-table", "npm:8.20.5"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:8.20.5", {\
+        "packageLocation": "./.yarn/__virtual__/@tanstack-react-table-virtual-f8a86e695f/6/.yarn/berry/cache/@tanstack-react-table-npm-8.20.5-43d9c7c3a2-10c0.zip/node_modules/@tanstack/react-table/",\
+        "packageDependencies": [\
+          ["@tanstack/react-table", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:8.20.5"],\
+          ["@tanstack/table-core", "npm:8.20.5"],\
+          ["@types/react", "npm:18.3.3"],\
+          ["@types/react-dom", "npm:18.3.0"],\
+          ["react", "npm:18.3.1"],\
+          ["react-dom", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@tanstack/react-virtual", [\
       ["npm:3.10.9", {\
         "packageLocation": "../../../../../.yarn/berry/cache/@tanstack-react-virtual-npm-3.10.9-3e9e8af707-10c0.zip/node_modules/@tanstack/react-virtual/",\
@@ -866,6 +894,15 @@ const RAW_RUNTIME_STATE =
           "@types/react",\
           "react-dom",\
           "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@tanstack/table-core", [\
+      ["npm:8.20.5", {\
+        "packageLocation": "../../../../../.yarn/berry/cache/@tanstack-table-core-npm-8.20.5-ec97a31c2d-10c0.zip/node_modules/@tanstack/table-core/",\
+        "packageDependencies": [\
+          ["@tanstack/table-core", "npm:8.20.5"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2931,6 +2968,7 @@ const RAW_RUNTIME_STATE =
           ["@heroicons/react", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:2.1.3"],\
           ["@tanstack/react-query", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:5.59.15"],\
           ["@tanstack/react-query-devtools", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:5.59.15"],\
+          ["@tanstack/react-table", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:8.20.5"],\
           ["@types/http-status-codes", "npm:1.2.0"],\
           ["@types/node", "npm:20.14.1"],\
           ["@types/qs", "npm:6.9.16"],\

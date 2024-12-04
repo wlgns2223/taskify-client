@@ -10,14 +10,10 @@ import {
   DEFAULT_PAGE_SIZE,
   OffsetPaginationRequestDto,
 } from "../../libs/dashboard/dto/offsetPagination.dto";
+import { defaultOffsetPaginationReqDto } from "../../core/const/default-pagination";
 import { Dashboard } from "../../libs/dashboard/dto/readDashboards.dto";
 
 interface DashboardsProps {}
-
-export const defaultOffsetPaginationReqDto: OffsetPaginationRequestDto = {
-  page: 1,
-  pageSize: DEFAULT_PAGE_SIZE,
-};
 
 export const Dashboards: React.FC<DashboardsProps> = ({}) => {
   const [offsetPaginationReqDto, setOffsetPaginationReqDto] =
@@ -58,7 +54,7 @@ export const Dashboards: React.FC<DashboardsProps> = ({}) => {
           </li>
         ))}
       </ul>
-      <PaginationButtons
+      <PaginationButtons<Dashboard>
         offsetPaginationReqDto={offsetPaginationReqDto}
         setOffsetPaginationReqDto={setOffsetPaginationReqDto}
         offsetPaginationResponse={offsetPaginationResponse}

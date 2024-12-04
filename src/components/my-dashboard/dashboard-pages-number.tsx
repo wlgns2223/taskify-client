@@ -11,19 +11,19 @@ export const PAGE_SIZE = {
   others: 6,
 };
 
-interface PaginationButtonsProps {
+interface PaginationButtonsProps<T> {
   setOffsetPaginationReqDto: Dispatch<
     SetStateAction<OffsetPaginationRequestDto>
   >;
   offsetPaginationReqDto: OffsetPaginationRequestDto;
-  offsetPaginationResponse: OffsetPaginationResponseDto<Dashboard>;
+  offsetPaginationResponse: OffsetPaginationResponseDto<T>;
 }
 
-export const PaginationButtons: React.FC<PaginationButtonsProps> = ({
+export function PaginationButtons<T = {}>({
   setOffsetPaginationReqDto,
   offsetPaginationReqDto,
   offsetPaginationResponse,
-}) => {
+}: PaginationButtonsProps<T>) {
   const handleNext = () => {
     if (
       offsetPaginationResponse.currentPage ===
@@ -67,4 +67,4 @@ export const PaginationButtons: React.FC<PaginationButtonsProps> = ({
       </div>
     </div>
   );
-};
+}
