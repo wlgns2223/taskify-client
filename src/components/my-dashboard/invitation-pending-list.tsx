@@ -3,15 +3,18 @@ import { JHInput } from "../../core/ui/jh-input";
 import { JhButton } from "../../core/ui/jh-button";
 import { Dispatch, SetStateAction, useState } from "react";
 import {
-  OffsetPaginationRequestDto,
+  InvitationOffsetPaginationRequestDto,
   OffsetPaginationResponseDto,
 } from "../../libs/dashboard/dto/offsetPagination.dto";
 import { InvitationSchema } from "../../libs/dashboard/dto/invitations.dto";
 import { PaginationButtons } from "./dashboard-pages-number";
+import { InvitationStatusButtons } from "./invitation-status-buttons";
 
 interface InvitationPendingListProps {
-  offsetPaginationDto: OffsetPaginationRequestDto;
-  setOffsetPaginationDto: Dispatch<SetStateAction<OffsetPaginationRequestDto>>;
+  offsetPaginationDto: InvitationOffsetPaginationRequestDto;
+  setOffsetPaginationDto: Dispatch<
+    SetStateAction<InvitationOffsetPaginationRequestDto>
+  >;
   invitationsWithPagination: OffsetPaginationResponseDto<InvitationSchema>;
 }
 
@@ -20,6 +23,14 @@ export const InvitationPendingList: React.FC<InvitationPendingListProps> = ({
   offsetPaginationDto,
   setOffsetPaginationDto,
 }) => {
+  const [keyword, setKeyword] = useState<string>("");
+
+  const handleSearch = () => {
+    setOffsetPaginationDto({
+      ...offsetPaginationDto,
+      search: keyword,
+    });
+  };
   return (
     <div className="flex flex-col px-6 py-8 bg-neutral-50 rounded-lg mt-11">
       <p className="font-bold text-2xl">{"초대받은 대시보드"}</p>
@@ -27,6 +38,7 @@ export const InvitationPendingList: React.FC<InvitationPendingListProps> = ({
         className="relative mt-8"
         onClick={(e) => {
           e.preventDefault();
+          handleSearch();
         }}
       >
         <MagnifyingGlassIcon className="w-6 h-6 text-neutral-700 absolute top-2 left-4" />
@@ -37,8 +49,10 @@ export const InvitationPendingList: React.FC<InvitationPendingListProps> = ({
           id="search"
           className="px-11 py-2 "
           placeholder="대시보드 이름으로 검색"
+          value={keyword}
+          onChange={(e) => setKeyword(e.currentTarget.value)}
         />
-        <JhButton className="sr-only" />
+        <JhButton className="sr-only" type="submit" />
       </form>
       <ul className="mt-6 divide-y">
         <li className="mb-6">
@@ -53,15 +67,7 @@ export const InvitationPendingList: React.FC<InvitationPendingListProps> = ({
             <div className="grid grid-cols-3 items-center">
               <span>{invitation.dashboardTitle}</span>
               <span>{invitation.inviterNickname}</span>
-              <div className="flex text-sm">
-                <JhButton className="px-6 py-2">{"수락"}</JhButton>
-                <JhButton
-                  className="px-6 py-2 text-primary ml-2"
-                  variants="outline"
-                >
-                  {"거절"}
-                </JhButton>
-              </div>
+              <InvitationStatusButtons invitationId={invitation.id} />
             </div>
           </li>
         ))}

@@ -3,6 +3,7 @@ import {
   DeleteColumnDtoSchema,
   UpdateColumnDtoSchema,
 } from "./dto/columns.dto";
+import { InvitationStatusEnum } from "./dto/invitations.dto";
 import { OffsetPaginationRequestDto } from "./dto/offsetPagination.dto";
 import { ReadDashboardsDtoSchema } from "./dto/readDashboards.dto";
 
@@ -53,5 +54,9 @@ export const queryOptions = {
     queryKey: [...queryKeys.invitation, offsetPaginationReqDto],
     queryFn: () =>
       dashboardService.getInvitationsWithPagination(offsetPaginationReqDto),
+  }),
+  updateInvitationStatus: () => ({
+    queryFn: (param: { invitationId: number; status: InvitationStatusEnum }) =>
+      dashboardService.updateInvitationStatus(param.invitationId, param.status),
   }),
 };

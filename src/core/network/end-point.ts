@@ -17,10 +17,10 @@ export const END_POINT = {
     read(dto: OffsetPaginationRequestDto) {
       const baseUrl = "/invitations";
       const queries = qs.stringify(dto);
-
-      console.log(`${baseUrl}?${queries}`);
-
       return `${baseUrl}?${queries}`;
+    },
+    update(id: number) {
+      return `/invitations/${id}`;
     },
   },
   dashboard: {

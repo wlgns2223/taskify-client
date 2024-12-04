@@ -8,3 +8,5 @@ export const InvitationSchema = z.object({
 });
 
 export type InvitationSchema = z.infer<typeof InvitationSchema>;
+export const InvitationStatusEnum = z.enum(["accepted", "declined", "pending"]);
+export type InvitationStatusEnum = z.infer<typeof InvitationStatusEnum>;

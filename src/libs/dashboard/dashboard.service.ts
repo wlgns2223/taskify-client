@@ -12,7 +12,7 @@ import {
   CreateInvitationDto,
   CreateInvitationDtoSchema,
 } from "./dto/createInvitation.dto";
-import { InvitationSchema } from "./dto/invitations.dto";
+import { InvitationSchema, InvitationStatusEnum } from "./dto/invitations.dto";
 import {
   OffsetPaginationRequestDto,
   OffsetPaginationResponseDto,
@@ -131,6 +131,21 @@ class DashboardService extends Service {
     const res = await this.apiHandler.get<
       OffsetPaginationResponseDto<InvitationSchema>
     >(this.endPoints.invitation.read(offsetPaginationReqDto));
+    return res.data;
+  }
+
+  async updateInvitationStatus(
+    invitationId: number,
+    status: InvitationStatusEnum
+  ) {
+    const result = InvitationStatusEnum.safeParse(status);
+    if (!result.success) {
+      throw new Error(result.error.message);
+    }
+    const res = await this.apiHandler.put(
+      this.endPoints.invitation.update(invitationId),
+      { status }
+    );
     return res.data;
   }
 }
