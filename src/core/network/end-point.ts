@@ -67,4 +67,9 @@ export const END_POINT = {
       return `/users/me?accessToken=${accessToken}`;
     },
   },
+  members: {
+    getByDashboardId(dashboardId: number) {
+      return `/members?dashboardId=${dashboardId}`;
+    },
+  },
 };

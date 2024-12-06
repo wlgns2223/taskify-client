@@ -9,6 +9,7 @@ import { PATH } from "../../types/path";
 import { userService } from "../../user/user.service";
 import { DashboardProvider } from "../../providers/dashboard-provider";
 import UserIcon from "./user-icon";
+import { memberService } from "../../../libs/member/member.service";
 
 export const DashboardHeader: React.FC<PropsWithChildren> = async ({
   children,
@@ -36,10 +37,9 @@ export const DashboardHeader: React.FC<PropsWithChildren> = async ({
   }
 
   const userInfo = await userService.getUser(accessToken);
-
-  const allMembers = Array.from({ length: 2 });
-  const members = allMembers.slice(0, 4);
-  const restMembers = allMembers.slice(4);
+  const members = await memberService.getMembersByDashboardId(parseInt(id, 10));
+  const membersToshow = members.slice(0, 4);
+  const restMembers = members.slice(4);
 
   return (
     <DashboardProvider dashboard={dashboard}>
@@ -63,8 +63,11 @@ export const DashboardHeader: React.FC<PropsWithChildren> = async ({
               <li className="ml-4">{children}</li>
               <li className="ml-10">
                 <ul className="flex items-center pl-3">
-                  {members.map((_, idx) => (
-                    <li className="rounded-full w-9 h-9 flex items-center justify-center -ml-3 bg-red-400 border-[3px] border-neutral-50 ">
+                  {membersToshow.map((member, idx) => (
+                    <li
+                      key={member.id}
+                      className="rounded-full w-9 h-9 flex items-center justify-center -ml-3 bg-red-400 border-[3px] border-neutral-50 "
+                    >
                       {idx}
                     </li>
                   ))}
