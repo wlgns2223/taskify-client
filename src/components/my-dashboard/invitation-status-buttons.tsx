@@ -1,23 +1,62 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { JhButton } from "../../core/ui/jh-button";
-import { InvitationStatusEnum } from "../../libs/dashboard/dto/invitations.dto";
+import {
+  InvitationSchema,
+  InvitationStatusEnum,
+} from "../../libs/dashboard/dto/invitations.dto";
 import { queryOptions } from "../../libs/dashboard/query-options";
+import {
+  InvitationOffsetPaginationRequestDto,
+  OffsetPaginationResponseDto,
+} from "../../libs/dashboard/dto/offsetPagination.dto";
 
 interface InvitationStatusButtonsProps {
   invitationId: number;
+  offsetPaginationDto: InvitationOffsetPaginationRequestDto;
 }
 
 export const InvitationStatusButtons: React.FC<
   InvitationStatusButtonsProps
-> = ({ invitationId }) => {
+> = ({ invitationId, offsetPaginationDto }) => {
   const qc = useQueryClient();
+
+  const updateTargetInvitationStatus = (
+    oldData: OffsetPaginationResponseDto<InvitationSchema>["data"],
+    param: { invitationId: number; status: InvitationStatusEnum }
+  ) => {
+    return oldData.map((invitation: InvitationSchema) =>
+      invitation.id === param.invitationId
+        ? { ...invitation, status: param.status }
+        : invitation
+    );
+  };
+
   const { mutate } = useMutation({
     mutationFn: queryOptions.updateInvitationStatus().queryFn,
     onMutate: async (data: {
       invitationId: number;
       status: InvitationStatusEnum;
     }) => {
-      await qc.cancelQueries({});
+      await qc.cancelQueries({
+        queryKey:
+          queryOptions.getInvitationsWithPagination(offsetPaginationDto)
+            .queryKey,
+      });
+      const prevInvitations = qc.getQueryData(
+        queryOptions.getInvitationsWithPagination(offsetPaginationDto).queryKey
+      );
+
+      qc.setQueryData(
+        queryOptions.getInvitationsWithPagination(offsetPaginationDto).queryKey,
+        (oldData: OffsetPaginationResponseDto<InvitationSchema>) => {
+          return {
+            ...oldData,
+            data: updateTargetInvitationStatus(oldData.data, data),
+          };
+        }
+      );
+
+      return { prevInvitations };
     },
   });
 

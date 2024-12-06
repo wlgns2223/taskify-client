@@ -6,9 +6,13 @@ import {
   InvitationOffsetPaginationRequestDto,
   OffsetPaginationResponseDto,
 } from "../../libs/dashboard/dto/offsetPagination.dto";
-import { InvitationSchema } from "../../libs/dashboard/dto/invitations.dto";
-import { PaginationButtons } from "./dashboard-pages-number";
+import {
+  InvitationSchema,
+  InvitationStatusEnum,
+} from "../../libs/dashboard/dto/invitations.dto";
 import { InvitationStatusButtons } from "./invitation-status-buttons";
+import { match } from "ts-pattern";
+import { InvitationStatusText } from "./invitation-status-text";
 
 interface InvitationPendingListProps {
   offsetPaginationDto: InvitationOffsetPaginationRequestDto;
@@ -64,10 +68,19 @@ export const InvitationPendingList: React.FC<InvitationPendingListProps> = ({
         </li>
         {invitationsWithPagination.data.map((invitation) => (
           <li key={invitation.id} className="py-4">
-            <div className="grid grid-cols-3 items-center">
+            <div className="grid grid-cols-3 items-center min-h-10">
               <span>{invitation.dashboardTitle}</span>
               <span>{invitation.inviterNickname}</span>
-              <InvitationStatusButtons invitationId={invitation.id} />
+              {match(invitation.status)
+                .with(InvitationStatusEnum.enum.pending, () => (
+                  <InvitationStatusButtons
+                    invitationId={invitation.id}
+                    offsetPaginationDto={offsetPaginationDto}
+                  />
+                ))
+                .otherwise(() => (
+                  <InvitationStatusText status={invitation.status} />
+                ))}
             </div>
           </li>
         ))}
