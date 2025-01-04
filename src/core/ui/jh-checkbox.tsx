@@ -19,7 +19,7 @@ export const JhCheckbox: React.FC<PropsWithChildren<JhCheckboxProps>> = ({
   const containerClasses = twMerge(
     clsx("flex items-center", containerClassName)
   );
-  const labelClasses = twMerge(clsx("ml-2 cursor-pointer", labelClassName));
+  const labelClasses = twMerge(clsx("ml-2 cursor-pointer blu", labelClassName));
   return (
     <Field className={containerClasses}>
       <Checkbox

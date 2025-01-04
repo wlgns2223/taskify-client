@@ -9,6 +9,9 @@ export const END_POINT = {
     signUp() {
       return "/auth/signUp";
     },
+    refresh() {
+      return "/auth/client-renew";
+    },
   },
   invitation: {
     create() {

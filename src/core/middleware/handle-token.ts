@@ -1,5 +1,3 @@
-"use server";
-
 import { NextRequest } from "next/server";
 import { HTTPError } from "../error/http-error";
 import { match } from "ts-pattern";
@@ -8,7 +6,7 @@ import {
   AuthTokenType,
   TokenHandleResult,
 } from "./types/auth-status";
-import { verifyToken } from "./auth-api/verify-token";
+import { verifyToken } from "./auth-api/verify-token/verify-token";
 import { StatusCodes } from "http-status-codes";
 
 export const handleToken = async (request: NextRequest) => {
@@ -29,7 +27,7 @@ export const handleToken = async (request: NextRequest) => {
   return TokenHandleResult.FAIL;
 };
 
-const handleVerifyFail = (httpError: HTTPError) => {
+export const handleVerifyFail = (httpError: HTTPError) => {
   console.error("handle verify failed");
   return match(httpError.statusCode)
     .with(StatusCodes.UNAUTHORIZED, () => handleUnauthorizeError(httpError))
@@ -39,7 +37,7 @@ const handleVerifyFail = (httpError: HTTPError) => {
     });
 };
 
-const handleUnauthorizeError = (httpError: HTTPError) => {
+export const handleUnauthorizeError = (httpError: HTTPError) => {
   console.log("handle unauthorize error");
   return match(httpError.headers)
     .when(
@@ -50,7 +48,7 @@ const handleUnauthorizeError = (httpError: HTTPError) => {
     .otherwise(() => TokenHandleResult.FAIL);
 };
 
-const handleErrorByRealm = (headers: Headers) => {
+export const handleErrorByRealm = (headers: Headers) => {
   const { realm, error } = extractRealmAndStatus(headers);
 
   console.log("realm", realm, error);
@@ -67,7 +65,7 @@ const handleErrorByRealm = (headers: Headers) => {
     .otherwise(() => TokenHandleResult.FAIL);
 };
 
-const extractRealmAndStatus = (header: Headers) => {
+export const extractRealmAndStatus = (header: Headers) => {
   const authHeader = header.get("www-authenticate")!;
   const realm = getTokenInfo<AuthTokenType>(authHeader, "realm");
   const error = getTokenInfo<AuthTokenStatus>(authHeader, "error");
@@ -76,7 +74,8 @@ const extractRealmAndStatus = (header: Headers) => {
     error,
   };
 };
-const getTokenInfo = <T>(authHeader: string, type: string) => {
+
+export const getTokenInfo = <T>(authHeader: string, type: string) => {
   const regex = new RegExp(`${type}=([^,]+)`);
   const matched = authHeader.match(regex);
   if (!matched) {

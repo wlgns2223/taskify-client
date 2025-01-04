@@ -26,6 +26,8 @@
 3.  사용자에게 HTML 파일을 전달한다.
 4.  사용자의 브라우저에서 하이드레이션이 일어난다.
 
+[] Pararell routing 및 intercepting route를 이용해서 모달과 사이드 바를 구현하기
+
 # Trouble Shooting
 
 [ ] To-do suspense query 제대로 이해하여 적용하기 -> Client Component -> Serever Component interleaving 방식 이용해서

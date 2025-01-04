@@ -1,13 +1,9 @@
 import { END_POINT } from "../../core/network/end-point";
-import { apiHandler } from "../../core/network/fetch";
+import { apiHandler } from "../../core/network/handlers/fetch/fetch";
 import {
   CreateDashBoardDtoSchema,
   createDashBoardDtoSchema,
 } from "./dto/createDashboards.dto";
-import {
-  ReadDashboardsDtoSchema,
-  readDashboardsDtoSchema,
-} from "./dto/readDashboards.dto";
 
 export const createDashBoard = async (
   createDashboardDto: CreateDashBoardDtoSchema

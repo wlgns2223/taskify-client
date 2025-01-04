@@ -4,12 +4,13 @@ export const enum TokenExceptionType {
   EXPIRED = "EXPIRED",
 }
 
+const defaultErrorMessage = "원인을 알 수 없는 에러입니다. (에러메세지 없음)";
 export class HTTPError extends Error {
   private _statusCode: number;
   private _headers: unknown;
 
   constructor(
-    cause: TokenExceptionType | string,
+    cause: TokenExceptionType | string = defaultErrorMessage,
     statusCode: number,
     headers: unknown
   ) {

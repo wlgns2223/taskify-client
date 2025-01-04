@@ -1,6 +1,6 @@
 import { HTTPError } from "../../core/error/http-error";
 import { END_POINT } from "../../core/network/end-point";
-import { apiHandler } from "../../core/network/fetch";
+import { apiHandler } from "../../core/network/handlers/fetch/fetch";
 import { ServerActionStatus } from "../../core/serverAction/createServerAction";
 import { signInDtoSchema, SignInDtoSchema } from "./dto";
 

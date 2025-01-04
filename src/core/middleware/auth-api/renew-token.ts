@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { apiHandler } from "../../network/fetch";
+import { apiHandler } from "../../network/handlers/fetch/fetch";
 import { PATH } from "../../types/path";
 import { NextResponse } from "next/server";
 import { TokenCookies } from "../types/renew-auth-token";

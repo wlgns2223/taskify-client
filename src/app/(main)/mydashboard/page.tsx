@@ -13,7 +13,7 @@ import { cookies } from "next/headers";
 import { ReadDashboardsResponse } from "../../../libs/dashboard/dto/readDashboards.dto";
 import { END_POINT } from "../../../core/network/end-point";
 import { InvitationList } from "../../../components/my-dashboard/invitation-list";
-import { apiHandler } from "../../../core/network/fetch";
+import { apiHandler } from "../../../core/network/handlers/fetch/fetch";
 import { defaultOffsetPaginationReqDto } from "../../../core/const/default-pagination";
 
 export default async () => {
