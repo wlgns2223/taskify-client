@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { useToast } from "../../core/hooks/useToast";
-import { createDashBoard } from "./create-dashboard";
-import { CreateDashBoardDtoSchema } from "./dto/createDashboards.dto";
+import { useToast } from "../../../core/hooks/useToast";
+import { createDashBoard } from "../create-dashboard";
+import { CreateDashBoardDtoSchema } from "../dto/createDashboards.dto";
 import { useState } from "react";
-import { colors } from "../../components/my-dashboard/dashboard-create-content";
+import { colors } from "../../../components/my-dashboard/dashboard-create-content";
 
 interface UseCreateDashboardProps {
   onSuccess?: () => void;

@@ -35,6 +35,7 @@ export const InvitationPendingList: React.FC<InvitationPendingListProps> = ({
       search: keyword,
     });
   };
+
   return (
     <div className="flex flex-col px-6 py-8 bg-neutral-50 rounded-lg mt-11">
       <p className="font-bold text-2xl">{"초대받은 대시보드"}</p>

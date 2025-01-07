@@ -2,7 +2,7 @@
 
 import { twMerge } from "tailwind-merge";
 import { JhButton, JhButtonProps } from "../../core/ui/jh-button";
-import { useCreateDashboard } from "../../libs/dashboard/useCreateDashboard";
+import { useCreateDashboard } from "../../libs/dashboard/hooks/useCreateDashboard";
 import { DashboardCreateContent } from "../my-dashboard/dashboard-create-content";
 import clsx from "clsx";
 import { useDashboardContext } from "../../core/providers/dashboard-provider";

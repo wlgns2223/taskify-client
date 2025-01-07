@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BaseModalProps } from "../../core/types/base-modal";
 import { JHInput } from "../../core/ui/jh-input";
 import { JhModal } from "../../core/ui/modal/jh-modal";
-import { useUpdateColumn } from "../../libs/dashboard/useUpdateColumn";
+import { useUpdateColumn } from "../../libs/dashboard/hooks/useUpdateColumn";
 import {
   ReadColumnDto,
   UpdateColumnDtoSchema,

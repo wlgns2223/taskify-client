@@ -3,6 +3,8 @@ import { ResponseType } from "../../../network/handlers/response-handler/respons
 import { verifyToken } from "./verify-token";
 import { apiHandler } from "../../../network/handlers/fetch/fetch";
 import { cookies } from "next/headers";
+import { HTTPError } from "../../../error/http-error";
+import { PATH } from "../../../types/path";
 
 jest.mock("next/headers", () => {
   return {
@@ -30,10 +32,6 @@ describe("verify token middleware test suites", () => {
     jest.clearAllMocks();
   });
 
-  it("debug cookie", () => {
-    console.log(cookies().toString());
-  });
-
   it("shuold return a ResponseType response", async () => {
     const response: ResponseType = {
       data: {
@@ -46,5 +44,45 @@ describe("verify token middleware test suites", () => {
 
     const actual = await verifyToken();
     expect(actual).toEqual(response);
+  });
+
+  it("should throw an error when the token is expired", async () => {
+    const error = new HTTPError(
+      "EXPIRED",
+      StatusCodes.UNAUTHORIZED,
+      new Headers()
+    );
+    postMock.mockRejectedValue(error);
+
+    try {
+      await verifyToken();
+    } catch (e) {
+      expect(e).toBeInstanceOf(HTTPError);
+      expect(e).toEqual(error);
+    }
+  });
+
+  it("shuold test if apiHandler.post is called with the correct arguments", async () => {
+    const response: ResponseType = {
+      data: {
+        message: "Valid Token",
+      },
+      headers: new Headers(),
+      statusCode: StatusCodes.OK,
+    };
+    postMock.mockResolvedValue(response);
+
+    await verifyToken();
+
+    expect(postMock).toHaveBeenCalledWith(
+      PATH.verifyToken(),
+      {},
+      {
+        credentials: "include",
+        headers: {
+          Cookie: "cookie=cookie",
+        },
+      }
+    );
   });
 });

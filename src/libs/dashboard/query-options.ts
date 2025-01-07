@@ -48,6 +48,7 @@ export const queryOptions = {
     queryKey: [...queryKeys.todosByColumnId(columnId)],
     queryFn: () => dashboardService.getTodosByColumnId(columnId),
   }),
+
   getInvitationsWithPagination: (
     offsetPaginationReqDto: OffsetPaginationRequestDto
   ) => ({
@@ -55,6 +56,7 @@ export const queryOptions = {
     queryFn: () =>
       dashboardService.getInvitationsWithPagination(offsetPaginationReqDto),
   }),
+
   updateInvitationStatus: () => ({
     queryFn: (param: { invitationId: number; status: InvitationStatusEnum }) =>
       dashboardService.updateInvitationStatus(param.invitationId, param.status),

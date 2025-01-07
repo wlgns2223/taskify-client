@@ -3,10 +3,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { PropsWithChildren, useState } from "react";
 import { queryOptions } from "../../libs/dashboard/query-options";
-import {
-  InvitationOffsetPaginationRequestDto,
-  OffsetPaginationRequestDto,
-} from "../../libs/dashboard/dto/offsetPagination.dto";
+import { InvitationOffsetPaginationRequestDto } from "../../libs/dashboard/dto/offsetPagination.dto";
 import { defaultOffsetPaginationReqDto } from "../../core/const/default-pagination";
 import { match } from "ts-pattern";
 import { EmptyBoard } from "./empty-board";
@@ -16,12 +13,16 @@ import { InvitationSchema } from "../../libs/dashboard/dto/invitations.dto";
 
 export const InvitationList: React.FC<PropsWithChildren> = ({ children }) => {
   const [offsetPaginationDto, setOffsetPaginationDto] =
-    useState<InvitationOffsetPaginationRequestDto>(
-      defaultOffsetPaginationReqDto
-    );
+    useState<InvitationOffsetPaginationRequestDto>({
+      ...defaultOffsetPaginationReqDto,
+      search: "",
+    });
+
   const { data: invitationsWithPagination } = useSuspenseQuery({
     ...queryOptions.getInvitationsWithPagination(offsetPaginationDto),
   });
+
+  console.log(invitationsWithPagination);
 
   return match(invitationsWithPagination.data.length)
     .with(0, () => <EmptyBoard />)

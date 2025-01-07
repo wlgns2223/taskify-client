@@ -11,12 +11,12 @@ import {
   Droppable,
 } from "@hello-pangea/dnd";
 import { SwapColumnsDtoSchema } from "../../libs/dashboard/dto/swapColumns.dto";
-import { useColumns } from "../../libs/dashboard/useColumns";
+import { useColumns } from "../../libs/dashboard/hooks/useColumns";
 import { ColumnCreateModal } from "./column-create-modal";
 import { useModal } from "../../core/hooks/useModal";
 import { PropsWithChildren, use, useState } from "react";
 import { Todos } from "./todos";
-import { TodoCreateModal } from "./todo-create-modal";
+import { TodoCreateModal } from "./todo-create-modal/todo-create-modal";
 
 interface DetailPageProps {
   dashboardId: string;

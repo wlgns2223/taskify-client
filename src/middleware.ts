@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { handleToken } from "./core/middleware/handle-token";
+import { handleToken } from "./core/middleware/auth-api/handle-token/handle-token";
 import { TokenHandleResult } from "./core/middleware/types/auth-status";
-import { handleFailedCookie } from "./core/middleware/auth-api/delete-cookie";
-import { handleRenewToken } from "./core/middleware/auth-api/renew-token";
+
+import { handleRenewToken } from "./core/middleware/auth-api/handle-renew-token/handle-renew-token";
+import { handleDeleteCookieOnFail } from "./core/middleware/auth-api/handle-delete-cookie-on-fail/handle-delete-cookie-on-fail";
 
 export const config = {
   matcher: [
@@ -20,6 +21,7 @@ export async function middleware(request: NextRequest) {
   //   return NextResponse.redirect(new URL(PATH.signIn(), request.url));
   // }
 
+  // token handling
   const response = NextResponse.next();
   response.headers.set(NEXT_FULL_URL_HEADER, request.nextUrl.href);
 
@@ -30,17 +32,18 @@ export async function middleware(request: NextRequest) {
         return response;
 
       case TokenHandleResult.FAIL:
-        const failedResponse = handleFailedCookie(request);
+        const failedResponse = handleDeleteCookieOnFail(request);
         return failedResponse;
       case TokenHandleResult.RENEW:
         const tokenRenewResponse = await handleRenewToken();
         return tokenRenewResponse;
       default:
-        return response;
+        const unhandledResponse = handleDeleteCookieOnFail(request);
+        return unhandledResponse;
     }
   } catch (e) {
     console.error("error", e);
-    const failedResponse = handleFailedCookie(request);
+    const failedResponse = handleDeleteCookieOnFail(request);
     return failedResponse;
   }
 }

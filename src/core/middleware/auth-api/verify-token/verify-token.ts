@@ -3,7 +3,7 @@ import { apiHandler } from "../../../network/handlers/fetch/fetch";
 import { PATH } from "../../../types/path";
 
 /**
- *
+ * 에러 상황
  * @returns ( ACCESS TOKEN , Expired ) or ( ACCESS TOKEN , Invalid )
  */
 export const verifyToken = async () => {

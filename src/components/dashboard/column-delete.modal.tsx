@@ -1,7 +1,7 @@
 import { BaseModalProps } from "../../core/types/base-modal";
 import { JhModal } from "../../core/ui/modal/jh-modal";
 import { ReadColumnDto } from "../../libs/dashboard/dto/columns.dto";
-import { useDeleteColumn } from "../../libs/dashboard/useDeleteColumn";
+import { useDeleteColumn } from "../../libs/dashboard/hooks/useDeleteColumn";
 
 interface ColumnDeleteModalProps extends BaseModalProps {
   column: ReadColumnDto;

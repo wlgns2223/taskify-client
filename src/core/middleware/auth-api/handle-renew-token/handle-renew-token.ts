@@ -1,18 +1,5 @@
-import { cookies } from "next/headers";
-import { apiHandler } from "../../network/handlers/fetch/fetch";
-import { PATH } from "../../types/path";
 import { NextResponse } from "next/server";
-import { TokenCookies } from "../types/renew-auth-token";
-
-export const fetchTokenCookie = async () => {
-  const result = await apiHandler.get<TokenCookies>(PATH.renewToken(), {
-    credentials: "include",
-    headers: {
-      Cookie: cookies().toString(),
-    },
-  });
-  return result.data;
-};
+import { fetchTokenCookie } from "../fetch-token-cookie/fetch-token-cookie";
 
 export const handleRenewToken = async () => {
   console.log("handle Renew Token");
