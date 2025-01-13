@@ -12,7 +12,7 @@ export class FetchHandler {
 
   async handlefetch<T = any>(url: string, options?: RequestInit) {
     this.headerHandler.setHeader({ ...options?.headers });
-    const _headers = this.headerHandler.getHeaders();
+    const _headers = await this.headerHandler.getHeaders();
 
     const _options: RequestInit = {
       ...options,

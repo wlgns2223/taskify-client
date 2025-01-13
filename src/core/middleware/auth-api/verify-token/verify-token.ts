@@ -1,3 +1,5 @@
+"use server";
+
 import { cookies } from "next/headers";
 import { apiHandler } from "../../../network/handlers/fetch/fetch";
 import { PATH } from "../../../types/path";

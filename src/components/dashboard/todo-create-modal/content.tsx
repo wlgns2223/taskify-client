@@ -12,7 +12,7 @@ export const TodoCreateContent: React.FC = () => {
         {"설명"}
       </label>
       <textarea
-        className="border border-neutral-300 rounded-lg p-4 w-full focus:outline-primary"
+        className="border border-neutral-300 rounded-lg px-4 py-2 w-full focus:border-primary outline-none"
         id="todo-title"
         value={todo.content}
         onChange={(e) => {

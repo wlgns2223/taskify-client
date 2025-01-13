@@ -59,7 +59,6 @@ export const DashboardCreateModal: React.FC<DashboardCreateContentProps> = ({
           setDashBoardCreateDto={setDashBoardCreateDto}
         />
       </JhModal>
-      <ToastContainer />
     </>
   );
 };

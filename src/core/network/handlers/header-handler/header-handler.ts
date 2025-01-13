@@ -8,7 +8,6 @@ export class HeaderHandler {
     this.isServerSide = isServer;
 
     this.headers.set("Content-Type", "application/json");
-    this.setServerSideCookie();
   }
 
   private async setServerSideCookie() {
@@ -29,7 +28,8 @@ export class HeaderHandler {
     });
   }
 
-  getHeaders() {
+  async getHeaders() {
+    await this.setServerSideCookie();
     return this.headers;
   }
 }

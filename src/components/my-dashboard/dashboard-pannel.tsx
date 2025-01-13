@@ -22,7 +22,6 @@ export const DashboardPannel: React.FC<PropsWithChildren> = ({ children }) => {
         {children}
       </div>
       <DashboardCreateModal modalHookProps={modalHookProps} />
-      <ToastContainer />
     </>
   );
 };

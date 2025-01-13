@@ -23,7 +23,7 @@ export const JhButton: React.FC<PropsWithChildren<JhButtonProps>> = ({
       ? props.className
       : twMerge(
           clsx(
-            "py-3 px-4 text-neutral-50 rounded-lg cursor-pointer",
+            "py-2 px-4 text-neutral-50 rounded-lg cursor-pointer",
             {
               "bg-primary": variants === "normal",
               "text-neutral-700 border border-primary": variants === "outline",

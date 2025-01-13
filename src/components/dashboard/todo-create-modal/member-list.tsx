@@ -37,7 +37,7 @@ export const MemberList: React.FC<MemberListProps> = ({ members }) => {
       >
         <ListboxButton
           className={
-            "flex p-4 pr-8 border border-neutral-200 rounded-md relative group"
+            "flex px-4 py-2 pr-8 border border-neutral-200 rounded-md relative group"
           }
         >
           {selected.nickname}

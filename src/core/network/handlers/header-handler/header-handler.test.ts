@@ -11,7 +11,7 @@ describe("header handler test suites", () => {
     expect(headerHandler).toBeDefined();
   });
 
-  it("should append header", () => {
+  it("should append header", async () => {
     const firstHeeader: Record<string, string> = {
       "Content-Type": "application/json",
     };
@@ -21,13 +21,12 @@ describe("header handler test suites", () => {
     };
 
     headerHandler.setHeader(firstHeeader);
+    const header = await headerHandler.getHeaders();
 
-    expect(headerHandler.getHeaders().get("Content-Type")).toBe(
-      "application/json"
-    );
+    expect(header.get("Content-Type")).toBe("application/json");
 
     headerHandler.setHeader(secondHeader);
 
-    expect(headerHandler.getHeaders().get("Cookie")).toBe("accessToken=1234");
+    expect(header.get("Cookie")).toBe("accessToken=1234");
   });
 });

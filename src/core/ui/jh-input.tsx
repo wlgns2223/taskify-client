@@ -1,18 +1,23 @@
 import clsx from "clsx";
-import { HTMLProps, forwardRef } from "react";
+import { HTMLProps, InputHTMLAttributes, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
-export interface JHInputProps extends HTMLProps<HTMLInputElement> {}
+export interface JHInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  variant?: "normal" | "reset";
+}
 
 export const JHInput = forwardRef<HTMLInputElement, JHInputProps>(
-  ({ className, ...props }, ref) => {
-    const classes = twMerge(
-      clsx(
-        "border border-neutral-300 rounded-lg p-4 w-full focus:outline-primary",
-        className
-      )
-    );
+  ({ className, variant = "normal", ...props }, ref) => {
+    const classes =
+      variant === "reset"
+        ? className
+        : twMerge(
+            clsx(
+              "border border-neutral-300 rounded-lg px-4 py-2 w-full focus:border-primary focus:outline-none h-12",
+              className
+            )
+          );
 
-    return <input ref={ref} className={classes} {...props} />;
+    return <input ref={ref} {...props} className={classes} />;
   }
 );

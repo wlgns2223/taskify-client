@@ -15,7 +15,6 @@ interface FormInputProps extends JHInputProps {
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
   ({ labeltxt, error, ...props }, ref) => {
     const inputClasses = twMerge(
-      "focus:outline focus:outline-primary",
       clsx({
         "border-red-400 border": !!error,
       })

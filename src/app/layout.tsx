@@ -24,8 +24,8 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={pretendardFont.className}>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
         <ToastContainer />
+        <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
   );

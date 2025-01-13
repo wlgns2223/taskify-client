@@ -8,8 +8,11 @@ import { useUserContext } from "../../../core/user/context";
 import { useDashboardContext } from "../../../core/providers/dashboard-provider";
 import { MemberList } from "./member-list";
 import { TodoCreateProvider } from "../../../libs/dashboard/todo-create-context";
-import { TodoTitleInput } from "./todo-title-input";
-import { TodoCreateContent } from "./todo-create-content";
+import { TodoTitleInput } from "./title-input";
+import { TodoCreateContent } from "./content";
+import { TodoCreateDatePicker } from "./date-picker";
+import { TodoCreateTags } from "./tags";
+import { ImageInput } from "./image-input";
 
 interface TodoCreateModalProps extends BaseModalProps {
   dashboardId: string;
@@ -45,7 +48,7 @@ export const TodoCreateModal: React.FC<TodoCreateModalProps> = ({
   return (
     <TodoCreateProvider todo={newTodo} setTodo={setNewTodo}>
       <JhModal
-        isOpen={true}
+        isOpen={isOpen}
         closeButtonProps={{
           onClick: () => {
             setIsOpen(false);
@@ -60,10 +63,13 @@ export const TodoCreateModal: React.FC<TodoCreateModalProps> = ({
       >
         <div>
           <p className="text-2xl">{"할 일 생성"}</p>
-          <form className="mt-9">
+          <form className="mt-9 space-y-4">
             <MemberList members={dashboardMembers} />
             <TodoTitleInput />
             <TodoCreateContent />
+            <TodoCreateDatePicker />
+            <TodoCreateTags />
+            <ImageInput />
           </form>
         </div>
       </JhModal>

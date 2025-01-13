@@ -45,14 +45,14 @@ export const InvitationHeaderButton: React.FC = () => {
   };
 
   return (
-    <div>
+    <>
       <JhButton
-        className="flex items-center justify-center px-4 py-2 border border-neutral-200 rounded-lg"
+        className="flex items-center justify-center px-4 py-1 border border-neutral-200 rounded-lg"
         variants="outline"
         onClick={() => modalHook.setIsOpen(true)}
       >
-        <UserPlusIcon className="w-5 h-5" />
-        <span className="ml-2">{"초대하기"}</span>
+        <UserPlusIcon className="w-5 h-5 hidden sm:block" />
+        <span className="sm:ml-2 text-nowrap ">{"초대하기"}</span>
       </JhButton>
       <JhModal
         isOpen={modalHook.isOpen}
@@ -84,6 +84,6 @@ export const InvitationHeaderButton: React.FC = () => {
           </form>
         </div>
       </JhModal>
-    </div>
+    </>
   );
 };
