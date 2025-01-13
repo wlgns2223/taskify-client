@@ -2,7 +2,7 @@
 
 import { JhButton } from "../../core/ui/jh-button";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { ReadColumnDto } from "../../libs/dashboard/dto/columns.dto";
+import { ReadColumnDto } from "../../libs/dashboard/column/dto/columns.dto";
 import Column from "./column";
 import {
   DragDropContext,
@@ -10,8 +10,8 @@ import {
   DropResult,
   Droppable,
 } from "@hello-pangea/dnd";
-import { SwapColumnsDtoSchema } from "../../libs/dashboard/dto/swapColumns.dto";
-import { useColumns } from "../../libs/dashboard/hooks/useColumns";
+import { SwapColumnsDtoSchema } from "../../libs/dashboard/column/dto/swapColumns.dto";
+import { useColumns } from "../../libs/dashboard/column/hooks/useColumns";
 import { ColumnCreateModal } from "./column-create-modal";
 import { useModal } from "../../core/hooks/useModal";
 import { PropsWithChildren, use, useState } from "react";

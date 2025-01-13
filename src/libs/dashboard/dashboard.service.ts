@@ -3,7 +3,7 @@ import {
   CreateColumnDtoSchema,
   ReadColumnDto,
   UpdateColumnDtoSchema,
-} from "./dto/columns.dto";
+} from "./column/dto/columns.dto";
 import {
   CreateDashBoardDtoSchema,
   createDashBoardDtoSchema,
@@ -11,7 +11,7 @@ import {
 import {
   CreateInvitationDto,
   CreateInvitationDtoSchema,
-} from "./dto/createInvitation.dto";
+} from "./invitation/dto/createInvitation.dto";
 import { InvitationSchema, InvitationStatusEnum } from "./dto/invitations.dto";
 import {
   OffsetPaginationRequestDto,
@@ -19,7 +19,7 @@ import {
   offsetPaginationRequestDtoSchema,
 } from "./dto/offsetPagination.dto";
 import { Dashboard } from "./dto/readDashboards.dto";
-import { SwapColumnsDtoSchema } from "./dto/swapColumns.dto";
+import { SwapColumnsDtoSchema } from "./column/dto/swapColumns.dto";
 
 class DashboardService extends Service {
   constructor() {
@@ -97,11 +97,6 @@ class DashboardService extends Service {
     const res = await this.apiHandler.delete(
       this.endPoints.columns.delete(columnId, dashboardId)
     );
-    return res.data;
-  }
-
-  async getTodosByColumnId(columnId: string) {
-    const res = await this.apiHandler.get(this.endPoints.todos.read(columnId));
     return res.data;
   }
 

@@ -1,5 +1,5 @@
 import { number, z } from "zod";
-import { Dashboard } from "./readDashboards.dto";
+import { Dashboard } from "../../dto/readDashboards.dto";
 
 export const swapColumnsDtoSchema = z.object({
   from: z.number().int(),

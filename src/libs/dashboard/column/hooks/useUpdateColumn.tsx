@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { queryOptions } from "../query-options";
+import { queryOptions } from "../../query-options";
 import { ReadColumnDto } from "../dto/columns.dto";
-import { useToast } from "../../../core/hooks/useToast";
+import { useToast } from "../../../../core/hooks/useToast";
 
 export const useUpdateColumn = () => {
   const qc = useQueryClient();

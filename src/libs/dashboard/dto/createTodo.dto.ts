@@ -10,7 +10,8 @@ export const CreateTodoDtoSchema = Todo.pick({
   dueDate: true,
   title: true,
   position: true,
-  imageUrl: true,
+}).extend({
+  imageFile: z.instanceof(File).optional(),
 });
 
 export type CreateTodoDto = z.infer<typeof CreateTodoDtoSchema>;

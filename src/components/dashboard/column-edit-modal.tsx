@@ -2,11 +2,11 @@ import { useState } from "react";
 import { BaseModalProps } from "../../core/types/base-modal";
 import { JHInput } from "../../core/ui/jh-input";
 import { JhModal } from "../../core/ui/modal/jh-modal";
-import { useUpdateColumn } from "../../libs/dashboard/hooks/useUpdateColumn";
+import { useUpdateColumn } from "../../libs/dashboard/column/hooks/useUpdateColumn";
 import {
   ReadColumnDto,
   UpdateColumnDtoSchema,
-} from "../../libs/dashboard/dto/columns.dto";
+} from "../../libs/dashboard/column/dto/columns.dto";
 
 interface ColumnEditModalProps extends BaseModalProps {
   column: ReadColumnDto;

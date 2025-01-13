@@ -3,11 +3,11 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { queryOptions } from "../query-options";
+import { queryOptions } from "../../query-options";
 import { SwapColumnsDtoSchema } from "../dto/swapColumns.dto";
-import { dashboardService } from "../dashboard.service";
+import { dashboardService } from "../../dashboard.service";
 import { CreateColumnDtoSchema, ReadColumnDto } from "../dto/columns.dto";
-import { useToast } from "../../../core/hooks/useToast";
+import { useToast } from "../../../../core/hooks/useToast";
 
 export const useColumns = (dashboardId: string) => {
   const { data: columns } = useSuspenseQuery({

@@ -1,6 +1,4 @@
-import { JhButton } from "../../core/ui/jh-button";
-import { Cog6ToothIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { ReadColumnDto } from "../../libs/dashboard/dto/columns.dto";
+import { ReadColumnDto } from "../../libs/dashboard/column/dto/columns.dto";
 import { useModal } from "../../core/hooks/useModal";
 import { ColumnEditDropdown } from "./column-edit-dropdown";
 import { ColumnEditModal } from "./column-edit-modal";

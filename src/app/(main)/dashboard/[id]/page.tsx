@@ -7,7 +7,8 @@ import { NextPage } from "next";
 import { queryOptions } from "../../../../libs/dashboard/query-options";
 import Detail from "../../../../components/dashboard/detail";
 import { Suspense } from "react";
-import { ReadColumnDto } from "../../../../libs/dashboard/dto/columns.dto";
+import { ReadColumnDto } from "../../../../libs/dashboard/column/dto/columns.dto";
+import { todoQueryOptions } from "../../../../libs/dashboard/todo/todo-query-option";
 
 type PageProps = {
   params: {
@@ -31,7 +32,7 @@ const Dashboard: NextPage<PageProps> = async ({ params }) => {
   if (columnsId) {
     const todoQueries = columnsId.map((columnId) =>
       queryClient.prefetchQuery({
-        ...queryOptions.getTodosByColumnId(columnId.toString()),
+        ...todoQueryOptions.getTodosByColumnId(columnId.toString()),
       })
     );
 

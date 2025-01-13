@@ -6,7 +6,7 @@ import { JhModal } from "../../core/ui/modal/jh-modal";
 import { JHInput } from "../../core/ui/jh-input";
 import { useState } from "react";
 import { useUserContext } from "../../core/user/context";
-import { CreateInvitationDto } from "../../libs/dashboard/dto/createInvitation.dto";
+import { CreateInvitationDto } from "../../libs/dashboard/invitation/dto/createInvitation.dto";
 import { useToast } from "../../core/hooks/useToast";
 import { useMutation } from "@tanstack/react-query";
 import { dashboardService } from "../../libs/dashboard/dashboard.service";

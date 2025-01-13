@@ -2,12 +2,15 @@
 
 import { BaseModalProps } from "../../../core/types/base-modal";
 import { JhModal } from "../../../core/ui/modal/jh-modal";
-import { FormEvent, useEffect, useState } from "react";
-import { CreateTodoDto } from "../../../libs/dashboard/dto/createTodo.dto";
+import { useEffect, useState } from "react";
+import {
+  CreateTodoDto,
+  CreateTodoDtoSchema,
+} from "../../../libs/dashboard/dto/createTodo.dto";
 import { useUserContext } from "../../../core/user/context";
 import { useDashboardContext } from "../../../core/providers/dashboard-provider";
 import { MemberList } from "./member-list";
-import { TodoCreateProvider } from "../../../libs/dashboard/todo-create-context";
+import { TodoCreateProvider } from "../../../libs/dashboard/todo/todo-create-context";
 import { TodoTitleInput } from "./title-input";
 import { TodoCreateContent } from "./content";
 import { TodoCreateDatePicker } from "./date-picker";
@@ -25,16 +28,16 @@ export const TodoCreateModal: React.FC<TodoCreateModalProps> = ({
   dashboardId,
 }) => {
   const { userInfo } = useUserContext();
-  const { dashboardMembers, dashboard } = useDashboardContext();
+  const { dashboardMembers } = useDashboardContext();
   const [newTodo, setNewTodo] = useState<CreateTodoDto>({
+    content: "",
+    dueDate: "",
+    title: "",
+    position: 0,
     assigneeUserId: dashboardMembers[0].nickname,
     assignerUserId: userInfo.nickname,
     columnId: columnId,
     dashboardId: dashboardId,
-    content: "",
-    dueDate: "",
-    position: 0,
-    title: "",
   });
 
   useEffect(() => {

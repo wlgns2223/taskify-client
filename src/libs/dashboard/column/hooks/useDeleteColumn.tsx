@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useToast } from "../../../core/hooks/useToast";
-import { queryOptions } from "../query-options";
+import { useToast } from "../../../../core/hooks/useToast";
+import { queryOptions } from "../../query-options";
 import { ReadColumnDto } from "../dto/columns.dto";
 
 export const useDeleteColumn = () => {

@@ -1,4 +1,3 @@
-import { EmptyBoard } from "../../../components/my-dashboard/empty-board";
 import { Suspense } from "react";
 import {
   HydrationBoundary,

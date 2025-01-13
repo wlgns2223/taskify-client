@@ -2,17 +2,15 @@ import { dashboardService } from "./dashboard.service";
 import {
   DeleteColumnDtoSchema,
   UpdateColumnDtoSchema,
-} from "./dto/columns.dto";
+} from "./column/dto/columns.dto";
 import { InvitationStatusEnum } from "./dto/invitations.dto";
 import { OffsetPaginationRequestDto } from "./dto/offsetPagination.dto";
-import { ReadDashboardsDtoSchema } from "./dto/readDashboards.dto";
 
 const queryKeys = {
   all: ["dashboards"] as const,
   columnsByDashboardId: (dashboardId: string) =>
     [...queryKeys.all, dashboardId] as const,
-  todo: ["todos"] as const,
-  todosByColumnId: (columnId: string) => [...queryKeys.todo, columnId] as const,
+
   invitation: ["invitations"] as const,
 };
 
@@ -43,10 +41,6 @@ export const queryOptions = {
         deleteColumnDto.id,
         deleteColumnDto.dashboardId
       ),
-  }),
-  getTodosByColumnId: (columnId: string) => ({
-    queryKey: [...queryKeys.todosByColumnId(columnId)],
-    queryFn: () => dashboardService.getTodosByColumnId(columnId),
   }),
 
   getInvitationsWithPagination: (
