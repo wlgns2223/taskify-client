@@ -3,7 +3,7 @@ import { FetchHandler } from "../fetch-handler/fetch-handler";
 import { HeaderHandler } from "../header-handler/header-handler";
 import { TokenHandler } from "../token-handler/token-handler";
 
-export const baseURL = "http://localhost:4000/api/1";
+export const baseURL = "http://localhost:4000/api";
 
 export class APIHanlder {
   constructor(private fetchHandler: FetchHandler) {}

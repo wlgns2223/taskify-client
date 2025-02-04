@@ -9,7 +9,7 @@ export const signUpDtoSchema = z.object({
   password: z
     .string()
     .min(4, { message: "비밀번호는 4글자 이상이어야 합니다." }),
-  repassword: z
+  passwordConfirm: z
     .string()
     .min(4, { message: "비밀번호는 4글자 이상이어야 합니다." }),
 });

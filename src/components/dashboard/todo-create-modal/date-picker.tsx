@@ -8,22 +8,25 @@ export const TodoCreateDatePicker: React.FC = () => {
   const { setTodo, todo } = useTodoCreateContext();
   const { notify } = useToast();
 
+  const format = "YYYY-MM-DD";
+
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isBefore = dayjs(e.target.value).isBefore(
-      dayjs().format("YYYY-MM-DD")
-    );
+    const isBefore = dayjs(e.target.value).isBefore(dayjs().format(format));
     if (isBefore) {
       notify("오늘 이후로 선택해주세요");
       return;
     }
 
-    setTodo((prev) => ({ ...prev, dueDate: e.target.value }));
+    setTodo((prev) => ({ ...prev, dueDate: dayjs(e.target.value).toDate() }));
   };
-
   return (
     <div className="flex flex-col">
       <span>{"마감일"}</span>
-      <JHInput value={todo.dueDate} onChange={handleDateChange} type="date" />
+      <JHInput
+        value={dayjs(todo.dueDate).format(format)}
+        onChange={handleDateChange}
+        type="date"
+      />
     </div>
   );
 };

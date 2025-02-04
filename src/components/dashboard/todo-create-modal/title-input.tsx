@@ -1,14 +1,14 @@
-import { FormEvent } from "react";
+import { ChangeEvent, FormEvent } from "react";
 import { JHInput } from "../../../core/ui/jh-input";
 import { useTodoCreateContext } from "../../../libs/dashboard/todo/todo-create-context";
 
 export const TodoTitleInput: React.FC = () => {
   const { setTodo, todo } = useTodoCreateContext();
 
-  const handleChangeTitle = (e: FormEvent<HTMLInputElement>) => {
+  const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTodo((prev) => ({
       ...prev,
-      title: e.currentTarget.value,
+      title: e.target.value,
     }));
   };
 

@@ -2,15 +2,15 @@ import { z } from "zod";
 
 export const Todo = z.object({
   id: z.number().int(),
-  columnId: z.string(),
-  dashboardId: z.string(),
-  assigneeUserId: z.string(),
-  assignerUserId: z.string(),
+  columnId: z.number().int(),
+  dashboardId: z.number().int(),
+  assigneeUserId: z.number().int(),
+  assignerUserId: z.number().int(),
   title: z.string(),
   content: z.string(),
-  dueDate: z.string(),
+  dueDate: z.date(),
   imageUrl: z.string().optional(),
   position: z.number().int(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
 });

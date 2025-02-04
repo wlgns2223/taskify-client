@@ -14,7 +14,7 @@ export type CreateFormFields = {
   email?: string[];
   nickname?: string[];
   password?: string[];
-  repassword?: string[];
+  passwordConfirm?: string[];
 };
 
 type CreateFormState = ServerActionStatus<CreateFormFields>;
@@ -27,7 +27,7 @@ export const createUser = async (
     email: formData.get("email") as string,
     nickname: formData.get("nickname") as string,
     password: formData.get("password") as string,
-    repassword: formData.get("repassword") as string,
+    passwordConfirm: formData.get("passwordConfirm") as string,
   };
   const result = signUpDtoSchema.safeParse(schema);
 
@@ -55,9 +55,7 @@ export const createUser = async (
     formState.success = true;
     formState.errors = undefined;
     formState.statusCode = response.statusCode;
-    if (!!formState.success && response.statusCode === StatusCodes.CREATED) {
-      redirect(PATH.signIn());
-    }
+    return formState;
   } catch (e) {
     console.error("Server action Error");
     if (e instanceof HTTPError) {
@@ -72,6 +70,7 @@ export const createUser = async (
       formState.statusCode = e.statusCode;
     } else {
       console.error("Unknown Error");
+      console.error(e);
       throw e;
     }
   }

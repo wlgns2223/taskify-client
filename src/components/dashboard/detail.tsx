@@ -14,7 +14,7 @@ import { SwapColumnsDtoSchema } from "../../libs/dashboard/column/dto/swapColumn
 import { useColumns } from "../../libs/dashboard/column/hooks/useColumns";
 import { ColumnCreateModal } from "./column-create-modal";
 import { useModal } from "../../core/hooks/useModal";
-import { PropsWithChildren, use, useState } from "react";
+import { PropsWithChildren, use, useEffect, useState } from "react";
 import { Todos } from "./todos";
 import { TodoCreateModal } from "./todo-create-modal/todo-create-modal";
 
@@ -25,7 +25,7 @@ interface DetailPageProps {
 const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
   dashboardId,
 }) => {
-  const [selectedColumn, setSelectedColumn] = useState("");
+  const [selectedColumn, setSelectedColumn] = useState<number | undefined>();
   const { columns, swapColumnsMutation, createColumnMutation } =
     useColumns(dashboardId);
 
@@ -56,10 +56,21 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
     columnCreateModalProps.setIsOpen(false);
   };
 
-  const handleOpenCreateTodoModal = (columnId: string) => {
+  const handleOpenCreateTodoModal = (columnId: number) => {
     setSelectedColumn(columnId);
-    todoCreateModalProps.setIsOpen(true);
   };
+
+  useEffect(() => {
+    if (selectedColumn) {
+      todoCreateModalProps.setIsOpen(true);
+    }
+  }, [selectedColumn]);
+
+  useEffect(() => {
+    if (!todoCreateModalProps.isOpen) {
+      setSelectedColumn(undefined);
+    }
+  }, [todoCreateModalProps.isOpen]);
 
   return (
     <>
@@ -85,9 +96,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                     <JhButton
                       className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] whitespace-nowrap mt-5"
                       variants="outline"
-                      onClick={() =>
-                        handleOpenCreateTodoModal(column.id.toString())
-                      }
+                      onClick={() => handleOpenCreateTodoModal(column.id)}
                     >
                       <PlusIcon className="w-4 h-4 text-primary bg-primary-light rounded-sm ml-3" />
                     </JhButton>
@@ -112,8 +121,8 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
       </div>
       <TodoCreateModal
         modalProps={todoCreateModalProps}
-        columnId={selectedColumn}
-        dashboardId={dashboardId}
+        columnId={selectedColumn!}
+        dashboardId={parseInt(dashboardId, 10)}
       />
       <ColumnCreateModal
         modalProps={columnCreateModalProps}

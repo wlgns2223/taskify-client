@@ -19,13 +19,6 @@ export const MemberList: React.FC<MemberListProps> = ({ members }) => {
   const [selected, setSelected] = useState<MemberSchemaDto>(members[0]);
   const { setTodo } = useTodoCreateContext();
 
-  useEffect(() => {
-    setTodo((prev) => ({
-      ...prev,
-      assigneeUserId: selected.id.toString(),
-    }));
-  }, [selected]);
-
   return (
     <Field>
       <Label>{"담당자"}</Label>
@@ -33,7 +26,9 @@ export const MemberList: React.FC<MemberListProps> = ({ members }) => {
         as={"div"}
         className={"flex flex-col relative"}
         value={selected}
-        onChange={setSelected}
+        onChange={(value) => {
+          setTodo((prev) => ({ ...prev, assigneeUserId: value.id }));
+        }}
       >
         <ListboxButton
           className={

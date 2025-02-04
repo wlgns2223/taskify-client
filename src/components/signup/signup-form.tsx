@@ -3,49 +3,13 @@
 import { useFormState } from "react-dom";
 import { CreateFormFields, createUser } from "../../libs/signup/actions";
 import { JhCheckbox } from "../../core/ui/jh-checkbox";
-import { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { JhButton } from "../../core/ui/jh-button";
 import { FormInput } from "./signup-input";
+import { useRouter } from "next/navigation";
+import { PATH } from "../../core/types/path";
+import { formChildren } from "./static";
 
-type SignUpFormChildren = {
-  type: string;
-  id: string;
-  name: string;
-  placeholder: string;
-  error?: string;
-  label: string;
-};
-
-const formChildren: SignUpFormChildren[] = [
-  {
-    id: "email",
-    name: "email",
-    placeholder: "이메일을 입력해 주세요.",
-    type: "text",
-    label: "이메일",
-  },
-  {
-    id: "nickname",
-    name: "nickname",
-    placeholder: "닉네임을 입력해 주세요.",
-    type: "text",
-    label: "닉네임",
-  },
-  {
-    label: "비밀번호",
-    id: "password",
-    name: "password",
-    placeholder: "비밀번호를 입력해 주세요.",
-    type: "password",
-  },
-  {
-    label: "비밀번호 확인",
-    id: "repassword",
-    name: "repassword",
-    placeholder: "비밀번호를 다시 입력해 주세요.",
-    type: "password",
-  },
-];
 /**
  *
  * useFormState와 Server Action 사용
@@ -63,11 +27,19 @@ export const SignupForm: React.FC = () => {
     });
   };
 
+  const router = useRouter();
+
   useEffect(() => {
     if (signUpFormState.errors && signUpFormState.errors.fieldMessage) {
       setErrors(signUpFormState.errors.fieldMessage);
     }
   }, [signUpFormState.errors]);
+
+  useEffect(() => {
+    if (!!signUpFormState.success) {
+      router.push(PATH.signIn());
+    }
+  }, [signUpFormState?.success]);
 
   const isSubmitDisabled = isTermChecked == false;
   return (

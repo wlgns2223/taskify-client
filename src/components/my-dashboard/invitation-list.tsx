@@ -22,8 +22,6 @@ export const InvitationList: React.FC<PropsWithChildren> = ({ children }) => {
     ...queryOptions.getInvitationsWithPagination(offsetPaginationDto),
   });
 
-  console.log(invitationsWithPagination);
-
   return match(invitationsWithPagination.data.length)
     .with(0, () => <EmptyBoard />)
     .otherwise(() => (
