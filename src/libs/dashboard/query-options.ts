@@ -15,22 +15,11 @@ const queryKeys = {
 };
 
 export const queryOptions = {
-  all: () => ({
-    queryKey: queryKeys.all,
-    queryFn: () => {},
-  }),
-  readDashboards: (offsetPaginationReqDto: OffsetPaginationRequestDto) => ({
-    queryKey: [...queryKeys.all, offsetPaginationReqDto],
-    queryFn: () => dashboardService.readDashboards(offsetPaginationReqDto),
-  }),
   getColumnsBydashboardId: (id: string) => ({
     queryKey: [...queryKeys.columnsByDashboardId(id)],
     queryFn: () => dashboardService.getColumnsByDashboardId(id),
   }),
-  getDashboardById: (id: string) => ({
-    queryKey: [...queryKeys.all, id],
-    queryFn: () => dashboardService.getDashboardById(id),
-  }),
+
   updateColumn: () => ({
     queryFn: (column: UpdateColumnDtoSchema) =>
       dashboardService.updateColumn(column.id.toString(), column),

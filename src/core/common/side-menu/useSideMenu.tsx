@@ -1,13 +1,16 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { queryOptions } from "../../../libs/dashboard/query-options";
 import { OffsetPaginationRequestDto } from "../../../libs/dashboard/dto/offsetPagination.dto";
 import { defaultOffsetPaginationReqDto } from "../../const/default-pagination";
+import { myDashboardQueryOptions } from "../../../libs/my-dashboard/services/query-key";
 
 export const useSideMenu = () => {
   return useSuspenseInfiniteQuery({
-    queryKey: queryOptions.all().queryKey,
-    queryFn: (context) =>
-      queryOptions.readDashboards(context.pageParam).queryFn(),
+    queryKey: myDashboardQueryOptions.all().queryKey,
+    queryFn: (context) => {
+      return myDashboardQueryOptions
+        .findByPagination(context.pageParam)
+        .queryFn();
+    },
     getNextPageParam: (lastPage) => {
       const nextOffsetPaginationReqDto: OffsetPaginationRequestDto = {
         ...defaultOffsetPaginationReqDto,

@@ -14,30 +14,18 @@ interface DashboardCreateContentProps {
 export const DashboardCreateModal: React.FC<DashboardCreateContentProps> = ({
   modalHookProps,
 }) => {
-  const queryClient = useQueryClient();
-
-  const refetchDashboards = () => {
-    queryClient.invalidateQueries({
-      queryKey: [
-        ...queryOptions.readDashboards(defaultOffsetPaginationReqDto).queryKey,
-      ],
-    });
-    queryClient.invalidateQueries({
-      queryKey: [...queryOptions.all().queryKey],
-    });
-  };
-
   const {
-    handleCreateDashboard,
     isPending,
+    createDashboardMutation,
     dashBoardCreateDto,
     setDashBoardCreateDto,
-  } = useCreateDashboard({
-    onSuccess: () => {
-      modalHookProps.setIsOpen(false);
-      refetchDashboards();
-    },
-  });
+  } = useCreateDashboard();
+
+  const handleCreateDashboard = () => {
+    createDashboardMutation(dashBoardCreateDto);
+    modalHookProps.setIsOpen(false);
+  };
+
   return (
     <>
       <JhModal

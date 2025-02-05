@@ -1,17 +1,13 @@
 "use client";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { queryOptions } from "../../libs/dashboard/query-options";
 import { PaginationButtons } from "./dashboard-pages-number";
 import { useState } from "react";
 import { useUserContext } from "../../core/user/context";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import {
-  DEFAULT_PAGE_SIZE,
-  OffsetPaginationRequestDto,
-} from "../../libs/dashboard/dto/offsetPagination.dto";
+import { OffsetPaginationRequestDto } from "../../libs/dashboard/dto/offsetPagination.dto";
 import { defaultOffsetPaginationReqDto } from "../../core/const/default-pagination";
 import { Dashboard } from "../../libs/dashboard/dto/readDashboards.dto";
+import { useDashboardsWithPagination } from "../../libs/my-dashboard/services/useMyDashboardServices";
 
 interface DashboardsProps {}
 
@@ -19,12 +15,12 @@ export const Dashboards: React.FC<DashboardsProps> = ({}) => {
   const [offsetPaginationReqDto, setOffsetPaginationReqDto] =
     useState<OffsetPaginationRequestDto>(defaultOffsetPaginationReqDto);
 
-  const { data: offsetPaginationResponse } = useSuspenseQuery({
-    ...queryOptions.readDashboards(offsetPaginationReqDto),
-  });
+  const { data: offsetPaginationResponse } = useDashboardsWithPagination(
+    offsetPaginationReqDto
+  );
+  const { data: dashboards } = offsetPaginationResponse;
 
   const { userInfo } = useUserContext();
-  const { data: dashboards } = offsetPaginationResponse;
 
   return (
     <div>

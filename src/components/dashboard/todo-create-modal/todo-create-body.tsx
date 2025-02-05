@@ -31,7 +31,6 @@ export const TodoCreateBody: React.FC<TodoCreateModalProps> = ({
     columnId: columnId,
     dashboardId: dashboardId,
   });
-  console.log("newTodo", newTodo);
   return (
     <TodoCreateProvider todo={newTodo} setTodo={setNewTodo}>
       <div>

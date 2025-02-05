@@ -39,7 +39,7 @@ class DashboardService extends Service {
     return res.data;
   }
 
-  async readDashboards(offsetPaginationReqDto: OffsetPaginationRequestDto) {
+  async findByPagination(offsetPaginationReqDto: OffsetPaginationRequestDto) {
     const result = offsetPaginationRequestDtoSchema.safeParse(
       offsetPaginationReqDto
     );
@@ -52,7 +52,7 @@ class DashboardService extends Service {
     return res.data;
   }
 
-  async getDashboardById(id: string) {
+  async findById(id: string) {
     const res = await this.apiHandler.get<Dashboard>(
       this.endPoints.dashboard.getByDashboardId(id)
     );

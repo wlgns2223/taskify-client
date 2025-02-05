@@ -1,43 +1,40 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "../../../core/hooks/useToast";
 import { createDashBoard } from "../create-dashboard";
 import { CreateDashBoardDtoSchema } from "../dto/createDashboards.dto";
 import { useState } from "react";
 import { colors } from "../../../components/my-dashboard/dashboard-create-content";
+import { myDashboardQueryOptions } from "../../my-dashboard/services/query-key";
 
-interface UseCreateDashboardProps {
-  onSuccess?: () => void;
-  onError?: (e: any) => void;
-}
-
-export const useCreateDashboard = (props?: UseCreateDashboardProps) => {
+export const useCreateDashboard = () => {
   const { notify } = useToast();
+  const queryClient = useQueryClient();
 
   const [dashBoardCreateDto, setDashBoardCreateDto] =
     useState<CreateDashBoardDtoSchema>({
       title: "",
       color: colors[0].hex,
     });
-  const { mutateAsync: createDashboardMutation, ...rest } = useMutation({
-    mutationFn: createDashBoard,
-  });
 
-  const handleCreateDashboard = async () => {
-    try {
-      await createDashboardMutation(dashBoardCreateDto);
-      if (props?.onSuccess) {
-        props.onSuccess();
-      }
-    } catch (e: any) {
-      notify(e.message);
-      if (props?.onError) {
-        props.onError(e);
-      }
-    }
+  const invalidateDashboards = () => {
+    queryClient.invalidateQueries({
+      queryKey: myDashboardQueryOptions.all().queryKey,
+    });
   };
 
+  const { mutate: createDashboardMutation, ...rest } = useMutation({
+    mutationFn: createDashBoard,
+    onSuccess: () => {
+      notify("대시보드가 생성되었습니다.");
+      invalidateDashboards();
+    },
+    onError: (error) => {
+      notify(error.message);
+    },
+  });
+
   return {
-    handleCreateDashboard,
+    createDashboardMutation,
     dashBoardCreateDto,
     setDashBoardCreateDto,
     ...rest,

@@ -13,22 +13,18 @@ import { InvitationList } from "../../../components/my-dashboard/invitation-list
 import { apiHandler } from "../../../core/network/handlers/fetch/fetch";
 import { defaultOffsetPaginationReqDto } from "../../../core/const/default-pagination";
 import { getHeaderWithCookies } from "../../../core/utils/get-header-with-cookies";
+import { myDashboardQueryOptions } from "../../../libs/my-dashboard/services/query-key";
 
 export default async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: queryOptions.readDashboards(defaultOffsetPaginationReqDto)
-      .queryKey,
-    queryFn: async () => {
-      const headers = await getHeaderWithCookies();
-      const res = await apiHandler.get<ReadDashboardsResponse>(
-        END_POINT.dashboard.read(defaultOffsetPaginationReqDto),
-        { headers }
-      );
-
-      return res.data;
-    },
+    queryKey: myDashboardQueryOptions.findByPagination(
+      defaultOffsetPaginationReqDto
+    ).queryKey,
+    queryFn: myDashboardQueryOptions.findByPagination(
+      defaultOffsetPaginationReqDto
+    ).queryFn,
   });
 
   await queryClient.prefetchQuery({
