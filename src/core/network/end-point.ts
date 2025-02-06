@@ -46,14 +46,14 @@ export const END_POINT = {
     create() {
       return "/columns";
     },
-    read(dashboardId: string) {
+    read(dashboardId: number) {
       return `/columns?dashboardId=${dashboardId}`;
     },
 
-    swap(dashboardId: string) {
+    swap(dashboardId: number) {
       return `/columns/swap/${dashboardId}`;
     },
-    update(id: string) {
+    update(id: number) {
       return `/columns/${id}`;
     },
     delete(columnId: number, dashboardId: number) {

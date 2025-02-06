@@ -24,7 +24,7 @@ export default async ({
   }
 
   const userInfo = await userService.getUser(accessToken);
-  const dashboard = await dashboardService.getDashboardById(params.id);
+  const dashboard = await dashboardService.findById(params.id);
   const members = await memberService.getMembersByDashboardId(dashboard.id);
   return (
     <DashboardProvider dashboard={dashboard} dashboardMembers={members}>

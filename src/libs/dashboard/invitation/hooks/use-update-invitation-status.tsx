@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { queryOptions } from "../../query-options";
 import {
   InvitationSchema,
   InvitationStatusEnum,
@@ -8,9 +7,16 @@ import {
   InvitationOffsetPaginationRequestDto,
   OffsetPaginationResponseDto,
 } from "../../dto/offsetPagination.dto";
+import { invitationService } from "../../../my-dashboard/invitation/services/service";
+import { invitationQueryOptions } from "../../../my-dashboard/invitation/services/query-key";
 
 type UpdateInvitationStatusParam = {
   offsetPaginationDto: InvitationOffsetPaginationRequestDto;
+};
+
+type UpdateInvitationStatusDto = {
+  invitationId: number;
+  status: InvitationStatusEnum;
 };
 
 export const useUpdateInvitationStatus = (
@@ -29,22 +35,25 @@ export const useUpdateInvitationStatus = (
     );
   };
   return useMutation({
-    mutationFn: queryOptions.updateInvitationStatus().queryFn,
+    mutationFn: (updateInvitationStatus: UpdateInvitationStatusDto) =>
+      invitationService.updateStatus(
+        updateInvitationStatus.invitationId,
+        updateInvitationStatus.status
+      ),
     onMutate: async (data: {
       invitationId: number;
       status: InvitationStatusEnum;
     }) => {
       await qc.cancelQueries({
         queryKey:
-          queryOptions.getInvitationsWithPagination(offsetPaginationDto)
-            .queryKey,
+          invitationQueryOptions.findByPagination(offsetPaginationDto).queryKey,
       });
       const prevInvitations = qc.getQueryData(
-        queryOptions.getInvitationsWithPagination(offsetPaginationDto).queryKey
+        invitationQueryOptions.findByPagination(offsetPaginationDto).queryKey
       );
 
       qc.setQueryData(
-        queryOptions.getInvitationsWithPagination(offsetPaginationDto).queryKey,
+        invitationQueryOptions.findByPagination(offsetPaginationDto).queryKey,
         (oldData: OffsetPaginationResponseDto<InvitationSchema>) => {
           return {
             ...oldData,

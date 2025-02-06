@@ -3,15 +3,15 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { queryOptions } from "../../query-options";
 import { SwapColumnsDtoSchema } from "../dto/swapColumns.dto";
-import { dashboardService } from "../../dashboard.service";
 import { CreateColumnDtoSchema, ReadColumnDto } from "../dto/columns.dto";
 import { useToast } from "../../../../core/hooks/useToast";
+import { columnQueryOptions } from "../services/query-key";
+import { columnService } from "../services/service";
 
-export const useColumns = (dashboardId: string) => {
+export const useColumns = (dashboardId: number) => {
   const { data: columns } = useSuspenseQuery({
-    ...queryOptions.getColumnsBydashboardId(dashboardId),
+    ...columnQueryOptions.findBy(dashboardId),
   });
   const { notify } = useToast();
   const queryClient = useQueryClient();
@@ -22,13 +22,13 @@ export const useColumns = (dashboardId: string) => {
 
   const createColumnMutation = useMutation({
     mutationFn: async (createColumnDto: CreateColumnDtoSchema) =>
-      dashboardService.createColumn(createColumnDto),
+      columnService.create(createColumnDto),
     onMutate: async (createColumnDto: CreateColumnDtoSchema) => {
       await queryClient.cancelQueries({
-        queryKey: queryOptions.getColumnsBydashboardId(dashboardId).queryKey,
+        queryKey: columnQueryOptions.findBy(dashboardId).queryKey,
       });
       queryClient.setQueryData(
-        queryOptions.getColumnsBydashboardId(dashboardId).queryKey,
+        columnQueryOptions.findBy(dashboardId).queryKey,
         (oldData: ReadColumnDto[]) =>
           appendColumn(oldData, {
             ...createColumnDto,
@@ -39,19 +39,19 @@ export const useColumns = (dashboardId: string) => {
           })
       );
       const prevColumns = queryClient.getQueryData(
-        queryOptions.getColumnsBydashboardId(dashboardId).queryKey
+        columnQueryOptions.findBy(dashboardId).queryKey
       );
 
       return { prevColumns };
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: queryOptions.getColumnsBydashboardId(dashboardId).queryKey,
+        queryKey: columnQueryOptions.findBy(dashboardId).queryKey,
       });
     },
     onError: (err, variables, context) => {
       queryClient.setQueryData(
-        queryOptions.getColumnsBydashboardId(dashboardId).queryKey,
+        columnQueryOptions.findBy(dashboardId).queryKey,
         context?.prevColumns
       );
       notify(err.message);
@@ -75,16 +75,15 @@ export const useColumns = (dashboardId: string) => {
       dashboardId,
       swapColumnsPosition,
     }: {
-      dashboardId: string;
+      dashboardId: number;
       swapColumnsPosition: SwapColumnsDtoSchema;
-    }) =>
-      dashboardService.swapColumnsPosition(dashboardId, swapColumnsPosition),
+    }) => columnService.swapPosition(dashboardId, swapColumnsPosition),
     onMutate: async (props) => {
       await queryClient.cancelQueries({
-        queryKey: queryOptions.getColumnsBydashboardId(dashboardId).queryKey,
+        queryKey: columnQueryOptions.findBy(dashboardId).queryKey,
       });
       queryClient.setQueryData(
-        queryOptions.getColumnsBydashboardId(dashboardId).queryKey,
+        columnQueryOptions.findBy(dashboardId).queryKey,
         (oldData: ReadColumnDto[]) =>
           swapColumns(
             oldData,
@@ -94,7 +93,7 @@ export const useColumns = (dashboardId: string) => {
       );
 
       const prevColumns = queryClient.getQueryData(
-        queryOptions.getColumnsBydashboardId(dashboardId).queryKey
+        columnQueryOptions.findBy(dashboardId).queryKey
       );
       return {
         prevColumns,
@@ -102,12 +101,12 @@ export const useColumns = (dashboardId: string) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: queryOptions.getColumnsBydashboardId(dashboardId).queryKey,
+        queryKey: columnQueryOptions.findBy(dashboardId).queryKey,
       });
     },
     onError: (err, variables, context) => {
       queryClient.setQueryData(
-        queryOptions.getColumnsBydashboardId(dashboardId).queryKey,
+        columnQueryOptions.findBy(dashboardId).queryKey,
         context?.prevColumns
       );
       notify(err.message);

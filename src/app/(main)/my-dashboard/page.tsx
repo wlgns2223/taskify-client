@@ -1,46 +1,47 @@
-import { Suspense } from "react";
+import { Suspense, useMemo } from "react";
 import {
+  FetchQueryOptions,
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import { queryOptions } from "../../../libs/dashboard/query-options";
 import { DashboardPannel } from "../../../components/my-dashboard/dashboard-pannel";
 import { Dashboards } from "../../../components/my-dashboard/dashboards";
-import { ReadDashboardsResponse } from "../../../libs/dashboard/dto/readDashboards.dto";
-import { END_POINT } from "../../../core/network/end-point";
 import { InvitationList } from "../../../components/my-dashboard/invitation-list";
-import { apiHandler } from "../../../core/network/handlers/fetch/fetch";
 import { defaultOffsetPaginationReqDto } from "../../../core/const/default-pagination";
-import { getHeaderWithCookies } from "../../../core/utils/get-header-with-cookies";
 import { myDashboardQueryOptions } from "../../../libs/my-dashboard/services/query-key";
+import { invitationQueryOptions } from "../../../libs/my-dashboard/invitation/services/query-key";
 
 export default async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: myDashboardQueryOptions.findByPagination(
-      defaultOffsetPaginationReqDto
-    ).queryKey,
-    queryFn: myDashboardQueryOptions.findByPagination(
-      defaultOffsetPaginationReqDto
-    ).queryFn,
-  });
+  const queryOptions: FetchQueryOptions[] = useMemo(
+    () => [
+      {
+        queryKey: myDashboardQueryOptions.findByPagination(
+          defaultOffsetPaginationReqDto
+        ).queryKey,
+        queryFn: myDashboardQueryOptions.findByPagination(
+          defaultOffsetPaginationReqDto
+        ).queryFn,
+      },
+      {
+        queryKey: invitationQueryOptions.findByPagination(
+          defaultOffsetPaginationReqDto
+        ).queryKey,
+        queryFn: invitationQueryOptions.findByPagination(
+          defaultOffsetPaginationReqDto
+        ).queryFn,
+      },
+    ],
+    []
+  );
 
-  await queryClient.prefetchQuery({
-    queryKey: queryOptions.getInvitationsWithPagination(
-      defaultOffsetPaginationReqDto
-    ).queryKey,
-    queryFn: async () => {
-      const headers = await getHeaderWithCookies();
-      const res = await apiHandler.get<ReadDashboardsResponse>(
-        END_POINT.invitation.read(defaultOffsetPaginationReqDto),
-        { headers }
-      );
+  const queries = queryOptions.map((option) =>
+    queryClient.prefetchQuery(option)
+  );
 
-      return res.data;
-    },
-  });
+  await Promise.all(queries);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

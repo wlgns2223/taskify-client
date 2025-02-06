@@ -19,7 +19,7 @@ import { Todos } from "./todos";
 import { TodoCreateModal } from "./todo-create-modal/todo-create-modal";
 
 interface DetailPageProps {
-  dashboardId: string;
+  dashboardId: number;
 }
 
 const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
@@ -49,7 +49,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
 
   const handleCreateColumn = (name: string) => {
     createColumnMutation.mutate({
-      dashboardId: parseInt(dashboardId, 10),
+      dashboardId,
       name,
       position: columns.length,
     });
@@ -122,7 +122,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
       <TodoCreateModal
         modalProps={todoCreateModalProps}
         columnId={selectedColumn!}
-        dashboardId={parseInt(dashboardId, 10)}
+        dashboardId={dashboardId}
       />
       <ColumnCreateModal
         modalProps={columnCreateModalProps}

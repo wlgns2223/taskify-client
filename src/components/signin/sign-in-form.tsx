@@ -8,9 +8,6 @@ import { signIn } from "../../libs/signin/actions";
 import { useEffect, useRef } from "react";
 import { redirect } from "next/navigation";
 import { PATH } from "../../core/types/path";
-import { DevComponentWrapper } from "../../core/dev/dev-component-wrapper";
-import { KeyInputHack } from "../../core/dev/keyboard-input-hack";
-import { useKeyInputHack } from "../../core/dev/hooks/useKeyboardHack";
 
 const SignInForm: NextPage = () => {
   const [signInFormState, signInAction] = useFormState(signIn, {});
@@ -21,22 +18,8 @@ const SignInForm: NextPage = () => {
     }
   }, [signInFormState.success]);
 
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const { handleKeyInputHack } = useKeyInputHack({
-    callback: () => {
-      if (emailRef.current && passwordRef.current) {
-        emailRef.current.value = "test@gmail.com";
-        passwordRef.current.value = "1234";
-      }
-    },
-  });
-
   return (
     <>
-      <DevComponentWrapper>
-        <KeyInputHack callback={handleKeyInputHack} />
-      </DevComponentWrapper>
       <form className="mt-9" action={signInAction}>
         <ul className="space-y-4">
           <li>
@@ -45,7 +28,6 @@ const SignInForm: NextPage = () => {
               name="email"
               placeholder="이메일을 입력해 주세요."
               error={signInFormState?.errors?.fieldMessage?.email}
-              ref={emailRef}
             />
           </li>
           <li>
@@ -55,7 +37,6 @@ const SignInForm: NextPage = () => {
               name="password"
               placeholder="비밀번호를 입력해 주세요."
               error={signInFormState?.errors?.fieldMessage?.password}
-              ref={passwordRef}
             />
           </li>
         </ul>

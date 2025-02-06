@@ -11,6 +11,7 @@ import { useToast } from "../../core/hooks/useToast";
 import { useMutation } from "@tanstack/react-query";
 import { dashboardService } from "../../libs/dashboard/dashboard.service";
 import { useDashboardContext } from "../../core/providers/dashboard-provider";
+import { invitationService } from "../../libs/my-dashboard/invitation/services/service";
 
 export const InvitationHeaderButton: React.FC = () => {
   const modalHook = useModal();
@@ -21,7 +22,7 @@ export const InvitationHeaderButton: React.FC = () => {
   const { dashboard } = useDashboardContext();
   const { mutate } = useMutation({
     mutationFn: async (dto: CreateInvitationDto) =>
-      await dashboardService.createInvitation(dto),
+      await invitationService.create(dto),
     onError: (err) => {
       notify(err.message);
       setEmail("");

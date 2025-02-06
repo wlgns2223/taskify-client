@@ -4,11 +4,11 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import { NextPage } from "next";
-import { queryOptions } from "../../../../libs/dashboard/query-options";
 import Detail from "../../../../components/dashboard/detail";
 import { Suspense } from "react";
 import { ReadColumnDto } from "../../../../libs/dashboard/column/dto/columns.dto";
 import { todoQueryOptions } from "../../../../libs/dashboard/todo/todo-query-option";
+import { columnQueryOptions } from "../../../../libs/dashboard/column/services/query-key";
 
 type PageProps = {
   params: {
@@ -17,16 +17,15 @@ type PageProps = {
 };
 
 const Dashboard: NextPage<PageProps> = async ({ params }) => {
-  const dashboardId = params.id;
+  const dashboardId = parseInt(params.id, 10);
 
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    ...queryOptions.getColumnsBydashboardId(dashboardId),
+    ...columnQueryOptions.findBy(dashboardId),
   });
-
   const data = queryClient.getQueriesData<ReadColumnDto[]>({
-    queryKey: queryOptions.getColumnsBydashboardId(dashboardId).queryKey,
+    queryKey: columnQueryOptions.findBy(dashboardId).queryKey,
   });
   const columnsId = data[0][1]?.map((column) => column.id);
   if (columnsId) {

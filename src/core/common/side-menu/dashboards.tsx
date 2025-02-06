@@ -20,14 +20,15 @@ export const SideDashboards: React.FC = () => {
 
   return (
     <div className="mt-3 overflow-scroll flex-1">
-      <ul className="">
+      <ul>
         {dashboards &&
           dashboards.map((dashboard, index) => (
-            <li key={dashboard.id}>
-              <Link
-                href={`/dashboard/${dashboard.id}`}
-                className="flex justify-center md:justify-start w-full max-w-[330px] h-[45px] px-2 py-3 hover:bg-primary-light hover:rounded-md"
-              >
+            <Link
+              key={dashboard.id}
+              href={`/dashboard/${dashboard.id}`}
+              className="flex justify-center md:justify-start w-full max-w-[330px] h-[45px] px-2 py-3 hover:bg-primary-light hover:rounded-md"
+            >
+              <li>
                 <div className="flex items-center">
                   <div
                     style={{
@@ -40,8 +41,8 @@ export const SideDashboards: React.FC = () => {
                     <CheckBadgeIcon className="text-blue-400 w-5 h-5 ml-2 hidden md:block" />
                   )}
                 </div>
-              </Link>
-            </li>
+              </li>
+            </Link>
           ))}
       </ul>
       <div ref={ref} className="w-full h-1" />

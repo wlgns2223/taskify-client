@@ -1,34 +1,34 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "../../../../core/hooks/useToast";
-import { queryOptions } from "../../query-options";
 import { ReadColumnDto } from "../dto/columns.dto";
+import { DelteColumnDto, columnService } from "../services/service";
+import { columnQueryOptions } from "../services/query-key";
 
 export const useDeleteColumn = () => {
   const qc = useQueryClient();
   const { notify } = useToast();
 
   return useMutation({
-    mutationFn: queryOptions.deleteColumn().queryFn,
+    mutationFn: (deleteColumnDto: DelteColumnDto) =>
+      columnService.delete(
+        deleteColumnDto.columnId,
+        deleteColumnDto.dashboardId
+      ),
     onMutate: async (deleteColumnDto) => {
       await qc.cancelQueries({
-        queryKey: queryOptions.getColumnsBydashboardId(
-          deleteColumnDto.dashboardId.toString()
-        ).queryKey,
+        queryKey: columnQueryOptions.findBy(deleteColumnDto.dashboardId)
+          .queryKey,
       });
 
       const previousColumns = qc.getQueryData<ReadColumnDto[]>(
-        queryOptions.getColumnsBydashboardId(
-          deleteColumnDto.dashboardId.toString()
-        ).queryKey
+        columnQueryOptions.findBy(deleteColumnDto.dashboardId).queryKey
       );
       if (previousColumns) {
         const updatedColumns = previousColumns.filter(
-          (c) => c.id !== deleteColumnDto.id
+          (c) => c.id !== deleteColumnDto.columnId
         );
         qc.setQueryData(
-          queryOptions.getColumnsBydashboardId(
-            deleteColumnDto.dashboardId.toString()
-          ).queryKey,
+          columnQueryOptions.findBy(deleteColumnDto.dashboardId).queryKey,
           updatedColumns
         );
       }
@@ -38,8 +38,7 @@ export const useDeleteColumn = () => {
     onError: (err, variables, context) => {
       if (context?.previousColumns) {
         qc.setQueryData(
-          queryOptions.getColumnsBydashboardId(variables.dashboardId.toString())
-            .queryKey,
+          columnQueryOptions.findBy(variables.dashboardId).queryKey,
           context.previousColumns
         );
       }
@@ -49,11 +48,10 @@ export const useDeleteColumn = () => {
     },
     onSettled: (data, err, variables, context) => {
       qc.setQueryData<ReadColumnDto[]>(
-        queryOptions.getColumnsBydashboardId(variables.dashboardId.toString())
-          .queryKey,
+        columnQueryOptions.findBy(variables.dashboardId).queryKey,
         (oldData) => {
           if (!oldData) return oldData;
-          return oldData.filter((c) => c.id !== variables.id);
+          return oldData.filter((c) => c.id !== variables.columnId);
         }
       );
     },

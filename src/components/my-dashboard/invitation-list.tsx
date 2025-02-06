@@ -1,15 +1,13 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { PropsWithChildren, useState } from "react";
-import { queryOptions } from "../../libs/dashboard/query-options";
 import { InvitationOffsetPaginationRequestDto } from "../../libs/dashboard/dto/offsetPagination.dto";
 import { defaultOffsetPaginationReqDto } from "../../core/const/default-pagination";
-import { match } from "ts-pattern";
 import { EmptyBoard } from "./empty-board";
 import { InvitationPendingList } from "./invitation-pending-list";
 import { PaginationButtons } from "./dashboard-pages-number";
 import { InvitationSchema } from "../../libs/dashboard/dto/invitations.dto";
+import { useInvitationWithPagination } from "../../libs/my-dashboard/invitation/services/useInvitationServices";
 
 export const InvitationList: React.FC<PropsWithChildren> = ({ children }) => {
   const [offsetPaginationDto, setOffsetPaginationDto] =
@@ -18,24 +16,23 @@ export const InvitationList: React.FC<PropsWithChildren> = ({ children }) => {
       search: "",
     });
 
-  const { data: invitationsWithPagination } = useSuspenseQuery({
-    ...queryOptions.getInvitationsWithPagination(offsetPaginationDto),
-  });
+  const { data: invitationsWithPagination } =
+    useInvitationWithPagination(offsetPaginationDto);
 
-  return match(invitationsWithPagination.data.length)
-    .with(0, () => <EmptyBoard />)
-    .otherwise(() => (
-      <div>
-        <InvitationPendingList
-          offsetPaginationDto={offsetPaginationDto}
-          setOffsetPaginationDto={setOffsetPaginationDto}
-          invitationsWithPagination={invitationsWithPagination}
-        />
-        <PaginationButtons<InvitationSchema>
-          offsetPaginationReqDto={offsetPaginationDto}
-          setOffsetPaginationReqDto={setOffsetPaginationDto}
-          offsetPaginationResponse={invitationsWithPagination}
-        />
-      </div>
-    ));
+  return invitationsWithPagination.data.length > 0 ? (
+    <div>
+      <InvitationPendingList
+        offsetPaginationDto={offsetPaginationDto}
+        setOffsetPaginationDto={setOffsetPaginationDto}
+        invitationsWithPagination={invitationsWithPagination}
+      />
+      <PaginationButtons<InvitationSchema>
+        offsetPaginationReqDto={offsetPaginationDto}
+        setOffsetPaginationReqDto={setOffsetPaginationDto}
+        offsetPaginationResponse={invitationsWithPagination}
+      />
+    </div>
+  ) : (
+    <EmptyBoard />
+  );
 };

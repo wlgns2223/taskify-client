@@ -7,7 +7,7 @@ export const PATH = {
   },
 
   myDashBoard() {
-    return "/mydashboard";
+    return "/my-dashboard";
   },
   dashboard() {
     return "/dashboard";
