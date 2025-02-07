@@ -12,21 +12,21 @@ export class APIHanlder {
     return await this.fetchHandler.handlefetch<T>(url, options);
   }
 
-  public async post<BodyType = any>(
+  public async post<TBody = any, ResponseType = any>(
     url: string,
-    body: BodyType,
+    body: TBody,
     options?: Omit<RequestInit, "body">
   ) {
-    return await this.fetchHandler.handlefetch<BodyType>(url, {
+    return await this.fetchHandler.handlefetch<ResponseType>(url, {
       method: "POST",
       ...options,
       body: BodyHandler.toBody(options?.headers, body),
     });
   }
 
-  public async put<BodyType = any, ResponseType = any>(
+  public async put<TData = any, ResponseType = any>(
     url: string,
-    body: BodyType,
+    body: TData,
     options?: Omit<RequestInit, "body">
   ) {
     return await this.fetchHandler.handlefetch<ResponseType>(url, {

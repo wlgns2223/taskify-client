@@ -7,31 +7,21 @@ import { JHInput } from "../../core/ui/jh-input";
 import { useState } from "react";
 import { useUserContext } from "../../core/user/context";
 import { CreateInvitationDto } from "../../libs/dashboard/invitation/dto/createInvitation.dto";
-import { useToast } from "../../core/hooks/useToast";
-import { useMutation } from "@tanstack/react-query";
-import { dashboardService } from "../../libs/dashboard/dashboard.service";
 import { useDashboardContext } from "../../core/providers/dashboard-provider";
-import { invitationService } from "../../libs/my-dashboard/invitation/services/service";
+import { useCreateInvitation } from "../../libs/my-dashboard/invitation/services/useInvitationServices";
 
 export const InvitationHeaderButton: React.FC = () => {
   const modalHook = useModal();
   const [email, setEmail] = useState("");
 
   const { userInfo } = useUserContext();
-  const { notify } = useToast();
+
   const { dashboard } = useDashboardContext();
-  const { mutate } = useMutation({
-    mutationFn: async (dto: CreateInvitationDto) =>
-      await invitationService.create(dto),
-    onError: (err) => {
-      notify(err.message);
-      setEmail("");
-    },
+  const { mutate } = useCreateInvitation({
     onSuccess: () => {
-      notify("초대 메일이 발송되었습니다.");
-      setEmail("");
       modalHook.setIsOpen(false);
     },
+    onSettled: () => setEmail(""),
   });
 
   const handleCreateInvitation = () => {
@@ -39,7 +29,6 @@ export const InvitationHeaderButton: React.FC = () => {
       inviteeEmail: email,
       dashboardId: dashboard.id,
       inviterId: userInfo.id,
-      dashboardTitle: dashboard.title,
     };
 
     mutate(dto);
@@ -58,23 +47,17 @@ export const InvitationHeaderButton: React.FC = () => {
       <JhModal
         isOpen={modalHook.isOpen}
         closeButtonProps={{
-          onClick: () => {
-            modalHook.setIsOpen(false);
-          },
+          onClick: () => modalHook.setIsOpen(false),
+          type: "button",
         }}
         confirmButtonProps={{
           onClick: handleCreateInvitation,
+          type: "submit",
         }}
       >
         <div className="min-w-[540px]">
           <p className="text-2xl">{"초대하기"}</p>
-          <form
-            className="mt-8"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleCreateInvitation;
-            }}
-          >
+          <div className="mt-8">
             <label htmlFor="email" className="text-lg mt-2">
               {"이메일"}
             </label>
@@ -82,7 +65,7 @@ export const InvitationHeaderButton: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.currentTarget.value)}
             />
-          </form>
+          </div>
         </div>
       </JhModal>
     </>
