@@ -23,9 +23,15 @@ export default async ({
     redirect(PATH.signIn());
   }
 
-  const userInfo = await userService.getUser(accessToken);
-  const dashboard = await dashboardService.findById(params.id);
-  const members = await memberService.getMembersByDashboardId(dashboard.id);
+  const [userInfo, dashboard, members] = await Promise.all([
+    userService.getUser(accessToken),
+    dashboardService.findById(params.id),
+    dashboardService
+      .findById(params.id)
+      .then((dashboard) => memberService.getMembersByDashboardId(dashboard.id)),
+    ,
+  ]);
+
   return (
     <DashboardProvider dashboard={dashboard} dashboardMembers={members}>
       <CommonLayout

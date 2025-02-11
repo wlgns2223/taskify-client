@@ -4,6 +4,7 @@ import { TokenHandleResult } from "./core/middleware/types/auth-status";
 
 import { handleRenewToken } from "./core/middleware/auth-api/handle-renew-token/handle-renew-token";
 import { handleDeleteCookieOnFail } from "./core/middleware/auth-api/handle-delete-cookie-on-fail/handle-delete-cookie-on-fail";
+import { cookies } from "next/headers";
 
 export const config = {
   matcher: [

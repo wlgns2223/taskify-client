@@ -15,6 +15,8 @@ export const InvitationSchema = Base.extend({
   inviter: User,
   status: InvitationStatusEnum,
   dashboardId: z.number(),
+  dashboardTitle: z.string(),
+  inviterNickname: z.string(),
 });
 
 export type InvitationSchema = z.infer<typeof InvitationSchema>;

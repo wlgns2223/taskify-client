@@ -40,7 +40,9 @@ export const DashboardHeader: React.FC<
   return (
     <header className="w-full  flex items-center h-[70px] px-3 py-2 md:px-10 md:py-4 border border-x-0 border-t-0  border-b-neutral-200 text-sm md:text-base">
       <div className="flex items-center justify-between w-full h-full">
-        <span className="hidden md:block">{dashboard.title}</span>
+        <span className="hidden md:block whitespace-nowrap">
+          {dashboard.title}
+        </span>
         <nav className="flex items-center h-full w-full ">
           <div className="flex items-center justify-between md:justify-end w-full">
             <div className="flex space-x-2">
