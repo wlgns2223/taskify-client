@@ -1,20 +1,13 @@
 "use client";
 
 import clsx from "clsx";
-import {
-  Fragment,
-  HTMLProps,
-  PropsWithChildren,
-  ReactNode,
-  createElement,
-  useState,
-} from "react";
+import { HTMLProps, PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 import { JhButton, JhButtonProps } from "../jh-button";
 import { ModalPortal } from "./modal-portal";
 import { Transition, TransitionChild } from "@headlessui/react";
 
-interface ModalProps extends HTMLProps<HTMLFormElement> {
+interface ModalProps extends HTMLProps<HTMLDivElement> {
   confirmButtonProps?: JhButtonProps;
   closeButtonProps?: JhButtonProps;
   confirmText?: string;
@@ -59,7 +52,7 @@ export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
               leaveFrom="opacity-100"
               leaveTo="opacity-0 "
             >
-              <form
+              <div
                 {...props}
                 className={twMerge(
                   clsx("relative bg-white p-8 rounded-lg", props.className)
@@ -91,7 +84,7 @@ export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
                     {confirmText}
                   </JhButton>
                 </div>
-              </form>
+              </div>
             </TransitionChild>
           </div>
         </ModalPortal>

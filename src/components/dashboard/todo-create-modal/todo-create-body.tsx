@@ -36,7 +36,9 @@ export const TodoCreateBody: React.FC<TodoCreateModalProps> = ({
       <div>
         <p className="text-2xl">{"할 일 생성"}</p>
         <form className="mt-9 space-y-4">
-          <MemberList members={dashboardMembers} />
+          <MemberList
+            members={Array.from({ length: 10 }).flatMap(() => dashboardMembers)}
+          />
           <TodoTitleInput />
           <TodoCreateContent />
           <TodoCreateDatePicker />
