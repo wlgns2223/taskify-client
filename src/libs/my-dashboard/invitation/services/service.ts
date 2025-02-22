@@ -2,7 +2,7 @@ import { Service } from "../../../../core/network/service";
 import {
   InvitationSchema,
   InvitationStatusEnum,
-} from "../../../dashboard/dto/invitations.dto";
+} from "../../../dashboard/invitation/dto/invitations.dto";
 import {
   InvitationOffsetPaginationRequestDto,
   OffsetPaginationResponseDto,

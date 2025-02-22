@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDashboardContext } from "../../../core/providers/dashboard-provider";
 import { useUserContext } from "../../../core/user/context";
-import { CreateTodoDto } from "../../../libs/dashboard/dto/createTodo.dto";
+import { CreateTodoDto } from "../../../libs/dashboard/todo/dto/createTodo.dto";
 import { TodoCreateProvider } from "../../../libs/dashboard/todo/todo-create-context";
 import { MemberList } from "./member-list";
 import { TodoTitleInput } from "./title-input";
@@ -25,7 +25,6 @@ export const TodoCreateBody: React.FC<TodoCreateModalProps> = ({
     content: "",
     dueDate: new Date(),
     title: "",
-    position: 0,
     assigneeUserId: dashboardMembers[0].id,
     assignerUserId: userInfo.id,
     columnId: columnId,
@@ -36,9 +35,7 @@ export const TodoCreateBody: React.FC<TodoCreateModalProps> = ({
       <div>
         <p className="text-2xl">{"할 일 생성"}</p>
         <form className="mt-9 space-y-4">
-          <MemberList
-            members={Array.from({ length: 10 }).flatMap(() => dashboardMembers)}
-          />
+          <MemberList members={dashboardMembers} />
           <TodoTitleInput />
           <TodoCreateContent />
           <TodoCreateDatePicker />

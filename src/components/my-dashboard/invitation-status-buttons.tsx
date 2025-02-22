@@ -1,5 +1,5 @@
 import { JhButton } from "../../core/ui/jh-button";
-import { InvitationStatusEnum } from "../../libs/dashboard/dto/invitations.dto";
+import { InvitationStatusEnum } from "../../libs/dashboard/invitation/dto/invitations.dto";
 import { InvitationOffsetPaginationRequestDto } from "../../libs/dashboard/dto/offsetPagination.dto";
 import { useUpdateInvitationStatus } from "../../libs/dashboard/invitation/hooks/use-update-invitation-status";
 

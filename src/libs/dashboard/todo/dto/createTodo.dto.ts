@@ -9,7 +9,6 @@ export const CreateTodoDtoSchema = Todo.pick({
   content: true,
   dueDate: true,
   title: true,
-  position: true,
 }).extend({
   imageFile: z.instanceof(File).optional(),
 });

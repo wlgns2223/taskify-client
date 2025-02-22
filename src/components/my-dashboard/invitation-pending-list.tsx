@@ -9,7 +9,7 @@ import {
 import {
   InvitationSchema,
   InvitationStatusEnum,
-} from "../../libs/dashboard/dto/invitations.dto";
+} from "../../libs/dashboard/invitation/dto/invitations.dto";
 import { InvitationStatusButtons } from "./invitation-status-buttons";
 import { match } from "ts-pattern";
 import { InvitationStatusText } from "./invitation-status-text";

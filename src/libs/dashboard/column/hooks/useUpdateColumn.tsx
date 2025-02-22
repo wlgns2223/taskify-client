@@ -4,7 +4,7 @@ import { useToast } from "../../../../core/hooks/useToast";
 import { columnQueryOptions } from "../services/query-key";
 import { columnService } from "../services/service";
 
-type UpdateColumnDto = {
+export type UpdateColumnDto = {
   columnId: number;
   newColumn: UpdateColumnDtoSchema;
 };

@@ -5,7 +5,7 @@ import {
   createContext,
   useContext,
 } from "react";
-import { CreateTodoDto } from "../dto/createTodo.dto";
+import { CreateTodoDto } from "./dto/createTodo.dto";
 
 const TodoCreateContext = createContext({
   todo: {} as CreateTodoDto,

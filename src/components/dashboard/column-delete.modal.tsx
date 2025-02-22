@@ -15,7 +15,8 @@ export const ColumnDeleteModal: React.FC<ColumnDeleteModalProps> = ({
   const handleDeleteColumn = () => {
     mutate({
       dashboardId: column.dashboardId,
-      id: column.id,
+
+      columnId: column.id,
     });
   };
   return (

@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import { InvitationStatusEnum } from "../../libs/dashboard/dto/invitations.dto";
+import { InvitationStatusEnum } from "../../libs/dashboard/invitation/dto/invitations.dto";
 import {
   CheckCircleIcon,
   CheckIcon,

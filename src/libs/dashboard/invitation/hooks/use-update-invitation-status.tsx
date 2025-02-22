@@ -1,8 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  InvitationSchema,
-  InvitationStatusEnum,
-} from "../../dto/invitations.dto";
+import { InvitationSchema, InvitationStatusEnum } from "../dto/invitations.dto";
 import {
   InvitationOffsetPaginationRequestDto,
   OffsetPaginationResponseDto,

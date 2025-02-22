@@ -7,7 +7,7 @@ import { NextPage } from "next";
 import Detail from "../../../../components/dashboard/detail";
 import { Suspense } from "react";
 import { ReadColumnDto } from "../../../../libs/dashboard/column/dto/columns.dto";
-import { todoQueryOptions } from "../../../../libs/dashboard/todo/todo-query-option";
+import { todoQueryOptions } from "../../../../libs/dashboard/todo/services/query-key";
 import { columnQueryOptions } from "../../../../libs/dashboard/column/services/query-key";
 
 type PageProps = {

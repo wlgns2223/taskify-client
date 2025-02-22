@@ -8,7 +8,7 @@ import { InvitationOffsetPaginationRequestDto } from "../../../dashboard/dto/off
 import { CreateInvitationDto } from "../../../dashboard/invitation/dto/createInvitation.dto";
 import { invitationService } from "./service";
 import { useToast } from "../../../../core/hooks/useToast";
-import { InvitationSchema } from "../../../dashboard/dto/invitations.dto";
+import { InvitationSchema } from "../../../dashboard/invitation/dto/invitations.dto";
 
 export const useInvitationWithPagination = (
   offsetPaginationDto: InvitationOffsetPaginationRequestDto

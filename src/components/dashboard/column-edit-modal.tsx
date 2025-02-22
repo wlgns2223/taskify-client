@@ -2,7 +2,10 @@ import { useState } from "react";
 import { BaseModalProps } from "../../core/types/base-modal";
 import { JHInput } from "../../core/ui/jh-input";
 import { JhModal } from "../../core/ui/modal/jh-modal";
-import { useUpdateColumn } from "../../libs/dashboard/column/hooks/useUpdateColumn";
+import {
+  UpdateColumnDto,
+  useUpdateColumn,
+} from "../../libs/dashboard/column/hooks/useUpdateColumn";
 import {
   ReadColumnDto,
   UpdateColumnDtoSchema,
@@ -24,9 +27,12 @@ export const ColumnEditModal: React.FC<ColumnEditModalProps> = ({
   const { mutate } = useUpdateColumn();
 
   const handleUpdateColumn = () => {
-    const updateColumnDto: UpdateColumnDtoSchema = {
-      ...column,
-      name,
+    const updateColumnDto: UpdateColumnDto = {
+      columnId: column.id,
+      newColumn: {
+        ...column,
+        name,
+      },
     };
     mutate(updateColumnDto);
   };

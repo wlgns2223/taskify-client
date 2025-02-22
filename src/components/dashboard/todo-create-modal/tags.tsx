@@ -14,7 +14,8 @@ export const TodoCreateTags: React.FC = () => {
 
   const handleAddTag = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && tag.trim() !== "") {
-      setTags([...tags, tag.trim()]);
+      const tagSet = Array.from(new Set([...tags, tag]));
+      setTags(tagSet);
       setTag("");
     }
   };

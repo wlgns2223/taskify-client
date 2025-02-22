@@ -1,4 +1,4 @@
-import { Service } from "../../../core/network/service";
+import { Service } from "../../../../core/network/service";
 
 class TodoService extends Service {
   constructor() {

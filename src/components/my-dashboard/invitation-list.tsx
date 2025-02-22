@@ -6,7 +6,7 @@ import { defaultOffsetPaginationReqDto } from "../../core/const/default-paginati
 import { EmptyBoard } from "./empty-board";
 import { InvitationPendingList } from "./invitation-pending-list";
 import { PaginationButtons } from "./dashboard-pages-number";
-import { InvitationSchema } from "../../libs/dashboard/dto/invitations.dto";
+import { InvitationSchema } from "../../libs/dashboard/invitation/dto/invitations.dto";
 import { useInvitationWithPagination } from "../../libs/my-dashboard/invitation/services/useInvitationServices";
 
 export const InvitationList: React.FC<PropsWithChildren> = ({ children }) => {
