@@ -1,8 +1,13 @@
 "use client";
 
+import { useState } from "react";
+import { useDashboardContext } from "../../../core/providers/dashboard-provider";
 import { BaseModalProps } from "../../../core/types/base-modal";
 import { JhModal } from "../../../core/ui/modal/jh-modal";
+import { useUserContext } from "../../../core/user/context";
 import { TodoCreateBody } from "./todo-create-body";
+import { CreateTodoDto } from "../../../libs/dashboard/todo/dto/createTodo.dto";
+import { TodoCreateProvider } from "../../../libs/dashboard/todo/todo-create-context";
 
 interface TodoCreateModalProps extends BaseModalProps {
   dashboardId: number;
@@ -14,6 +19,17 @@ export const TodoCreateModal: React.FC<TodoCreateModalProps> = ({
   columnId,
   dashboardId,
 }) => {
+  const { userInfo } = useUserContext();
+  const { dashboardMembers } = useDashboardContext();
+  const [newTodo, setNewTodo] = useState<CreateTodoDto>({
+    content: "",
+    dueDate: new Date(),
+    title: "",
+    assigneeUserId: dashboardMembers[0].id,
+    assignerUserId: userInfo.id,
+    columnId: columnId,
+    dashboardId: dashboardId,
+  });
   return (
     <JhModal
       isOpen={isOpen}
@@ -29,7 +45,9 @@ export const TodoCreateModal: React.FC<TodoCreateModalProps> = ({
       }}
       className="w-full max-w-[540px]"
     >
-      <TodoCreateBody columnId={columnId} dashboardId={dashboardId} />
+      <TodoCreateProvider todo={newTodo} setTodo={setNewTodo}>
+        <TodoCreateBody dashboardMembers={dashboardMembers} />
+      </TodoCreateProvider>
     </JhModal>
   );
 };

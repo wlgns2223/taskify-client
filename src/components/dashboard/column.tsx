@@ -7,25 +7,19 @@ import { DraggableProvided } from "@hello-pangea/dnd";
 
 interface ColumnProps {
   column: ReadColumnDto;
-  provided: DraggableProvided;
 }
 
-const Column: React.FC<ColumnProps> = ({ column, provided }) => {
+const Column: React.FC<ColumnProps> = ({ column }) => {
   const editColumnModal = useModal();
   const deleteColumnModal = useModal();
   return (
     <>
-      <div
-        className="flex items-center justify-between"
-        ref={provided.innerRef}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-      >
+      <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="w-2 h-2 bg-primary rounded-full" />
           <span className="ml-2 text-lg font-bold">{column.name}</span>
-          <span className="flex justify-center items-center p-1 bg-neutral-200 text-sm rounded-[4px] text-neutral-700 w-5 h-5 ml-3  ">
-            {`column id: ${column.id}`}
+          <span className="flex justify-center items-center px-1 py-0.5 bg-neutral-200 text-sm rounded-[4px] text-neutral-700  ml-3  ">
+            {column.id}
           </span>
         </div>
         <ColumnEditDropdown

@@ -61,7 +61,10 @@ export const END_POINT = {
     },
   },
   todos: {
-    read(columnId: string) {
+    create() {
+      return "/todos";
+    },
+    read(columnId: number) {
       return `/todos?columnId=${columnId}`;
     },
   },

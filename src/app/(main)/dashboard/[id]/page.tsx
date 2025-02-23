@@ -31,7 +31,7 @@ const Dashboard: NextPage<PageProps> = async ({ params }) => {
   if (columnsId) {
     const todoQueries = columnsId.map((columnId) =>
       queryClient.prefetchQuery({
-        ...todoQueryOptions.getTodosByColumnId(columnId.toString()),
+        ...todoQueryOptions.findManyBy(columnId),
       })
     );
 

@@ -80,28 +80,35 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
             {(provided) => (
               <ul
                 className="flex h-full"
-                {...provided.droppableProps}
                 ref={provided.innerRef}
+                {...provided.droppableProps}
               >
                 {columns.map((column: ReadColumnDto) => (
-                  <li key={column.id} className="px-2 min-w-[300px] border-r">
-                    <Draggable
-                      draggableId={column.id.toString()}
-                      index={column.position}
-                    >
-                      {(provided) => (
-                        <Column column={column} provided={provided} />
-                      )}
-                    </Draggable>
-                    <JhButton
-                      className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] whitespace-nowrap mt-5"
-                      variants="outline"
-                      onClick={() => handleOpenCreateTodoModal(column.id)}
-                    >
-                      <PlusIcon className="w-4 h-4 text-primary bg-primary-light rounded-sm ml-3" />
-                    </JhButton>
-                    <Todos columnId={column.id} />
-                  </li>
+                  <Draggable
+                    key={column.id}
+                    draggableId={column.id.toString()}
+                    index={column.position}
+                  >
+                    {(provided) => (
+                      <li
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className="px-2 min-w-[300px] border-r"
+                      >
+                        <Column column={column} />
+
+                        <JhButton
+                          className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] whitespace-nowrap mt-5"
+                          variants="outline"
+                          onClick={() => handleOpenCreateTodoModal(column.id)}
+                        >
+                          <PlusIcon className="w-4 h-4 text-primary bg-primary-light rounded-sm ml-3" />
+                        </JhButton>
+                        <Todos columnId={column.id} />
+                      </li>
+                    )}
+                  </Draggable>
                 ))}
                 {provided.placeholder}
                 <li className="ml-2 min-w-[300px]">

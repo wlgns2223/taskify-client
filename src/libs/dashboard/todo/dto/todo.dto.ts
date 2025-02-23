@@ -14,3 +14,5 @@ export const Todo = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
 });
+
+export type Todo = z.infer<typeof Todo>;
