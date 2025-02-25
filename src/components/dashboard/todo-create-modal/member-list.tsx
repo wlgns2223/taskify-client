@@ -17,7 +17,9 @@ interface MemberListProps {
 export const MemberList: React.FC<MemberListProps> = ({ members }) => {
   const { todo, setTodo } = useTodoCreateContext();
 
-  const selected = members.find((member) => member.id === todo.assigneeUserId);
+  const selected = members.find(
+    (member) => member.memberId === todo.assigneeUserId
+  );
 
   return (
     <Field>

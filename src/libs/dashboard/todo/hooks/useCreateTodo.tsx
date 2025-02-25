@@ -17,7 +17,7 @@ export const useCreateTodo = ({
     content: "",
     dueDate: new Date(),
     title: "",
-    assigneeUserId: dashboardMembers[0].id,
+    assigneeUserId: dashboardMembers[0].memberId,
     assignerUserId: userInfo.id,
     columnId: columnId,
     dashboardId: dashboardId,
