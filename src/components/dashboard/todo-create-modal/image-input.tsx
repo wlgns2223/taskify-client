@@ -3,11 +3,13 @@ import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { JhButton } from "../../../core/ui/jh-button";
 import { JHInput } from "../../../core/ui/jh-input";
 import Image from "next/image";
+import { useTodoCreateContext } from "../../../libs/dashboard/todo/todo-create-context";
 
 export const ImageInput: React.FC = () => {
   const imgInputRef = useRef<HTMLInputElement>(null);
-  const [imgFile, setImgFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
+
+  const { setTodo } = useTodoCreateContext();
 
   const handleChangeImg = () => {
     if (imgInputRef.current) {
@@ -16,7 +18,7 @@ export const ImageInput: React.FC = () => {
   };
 
   const handleDelete = () => {
-    setImgFile(null);
+    setTodo((prev) => ({ ...prev, image: null }));
     setPreview("");
     URL.revokeObjectURL(preview);
     if (imgInputRef.current) {
@@ -27,7 +29,8 @@ export const ImageInput: React.FC = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      setImgFile(file);
+      setTodo((prev) => ({ ...prev, image: file }));
+
       const url = URL.createObjectURL(file);
       setPreview(url);
     }
@@ -38,8 +41,9 @@ export const ImageInput: React.FC = () => {
       if (preview) {
         URL.revokeObjectURL(preview);
       }
+      setTodo((prev) => ({ ...prev, image: null }));
     };
-  }, [imgFile]);
+  }, []);
 
   return (
     <div className="flex flex-col">

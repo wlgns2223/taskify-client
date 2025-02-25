@@ -56,12 +56,8 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
     columnCreateModalProps.setIsOpen(false);
   };
 
-  const handleOpenCreateTodoModal = (columnId: number) => {
-    setSelectedColumn(columnId);
-  };
-
   useEffect(() => {
-    if (selectedColumn) {
+    if (selectedColumn !== undefined) {
       todoCreateModalProps.setIsOpen(true);
     }
   }, [selectedColumn]);
@@ -101,7 +97,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                         <JhButton
                           className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] whitespace-nowrap mt-5"
                           variants="outline"
-                          onClick={() => handleOpenCreateTodoModal(column.id)}
+                          onClick={() => setSelectedColumn(column.id)}
                         >
                           <PlusIcon className="w-4 h-4 text-primary bg-primary-light rounded-sm ml-3" />
                         </JhButton>

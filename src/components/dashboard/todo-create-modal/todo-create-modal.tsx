@@ -1,13 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { useDashboardContext } from "../../../core/providers/dashboard-provider";
 import { BaseModalProps } from "../../../core/types/base-modal";
 import { JhModal } from "../../../core/ui/modal/jh-modal";
-import { useUserContext } from "../../../core/user/context";
 import { TodoCreateBody } from "./todo-create-body";
-import { CreateTodoDto } from "../../../libs/dashboard/todo/dto/createTodo.dto";
 import { TodoCreateProvider } from "../../../libs/dashboard/todo/todo-create-context";
+import { useCreateTodo } from "../../../libs/dashboard/todo/hooks/useCreateTodo";
 
 interface TodoCreateModalProps extends BaseModalProps {
   dashboardId: number;
@@ -19,17 +16,16 @@ export const TodoCreateModal: React.FC<TodoCreateModalProps> = ({
   columnId,
   dashboardId,
 }) => {
-  const { userInfo } = useUserContext();
-  const { dashboardMembers } = useDashboardContext();
-  const [newTodo, setNewTodo] = useState<CreateTodoDto>({
-    content: "",
-    dueDate: new Date(),
-    title: "",
-    assigneeUserId: dashboardMembers[0].id,
-    assignerUserId: userInfo.id,
-    columnId: columnId,
-    dashboardId: dashboardId,
-  });
+  const { createTodoMutation, dashboardMembers, newTodo, setNewTodo } =
+    useCreateTodo({
+      columnId,
+      dashboardId,
+    });
+
+  const handleCreateTodo = () => {
+    createTodoMutation.mutate(newTodo);
+  };
+
   return (
     <JhModal
       isOpen={isOpen}
@@ -41,6 +37,7 @@ export const TodoCreateModal: React.FC<TodoCreateModalProps> = ({
       confirmButtonProps={{
         onClick: () => {
           setIsOpen(false);
+          handleCreateTodo();
         },
       }}
       className="w-full max-w-[540px]"

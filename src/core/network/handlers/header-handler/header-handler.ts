@@ -6,8 +6,6 @@ export class HeaderHandler {
   constructor() {
     this.headers = new Headers();
     this.isServerSide = isServer;
-
-    this.headers.set("Content-Type", "application/json");
   }
 
   private async setServerSideCookie() {

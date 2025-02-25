@@ -17,10 +17,12 @@ export class APIHanlder {
     body: TBody,
     options?: Omit<RequestInit, "body">
   ) {
+    const headers = { ...options?.headers };
+    delete options?.headers?.["Content-Type" as keyof HeadersInit];
     return await this.fetchHandler.handlefetch<ResponseType>(url, {
       method: "POST",
       ...options,
-      body: BodyHandler.toBody(options?.headers, body),
+      body: BodyHandler.toBody(headers, body),
     });
   }
 

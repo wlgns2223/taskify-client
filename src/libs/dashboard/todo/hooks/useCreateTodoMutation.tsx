@@ -10,7 +10,8 @@ export const useCreateTodoMutation = () => {
   const { notify } = useToast();
   return useMutation({
     mutationFn: async (createTodoDto: CreateTodoDto) =>
-      todoService.create(createTodoDto),
+      await todoService.create(createTodoDto),
+
     onMutate: async (createTodoDto: CreateTodoDto) => {
       await queryClient.cancelQueries({
         queryKey: todoQueryOptions.findManyBy(createTodoDto.columnId).queryKey,
@@ -34,7 +35,9 @@ export const useCreateTodoMutation = () => {
       };
       queryClient.setQueryData(
         todoQueryOptions.findManyBy(createTodoDto.columnId).queryKey,
-        (oldData: Todo[]) => [...oldData, newTodo]
+        (oldData: Todo[]) => {
+          return [...(oldData ?? []), newTodo];
+        }
       );
 
       return { prevTodos };

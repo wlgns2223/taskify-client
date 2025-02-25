@@ -1,3 +1,4 @@
+import { HeaderContentType } from "../../../../core/network/handlers/body-handler/body-handler";
 import { Service } from "../../../../core/network/service";
 import { CreateTodoDto } from "../dto/createTodo.dto";
 import { Todo } from "../dto/todo.dto";
@@ -10,7 +11,12 @@ class TodoService extends Service {
   async create(dto: CreateTodoDto) {
     const res = await this.apiHandler.post<CreateTodoDto, Todo>(
       this.endPoints.todos.create(),
-      dto
+      dto,
+      {
+        headers: {
+          "Content-Type": HeaderContentType.FORM_DATA,
+        },
+      }
     );
     return res.data;
   }

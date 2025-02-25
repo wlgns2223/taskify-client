@@ -34,6 +34,7 @@ export class BodyHandler {
         for (const key in body) {
           formData.append(key, body[key]);
         }
+        console.log(formData);
         return formData;
       default:
         throw new Error("Unsupported content type");
