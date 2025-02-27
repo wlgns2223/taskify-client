@@ -55,7 +55,10 @@ export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
               <div
                 {...props}
                 className={twMerge(
-                  clsx("relative bg-white p-8 rounded-lg", props.className)
+                  clsx(
+                    "relative bg-white max-h-[80%] overflow-scroll p-8 rounded-lg",
+                    props.className
+                  )
                 )}
               >
                 {children}

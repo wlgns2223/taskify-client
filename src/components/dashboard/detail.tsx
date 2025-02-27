@@ -112,7 +112,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                   </Draggable>
                 ))}
                 {provided.placeholder}
-                <li className="ml-2 min-w-[300px]">
+                <li className="px-2 min-w-[300px]">
                   <JhButton
                     className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] whitespace-nowrap"
                     variants="outline"

@@ -3,7 +3,6 @@ import { useModal } from "../../core/hooks/useModal";
 import { ColumnEditDropdown } from "./column-edit-dropdown";
 import { ColumnEditModal } from "./column-edit-modal";
 import { ColumnDeleteModal } from "./column-delete.modal";
-import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 
 interface ColumnProps {
   column: ReadColumnDto;
