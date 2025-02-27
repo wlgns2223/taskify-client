@@ -1,7 +1,7 @@
 "use client";
 
 import { JhButton } from "../../core/ui/jh-button";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { EllipsisHorizontalIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { ReadColumnDto } from "../../libs/dashboard/column/dto/columns.dto";
 import Column from "./column";
 import {
@@ -89,9 +89,14 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                       <li
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="px-2 min-w-[300px] border-r"
+                        className="px-2 min-w-[300px] border-r "
                       >
+                        <div
+                          {...provided.dragHandleProps}
+                          className="flex w-full justify-center"
+                        >
+                          <EllipsisHorizontalIcon className="w-6 h-6" />
+                        </div>
                         <Column column={column} />
 
                         <JhButton
