@@ -3,12 +3,15 @@ import { useModal } from "../../core/hooks/useModal";
 import { ColumnEditDropdown } from "./column-edit-dropdown";
 import { ColumnEditModal } from "./column-edit-modal";
 import { ColumnDeleteModal } from "./column-delete.modal";
+import { UseQueryResult } from "@tanstack/react-query";
+import { Todo } from "../../libs/dashboard/todo/dto/todo.dto";
 
 interface ColumnProps {
   column: ReadColumnDto;
+  todo: UseQueryResult<Todo[], Error>;
 }
 
-const Column: React.FC<ColumnProps> = ({ column }) => {
+const Column: React.FC<ColumnProps> = ({ column, todo }) => {
   const editColumnModal = useModal();
   const deleteColumnModal = useModal();
   return (
@@ -18,7 +21,7 @@ const Column: React.FC<ColumnProps> = ({ column }) => {
           <div className="w-2 h-2 bg-primary rounded-full" />
           <span className="ml-2 text-lg font-bold">{column.name}</span>
           <span className="flex justify-center items-center px-1 py-0.5 bg-neutral-200 text-sm rounded-[4px] text-neutral-700  ml-3  ">
-            {column.id}
+            {todo.data?.length ?? 0}
           </span>
         </div>
         <ColumnEditDropdown

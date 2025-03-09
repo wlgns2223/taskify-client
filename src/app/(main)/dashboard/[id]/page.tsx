@@ -21,22 +21,24 @@ const Dashboard: NextPage<PageProps> = async ({ params }) => {
 
   const queryClient = new QueryClient();
 
+  // Prefetch columns
   await queryClient.prefetchQuery({
     ...columnQueryOptions.findBy(dashboardId),
   });
-  const data = queryClient.getQueriesData<ReadColumnDto[]>({
-    queryKey: columnQueryOptions.findBy(dashboardId).queryKey,
-  });
-  const columnsId = data[0][1]?.map((column) => column.id);
-  if (columnsId) {
-    const todoQueries = columnsId.map((columnId) =>
-      queryClient.prefetchQuery({
-        ...todoQueryOptions.findManyBy(columnId),
-      })
-    );
 
-    await Promise.all(todoQueries);
-  }
+  // Prefetch todos
+  const prefetchedColumns =
+    queryClient.getQueriesData<ReadColumnDto[]>({
+      queryKey: columnQueryOptions.findBy(dashboardId).queryKey,
+    })[0][1] ?? [];
+
+  const columnIds = prefetchedColumns.map((column) => column.id);
+  const prefetchTodos = columnIds.map((columnId) =>
+    queryClient.prefetchQuery({
+      ...todoQueryOptions.findManyBy(columnId),
+    })
+  );
+  await Promise.all(prefetchTodos);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

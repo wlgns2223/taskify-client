@@ -17,6 +17,10 @@ import { useModal } from "../../core/hooks/useModal";
 import { PropsWithChildren, use, useEffect, useState } from "react";
 import { Todos } from "./todos";
 import { TodoCreateModal } from "./todo-create-modal/todo-create-modal";
+import { ColumnHeader } from "./column-header";
+import { useQueries } from "@tanstack/react-query";
+import { todoQueryOptions } from "../../libs/dashboard/todo/services/query-key";
+import { useFetchAllTodosOfAllColumns } from "../../libs/dashboard/todo/hooks/useFetchAllTodosOfAllColumns";
 
 interface DetailPageProps {
   dashboardId: number;
@@ -28,6 +32,10 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
   const [selectedColumn, setSelectedColumn] = useState<number | undefined>();
   const { columns, swapColumnsMutation, createColumnMutation } =
     useColumns(dashboardId);
+
+  const { todoMap } = useFetchAllTodosOfAllColumns({
+    columnIds: columns.map((column) => column.id),
+  });
 
   const columnCreateModalProps = useModal();
   const todoCreateModalProps = useModal();
@@ -45,15 +53,6 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
       dashboardId,
       swapColumnsPosition,
     });
-  };
-
-  const handleCreateColumn = (name: string) => {
-    createColumnMutation.mutate({
-      dashboardId,
-      name,
-      position: columns.length,
-    });
-    columnCreateModalProps.setIsOpen(false);
   };
 
   useEffect(() => {
@@ -91,22 +90,13 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                         {...provided.draggableProps}
                         className="px-2 min-w-[300px] border-r "
                       >
-                        <div
-                          {...provided.dragHandleProps}
-                          className="flex w-full justify-center"
-                        >
-                          <EllipsisHorizontalIcon className="w-6 h-6" />
-                        </div>
-                        <Column column={column} />
-
-                        <JhButton
-                          className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] whitespace-nowrap mt-5"
-                          variants="outline"
-                          onClick={() => setSelectedColumn(column.id)}
-                        >
-                          <PlusIcon className="w-4 h-4 text-primary bg-primary-light rounded-sm ml-3" />
-                        </JhButton>
-                        <Todos columnId={column.id} />
+                        <ColumnHeader
+                          column={column}
+                          provided={provided}
+                          setSelectedColumn={setSelectedColumn}
+                          todo={todoMap.get(column.id)}
+                        />
+                        <Todos todo={todoMap.get(column.id)} />
                       </li>
                     )}
                   </Draggable>
@@ -134,7 +124,9 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
       />
       <ColumnCreateModal
         modalProps={columnCreateModalProps}
-        handleCreateColumn={handleCreateColumn}
+        createColumnMutation={createColumnMutation}
+        columnLength={columns.length}
+        dashboardId={dashboardId}
       />
     </>
   );

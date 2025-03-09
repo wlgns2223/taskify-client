@@ -1,4 +1,3 @@
-import { ToastContainer } from "react-toastify";
 import { useTodoCreateContext } from "../../../libs/dashboard/todo/todo-create-context";
 import dayjs from "dayjs";
 import { useToast } from "../../../core/hooks/useToast";
@@ -17,7 +16,7 @@ export const TodoCreateDatePicker: React.FC = () => {
       return;
     }
 
-    setTodo((prev) => ({ ...prev, dueDate: dayjs(e.target.value).toDate() }));
+    setTodo((prev) => ({ ...prev, dueDate: dayjs(e.target.value).toString() }));
   };
   return (
     <div className="flex flex-col">
