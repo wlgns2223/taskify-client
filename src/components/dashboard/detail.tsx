@@ -15,7 +15,7 @@ import { useColumns } from "../../libs/dashboard/column/hooks/useColumns";
 import { ColumnCreateModal } from "./column-create-modal";
 import { useModal } from "../../core/hooks/useModal";
 import { PropsWithChildren, use, useEffect, useState } from "react";
-import { Todos } from "./todos";
+import { Todos } from "./todos/todos";
 import { TodoCreateModal } from "./todo-create-modal/todo-create-modal";
 import { ColumnHeader } from "./column-header";
 import { useQueries } from "@tanstack/react-query";

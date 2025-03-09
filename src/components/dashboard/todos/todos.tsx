@@ -1,5 +1,5 @@
 import { UseQueryResult } from "@tanstack/react-query";
-import { Todo } from "../../libs/dashboard/todo/dto/todo.dto";
+import { Todo } from "../../../libs/dashboard/todo/dto/todo.dto";
 import { TodoCard } from "./todo-card";
 
 interface TodosProps {
