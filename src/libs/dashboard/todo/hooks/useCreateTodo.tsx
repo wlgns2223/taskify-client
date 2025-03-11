@@ -37,7 +37,7 @@ export const useCreateTodo = ({
     };
   }, [columnId, dashboardId]);
 
-  const createTodoMutation = useCreateTodoMutation();
+  const createTodoMutation = useCreateTodoMutation({ dashboardMembers });
 
   return {
     dashboardMembers,

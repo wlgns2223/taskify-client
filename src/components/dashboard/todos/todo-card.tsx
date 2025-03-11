@@ -33,7 +33,7 @@ export const TodoCard: React.FC<TodoCardProps> = ({ todo }) => {
             <span>{dayjs(todo.dueDate).format("YYYY-MM-DD")}</span>
           </div>
           <div className="w-6 h-6 rounded-full bg-green-400 flex justify-center items-center">
-            {/* <span>{todo.assignee.nickname[0]}</span>{" "} */}
+            <span>{todo.assignee.nickname[0]}</span>{" "}
           </div>
         </div>
       </div>

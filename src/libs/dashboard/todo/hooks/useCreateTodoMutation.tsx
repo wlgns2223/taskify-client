@@ -4,8 +4,15 @@ import { todoService } from "../services/todo.service";
 import { todoQueryOptions } from "../services/query-key";
 import { Todo } from "../dto/todo.dto";
 import { useToast } from "../../../../core/hooks/useToast";
+import { useDashboardContext } from "../../../../core/providers/dashboard-provider";
 
-export const useCreateTodoMutation = () => {
+type CreateTodoMutationProps = {
+  dashboardMembers: ReturnType<typeof useDashboardContext>["dashboardMembers"];
+};
+
+export const useCreateTodoMutation = ({
+  dashboardMembers,
+}: CreateTodoMutationProps) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
   return useMutation({
@@ -20,13 +27,32 @@ export const useCreateTodoMutation = () => {
         todoQueryOptions.findManyBy(createTodoDto.columnId).queryKey
       );
 
-      const newTodo: Omit<Todo, "assignee"> = {
+      const assignee = dashboardMembers.find(
+        (member) => member.memberId === createTodoDto.assigneeUserId
+      );
+
+      const newTodo: Todo = {
         assigneeUserId: createTodoDto.assigneeUserId,
         assignerUserId: createTodoDto.assignerUserId,
         tags: Array.from({ length: createTodoDto.tags.length }).map((_, i) => ({
           id: i,
           tag: createTodoDto.tags[i],
         })),
+        assignee: !!assignee
+          ? {
+              id: assignee.memberId,
+              email: "",
+              nickname: assignee.nickname,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            }
+          : {
+              id: Math.random(),
+              email: "",
+              nickname: "임시",
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
         columnId: createTodoDto.columnId,
         content: createTodoDto.content,
         dashboardId: createTodoDto.dashboardId,
@@ -46,6 +72,7 @@ export const useCreateTodoMutation = () => {
 
       return { prevTodos };
     },
+
     onError: (err, vairables, context) => {
       queryClient.setQueryData(
         todoQueryOptions.findManyBy(vairables.columnId).queryKey,
