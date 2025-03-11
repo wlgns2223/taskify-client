@@ -2,9 +2,10 @@ import { KeyboardEvent, useRef, useState } from "react";
 import { JHInput } from "../../../core/ui/jh-input";
 import clsx from "clsx";
 import { Tag } from "./tag";
+import { useTodoCreateContext } from "../../../libs/dashboard/todo/todo-create-context";
 
 export const TodoCreateTags: React.FC = () => {
-  const [tags, setTags] = useState<string[]>([]);
+  const { setTodo, todo } = useTodoCreateContext();
   const [tag, setTag] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -14,8 +15,11 @@ export const TodoCreateTags: React.FC = () => {
 
   const handleAddTag = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && tag.trim() !== "") {
-      const tagSet = Array.from(new Set([...tags, tag]));
-      setTags(tagSet);
+      const tagSet = Array.from(new Set([...todo.tags, tag]));
+      setTodo((prev) => ({
+        ...prev,
+        tags: tagSet,
+      }));
       setTag("");
     }
   };
@@ -34,12 +38,12 @@ export const TodoCreateTags: React.FC = () => {
         className={clsx(
           "flex flex-wrap items-center border border-neutral-300 rounded-lg px-4 py-2  w-full focus-within:border-primary",
           {
-            "gap-2": tags.length > 0,
+            "gap-2": todo.tags.length > 0,
           }
         )}
       >
-        {tags.length > 0 &&
-          tags.map((tag, index) => (
+        {todo.tags.length > 0 &&
+          todo.tags.map((tag, index) => (
             <li key={`${tag}-${index}`}>
               <Tag>{tag}</Tag>
             </li>

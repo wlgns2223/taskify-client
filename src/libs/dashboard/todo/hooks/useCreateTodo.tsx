@@ -13,15 +13,17 @@ export const useCreateTodo = ({
 }) => {
   const { userInfo } = useUserContext();
   const { dashboardMembers } = useDashboardContext();
-  const [newTodo, setNewTodo] = useState<CreateTodoDto>({
+  const TODO_DEFAULT = {
     content: "",
-    dueDate: new Date(),
+    dueDate: new Date().toDateString(),
     title: "",
     assigneeUserId: dashboardMembers[0].memberId,
     assignerUserId: userInfo.id,
     columnId: columnId,
     dashboardId: dashboardId,
-  });
+    tags: [],
+  };
+  const [newTodo, setNewTodo] = useState<CreateTodoDto>(TODO_DEFAULT);
 
   useEffect(() => {
     setNewTodo((prev) => ({
@@ -29,6 +31,10 @@ export const useCreateTodo = ({
       columnId,
       dashboardId,
     }));
+
+    return () => {
+      setNewTodo(TODO_DEFAULT);
+    };
   }, [columnId, dashboardId]);
 
   const createTodoMutation = useCreateTodoMutation();

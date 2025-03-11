@@ -14,7 +14,6 @@ interface InvitationStatusTextProps {
 export const InvitationStatusText: React.FC<InvitationStatusTextProps> = ({
   status,
 }) => {
-  console.log(status);
   return match(status)
     .with(InvitationStatusEnum.enum.accepted, () => (
       <div className="text-neutral-400 flex items-center">

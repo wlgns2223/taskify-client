@@ -11,6 +11,7 @@ export const CreateTodoDtoSchema = Todo.pick({
   title: true,
 }).extend({
   imageFile: z.instanceof(File).optional(),
+  tags: z.string().array().default([]),
 });
 
 export type CreateTodoDto = z.infer<typeof CreateTodoDtoSchema>;

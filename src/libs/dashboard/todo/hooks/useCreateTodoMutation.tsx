@@ -20,9 +20,13 @@ export const useCreateTodoMutation = () => {
         todoQueryOptions.findManyBy(createTodoDto.columnId).queryKey
       );
 
-      const newTodo: Todo = {
+      const newTodo: Omit<Todo, "assignee"> = {
         assigneeUserId: createTodoDto.assigneeUserId,
         assignerUserId: createTodoDto.assignerUserId,
+        tags: Array.from({ length: createTodoDto.tags.length }).map((_, i) => ({
+          id: i,
+          tag: createTodoDto.tags[i],
+        })),
         columnId: createTodoDto.columnId,
         content: createTodoDto.content,
         dashboardId: createTodoDto.dashboardId,

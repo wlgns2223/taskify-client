@@ -18,7 +18,6 @@ export class APIHanlder {
     options?: Omit<RequestInit, "body">
   ) {
     const headers = { ...options?.headers };
-    delete options?.headers?.["Content-Type" as keyof HeadersInit];
     return await this.fetchHandler.handlefetch<ResponseType>(url, {
       method: "POST",
       ...options,

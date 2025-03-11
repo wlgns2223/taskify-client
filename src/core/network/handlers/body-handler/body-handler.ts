@@ -32,9 +32,13 @@ export class BodyHandler {
       case HeaderContentType.FORM_DATA:
         const formData = new FormData();
         for (const key in body) {
-          formData.append(key, body[key]);
+          if (Array.isArray(body[key]) || typeof body[key] === "object") {
+            formData.append(key, JSON.stringify(body[key]));
+          } else {
+            formData.append(key, body[key]);
+          }
         }
-        console.log(formData);
+
         return formData;
       default:
         throw new Error("Unsupported content type");

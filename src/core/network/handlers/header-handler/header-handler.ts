@@ -1,4 +1,5 @@
 import { isServer } from "@tanstack/react-query";
+import { HeaderContentType } from "../body-handler/body-handler";
 
 export class HeaderHandler {
   private headers: Headers;
@@ -6,7 +7,6 @@ export class HeaderHandler {
   constructor() {
     this.headers = new Headers();
     this.isServerSide = isServer;
-    this.headers.set("Content-Type", "application/json");
   }
 
   private async setServerSideCookie() {
@@ -25,6 +25,14 @@ export class HeaderHandler {
     Object.entries(headers).forEach(([key, value]) => {
       this.headers.set(key, value);
     });
+    if (
+      this.headers.has("Content-Type") &&
+      this.headers.get("Content-Type") === HeaderContentType.FORM_DATA
+    ) {
+      this.headers.delete("Content-Type");
+    } else {
+      this.headers.set("Content-Type", HeaderContentType.JSON);
+    }
   }
 
   async getHeaders() {
