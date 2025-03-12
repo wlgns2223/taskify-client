@@ -74,7 +74,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
           <Droppable droppableId="droppable" direction="horizontal">
             {(provided) => (
               <ul
-                className="flex h-full"
+                className="flex h-auto flex-col lg:flex-row divide-y lg:divide-y-0 gap-4  lg:gap-0"
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
@@ -88,7 +88,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                       <li
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        className="px-2 min-w-[300px] border-r "
+                        className="p-2 lg:p-4 lg:min-w-[300px] lg:border-r"
                       >
                         <ColumnHeader
                           column={column}
@@ -102,9 +102,9 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                   </Draggable>
                 ))}
                 {provided.placeholder}
-                <li className="px-2 min-w-[300px]">
+                <li className="p-2 lg:p-4 min-w-[300px]">
                   <JhButton
-                    className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] whitespace-nowrap"
+                    className=" mt-0 lg:mt-4   flex justify-center items-center border-neutral-200 bg-white w-full lg:max-w-[330px] whitespace-nowrap"
                     variants="outline"
                     onClick={() => columnCreateModalProps.setIsOpen(true)}
                   >

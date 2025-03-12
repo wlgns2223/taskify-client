@@ -22,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className={pretendardFont.className}>
+    <html lang="ko" className="h-full">
+      <body className={pretendardFont.className + "h-full"}>
         <ToastContainer />
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>

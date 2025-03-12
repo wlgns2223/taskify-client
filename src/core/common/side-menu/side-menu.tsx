@@ -8,7 +8,7 @@ import { SideDashboards } from "./dashboards";
 
 export const SideMenu: React.FC = () => {
   return (
-    <aside className="w-16 flex flex-col md:w-40 lg:w-[300px] border border-l-0 border-y-0 border-r-neutral-200 h-screen p-4">
+    <aside className="w-16 flex flex-col md:w-40 lg:w-[300px] border border-l-0 border-y-0 border-r-neutral-200 h-full p-4">
       <Link href={"/"} className="">
         <Image src={logoText} alt="logo" className="" />
       </Link>

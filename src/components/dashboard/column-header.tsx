@@ -27,7 +27,7 @@ export const ColumnHeader: React.FC<ColumnHeaderProps> = ({
       <Column column={column} todo={todo} />
 
       <JhButton
-        className="flex justify-center items-center border-neutral-200 bg-white w-full max-w-[330px] whitespace-nowrap mt-5"
+        className="flex justify-center items-center border-neutral-200 bg-white w-full lg:max-w-[330px] whitespace-nowrap mt-5"
         variants="outline"
         onClick={() => setSelectedColumn(column.id)}
       >

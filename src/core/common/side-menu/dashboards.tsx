@@ -19,14 +19,14 @@ export const SideDashboards: React.FC = () => {
   }, [isIntersecting, hasNextPage]);
 
   return (
-    <div className="mt-3 overflow-scroll flex-1">
+    <div className="lg:mt-3 overflow-scroll flex-1">
       <ul>
         {dashboards &&
           dashboards.map((dashboard, index) => (
             <Link
               key={dashboard.id}
               href={`/dashboard/${dashboard.id}`}
-              className="flex justify-center md:justify-start w-full max-w-[330px] h-[45px] px-2 py-3 hover:bg-primary-light hover:rounded-md"
+              className="flex justify-center md:justify-start w-full max-w-[330px] lg:h-[45px] px-2 py-3 hover:bg-primary-light hover:rounded-md"
             >
               <li>
                 <div className="flex items-center">

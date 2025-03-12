@@ -7,6 +7,10 @@ interface TodosProps {
 }
 
 export const Todos: React.FC<TodosProps> = ({ todo }) => {
+  const isTodAvailable = todo.data && todo.data.length > 0;
+  if (!isTodAvailable) {
+    return null;
+  }
   return (
     <ul className="mt-4 space-y-4">
       {todo.data?.map((todo) => (

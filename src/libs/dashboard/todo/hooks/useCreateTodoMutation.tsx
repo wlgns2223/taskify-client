@@ -66,7 +66,7 @@ export const useCreateTodoMutation = ({
       queryClient.setQueryData(
         todoQueryOptions.findManyBy(createTodoDto.columnId).queryKey,
         (oldData: Todo[]) => {
-          return [...(oldData ?? []), newTodo];
+          return [newTodo, ...(oldData ?? [])];
         }
       );
 
