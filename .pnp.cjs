@@ -61,7 +61,7 @@ const RAW_RUNTIME_STATE =
           ["ts-node", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:10.9.2"],\
           ["ts-pattern", "npm:5.2.0"],\
           ["typescript", "patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>::version=5.4.5&hash=5adc0c"],\
-          ["usehooks-ts", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:3.1.0"],\
+          ["usehooks-ts", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:3.1.1"],\
           ["zod", "npm:3.23.8"]\
         ],\
         "linkType": "SOFT"\
@@ -7682,7 +7682,7 @@ const RAW_RUNTIME_STATE =
           ["ts-node", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:10.9.2"],\
           ["ts-pattern", "npm:5.2.0"],\
           ["typescript", "patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>::version=5.4.5&hash=5adc0c"],\
-          ["usehooks-ts", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:3.1.0"],\
+          ["usehooks-ts", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:3.1.1"],\
           ["zod", "npm:3.23.8"]\
         ],\
         "linkType": "SOFT"\
@@ -8090,17 +8090,17 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["usehooks-ts", [\
-      ["npm:3.1.0", {\
-        "packageLocation": "../../../../../.yarn/berry/cache/usehooks-ts-npm-3.1.0-5f674100de-10c0.zip/node_modules/usehooks-ts/",\
+      ["npm:3.1.1", {\
+        "packageLocation": "../../../../../.yarn/berry/cache/usehooks-ts-npm-3.1.1-8bd09b7fac-10c0.zip/node_modules/usehooks-ts/",\
         "packageDependencies": [\
-          ["usehooks-ts", "npm:3.1.0"]\
+          ["usehooks-ts", "npm:3.1.1"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:3.1.0", {\
-        "packageLocation": "./.yarn/__virtual__/usehooks-ts-virtual-5e6419aee0/6/.yarn/berry/cache/usehooks-ts-npm-3.1.0-5f674100de-10c0.zip/node_modules/usehooks-ts/",\
+      ["virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:3.1.1", {\
+        "packageLocation": "./.yarn/__virtual__/usehooks-ts-virtual-2cf429d500/6/.yarn/berry/cache/usehooks-ts-npm-3.1.1-8bd09b7fac-10c0.zip/node_modules/usehooks-ts/",\
         "packageDependencies": [\
-          ["usehooks-ts", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:3.1.0"],\
+          ["usehooks-ts", "virtual:97252ba44462653f46a2343dab0c5abbf07506d62f2bbe2369b185a1b41f199b3c5534e47ab022479b988c0cd7b7679c4bce16aeea9f6251025e22ac3bc2a913#npm:3.1.1"],\
           ["@types/react", "npm:18.3.3"],\
           ["lodash.debounce", "npm:4.0.8"],\
           ["react", "npm:18.3.1"]\

@@ -1,9 +1,8 @@
 "use client";
 
 import { JhButton } from "../../core/ui/jh-button";
-import { EllipsisHorizontalIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { ReadColumnDto } from "../../libs/dashboard/column/dto/columns.dto";
-import Column from "./column";
 import {
   DragDropContext,
   Draggable,
@@ -14,13 +13,14 @@ import { SwapColumnsDtoSchema } from "../../libs/dashboard/column/dto/swapColumn
 import { useColumns } from "../../libs/dashboard/column/hooks/useColumns";
 import { ColumnCreateModal } from "./column-create-modal";
 import { useModal } from "../../core/hooks/useModal";
-import { PropsWithChildren, use, useEffect, useState } from "react";
+import { PropsWithChildren } from "react";
 import { Todos } from "./todos/todos";
 import { TodoCreateModal } from "./todo-create-modal/todo-create-modal";
 import { ColumnHeader } from "./column-header";
-import { useQueries } from "@tanstack/react-query";
-import { todoQueryOptions } from "../../libs/dashboard/todo/services/query-key";
 import { useFetchAllTodosOfAllColumns } from "../../libs/dashboard/todo/hooks/useFetchAllTodosOfAllColumns";
+import { useFetchTodoWithPagination } from "../../libs/dashboard/todo/hooks/useFetchTodoWithPagination";
+import { useCreateTodoModal } from "../../libs/dashboard/todo/hooks/useCreateTodoModal";
+import { useMediaQuery } from "usehooks-ts";
 
 interface DetailPageProps {
   dashboardId: number;
@@ -29,16 +29,15 @@ interface DetailPageProps {
 const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
   dashboardId,
 }) => {
-  const [selectedColumn, setSelectedColumn] = useState<number | undefined>();
+  const columnCreateModalProps = useModal();
+  const { selectedColumn, setSelectedColumn, todoCreateModalProps } =
+    useCreateTodoModal();
   const { columns, swapColumnsMutation, createColumnMutation } =
     useColumns(dashboardId);
 
   const { todoMap } = useFetchAllTodosOfAllColumns({
     columnIds: columns.map((column) => column.id),
   });
-
-  const columnCreateModalProps = useModal();
-  const todoCreateModalProps = useModal();
 
   const handleDragend = async (result: DropResult) => {
     if (!result.destination) {
@@ -55,18 +54,6 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
     });
   };
 
-  useEffect(() => {
-    if (selectedColumn !== undefined) {
-      todoCreateModalProps.setIsOpen(true);
-    }
-  }, [selectedColumn]);
-
-  useEffect(() => {
-    if (!todoCreateModalProps.isOpen) {
-      setSelectedColumn(undefined);
-    }
-  }, [todoCreateModalProps.isOpen]);
-
   return (
     <>
       <div className="overflow-scroll h-full">
@@ -74,7 +61,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
           <Droppable droppableId="droppable" direction="horizontal">
             {(provided) => (
               <ul
-                className="flex h-auto flex-col lg:flex-row divide-y lg:divide-y-0 gap-4  lg:gap-0"
+                className="flex min-w-full flex-col lg:flex-row divide-y lg:divide-y-0"
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
@@ -96,7 +83,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                           setSelectedColumn={setSelectedColumn}
                           todo={todoMap.get(column.id)}
                         />
-                        <Todos todo={todoMap.get(column.id)} />
+                        <Todos columnId={column.id} />
                       </li>
                     )}
                   </Draggable>
@@ -117,11 +104,14 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
           </Droppable>
         </DragDropContext>
       </div>
-      <TodoCreateModal
-        modalProps={todoCreateModalProps}
-        columnId={selectedColumn!}
-        dashboardId={dashboardId}
-      />
+      {selectedColumn && (
+        <TodoCreateModal
+          modalProps={todoCreateModalProps}
+          columnId={selectedColumn}
+          dashboardId={dashboardId}
+        />
+      )}
+
       <ColumnCreateModal
         modalProps={columnCreateModalProps}
         createColumnMutation={createColumnMutation}

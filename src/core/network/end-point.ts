@@ -67,6 +67,11 @@ export const END_POINT = {
     read(columnId: number) {
       return `/todos?columnId=${columnId}`;
     },
+    readByPagination(columnId: number, dto: OffsetPaginationRequestDto) {
+      const baseUrl = `/todos/column/${columnId}/pagination`;
+      const queries = qs.stringify(dto);
+      return `${baseUrl}?${queries}`;
+    },
   },
   user: {
     me(accessToken: string) {

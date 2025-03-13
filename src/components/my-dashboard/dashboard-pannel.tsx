@@ -15,7 +15,7 @@ export const DashboardPannel: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      <div className="max-w-5xl">
+      <div className="max-w-5xl p-2 lg:p-4">
         <div className="flex justify-end">
           <ModalOpenButton handleOpenModal={handleOpenModal} />
         </div>
