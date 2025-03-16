@@ -11,7 +11,7 @@ interface TodoCardProps {
 export const TodoCard: React.FC<TodoCardProps> = ({ todo }) => {
   return (
     <JhButton
-      className=" w-full border border-neutral-200 rounded-md p-4 bg-neutral-50 text-start"
+      className=" w-full border border-neutral-200 rounded-md p-4 bg-neutral-50 text-start hover:shadow transition-shadow"
       variants="reset"
     >
       <div className="space-y-2">

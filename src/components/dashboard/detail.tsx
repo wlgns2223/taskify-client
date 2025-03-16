@@ -14,13 +14,9 @@ import { useColumns } from "../../libs/dashboard/column/hooks/useColumns";
 import { ColumnCreateModal } from "./column-create-modal";
 import { useModal } from "../../core/hooks/useModal";
 import { PropsWithChildren } from "react";
-import { Todos } from "./todos/todos";
 import { TodoCreateModal } from "./todo-create-modal/todo-create-modal";
-import { ColumnHeader } from "./column-header";
-import { useFetchAllTodosOfAllColumns } from "../../libs/dashboard/todo/hooks/useFetchAllTodosOfAllColumns";
-import { useFetchTodoWithPagination } from "../../libs/dashboard/todo/hooks/useFetchTodoWithPagination";
+import { Column } from "./column";
 import { useCreateTodoModal } from "../../libs/dashboard/todo/hooks/useCreateTodoModal";
-import { useMediaQuery } from "usehooks-ts";
 
 interface DetailPageProps {
   dashboardId: number;
@@ -34,10 +30,6 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
     useCreateTodoModal();
   const { columns, swapColumnsMutation, createColumnMutation } =
     useColumns(dashboardId);
-
-  const { todoMap } = useFetchAllTodosOfAllColumns({
-    columnIds: columns.map((column) => column.id),
-  });
 
   const handleDragend = async (result: DropResult) => {
     if (!result.destination) {
@@ -61,7 +53,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
           <Droppable droppableId="droppable" direction="horizontal">
             {(provided) => (
               <ul
-                className="flex min-w-full flex-col lg:flex-row divide-y lg:divide-y-0"
+                className="flex min-h-full flex-col lg:flex-row divide-y lg:divide-y-0"
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
@@ -77,13 +69,11 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                         {...provided.draggableProps}
                         className="p-2 lg:p-4 lg:min-w-[300px] lg:border-r"
                       >
-                        <ColumnHeader
+                        <Column
                           column={column}
                           provided={provided}
                           setSelectedColumn={setSelectedColumn}
-                          todo={todoMap.get(column.id)}
                         />
-                        <Todos columnId={column.id} />
                       </li>
                     )}
                   </Draggable>

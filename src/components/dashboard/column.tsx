@@ -1,37 +1,52 @@
+import { EllipsisHorizontalIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { JhButton } from "../../core/ui/jh-button";
 import { ReadColumnDto } from "../../libs/dashboard/column/dto/columns.dto";
-import { useModal } from "../../core/hooks/useModal";
-import { ColumnEditDropdown } from "./column-edit-dropdown";
-import { ColumnEditModal } from "./column-edit-modal";
-import { ColumnDeleteModal } from "./column-delete.modal";
-import { UseQueryResult } from "@tanstack/react-query";
-import { Todo } from "../../libs/dashboard/todo/dto/todo.dto";
+import { DraggableProvided } from "@hello-pangea/dnd";
+import { ColumnHeader } from "./column-temp";
+import { Todos } from "./todos/todos";
+import { useFetchTodoWithPagination } from "../../libs/dashboard/todo/hooks/useFetchTodoWithPagination";
+import { JHSuspense } from "../../core/ui/jh-suspense";
 
 interface ColumnProps {
   column: ReadColumnDto;
-  todo: UseQueryResult<Todo[], Error>;
+  provided: DraggableProvided;
+  setSelectedColumn: (columnId: number) => void;
 }
 
-const Column: React.FC<ColumnProps> = ({ column, todo }) => {
-  const editColumnModal = useModal();
-  const deleteColumnModal = useModal();
+export const Column: React.FC<ColumnProps> = ({
+  column,
+  provided,
+  setSelectedColumn,
+}) => {
+  const {
+    data: todo,
+    fetchNextPage,
+    hasNextPage,
+  } = useFetchTodoWithPagination(column.id, {
+    page: 1,
+    pageSize: 5,
+  });
   return (
     <>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <div className="w-2 h-2 bg-primary rounded-full" />
-          <span className="ml-2 text-lg font-bold">{column.name}</span>
-          <span className="flex justify-center items-center px-1 py-0.5 bg-neutral-200 text-sm rounded-[4px] text-neutral-700  ml-3  ">
-            {todo.data?.length ?? 0}
-          </span>
-        </div>
-        <ColumnEditDropdown
-          handleOpenEdit={() => editColumnModal.setIsOpen(true)}
-          handleOpenDelete={() => deleteColumnModal.setIsOpen(true)}
-        />
+      <div {...provided.dragHandleProps} className="flex w-full justify-center">
+        <EllipsisHorizontalIcon className="w-6 h-6" />
       </div>
-      <ColumnEditModal modalProps={editColumnModal} column={column} />
-      <ColumnDeleteModal modalProps={deleteColumnModal} column={column} />
+      <ColumnHeader column={column} numberOfTodos={todo.length} />
+
+      <JhButton
+        className="flex justify-center items-center border-neutral-200 bg-white w-full lg:max-w-[330px] whitespace-nowrap mt-5"
+        variants="outline"
+        onClick={() => setSelectedColumn(column.id)}
+      >
+        <PlusIcon className="w-4 h-4 text-primary bg-primary-light rounded-sm ml-3" />
+      </JhButton>
+      <JHSuspense className="mt-4">
+        <Todos
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
+          todo={todo}
+        />
+      </JHSuspense>
     </>
   );
 };
-export default Column;

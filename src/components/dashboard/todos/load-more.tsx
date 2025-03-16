@@ -1,15 +1,14 @@
 import { useIntersectionObserver } from "usehooks-ts";
 import { JhButton } from "../../../core/ui/jh-button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useMediaQuery } from "usehooks-ts";
 
 interface LoadMoreProps {
-  isPC: boolean;
   fetchNextPage: () => void;
   hasNextPage: boolean;
 }
 
 export const LoadMore: React.FC<LoadMoreProps> = ({
-  isPC,
   fetchNextPage,
   hasNextPage,
 }) => {
@@ -21,13 +20,21 @@ export const LoadMore: React.FC<LoadMoreProps> = ({
     }
   };
 
+  const [isClient, setIsClient] = useState(false);
+
+  const isPC = useMediaQuery("(min-width: 1024px)");
+
   useEffect(() => {
-    if (isPC && isIntersecting && hasNextPage) {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (isIntersecting && hasNextPage) {
       fetchNextPage();
     }
-  }, [isPC, isIntersecting, hasNextPage]);
+  }, [isIntersecting, hasNextPage]);
 
-  if (isPC) {
+  if (isPC && isClient === true) {
     return <div ref={ref} className="w-full h-1" />;
   }
 
