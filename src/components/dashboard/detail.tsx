@@ -13,10 +13,12 @@ import { SwapColumnsDtoSchema } from "../../libs/dashboard/column/dto/swapColumn
 import { useColumns } from "../../libs/dashboard/column/hooks/useColumns";
 import { ColumnCreateModal } from "./column-create-modal";
 import { useModal } from "../../core/hooks/useModal";
-import { PropsWithChildren } from "react";
-import { TodoCreateModal } from "./todo-create-modal/todo-create-modal";
+import { PropsWithChildren, useState } from "react";
+import { TodoCreateModal } from "./todos/todo-create-modal/todo-create-modal";
 import { Column } from "./column";
 import { useCreateTodoModal } from "../../libs/dashboard/todo/hooks/useCreateTodoModal";
+import { Todo } from "../../libs/dashboard/todo/dto/todo.dto";
+import { TodoDetailModal } from "./todos/todo-detail-modal/todo-detail-modal";
 
 interface DetailPageProps {
   dashboardId: number;
@@ -46,6 +48,15 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
     });
   };
 
+  const [currentTodo, setTodo] = useState<{
+    currentColumn: ReadColumnDto;
+    currentTodo: Todo;
+  } | null>(null);
+
+  const handleClickCurrentTodo =
+    (currentColumn: ReadColumnDto) => (currentTodo: Todo) =>
+      setTodo({ currentColumn, currentTodo });
+
   return (
     <>
       <div className="overflow-scroll h-full">
@@ -73,6 +84,9 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
                           column={column}
                           provided={provided}
                           setSelectedColumn={setSelectedColumn}
+                          handleClickCurrentTodo={handleClickCurrentTodo(
+                            column
+                          )}
                         />
                       </li>
                     )}
@@ -94,6 +108,18 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
           </Droppable>
         </DragDropContext>
       </div>
+      {currentTodo && (
+        <TodoDetailModal
+          modalProps={{
+            isOpen: !!currentTodo,
+            setIsOpen: () => {
+              setTodo(null);
+            },
+          }}
+          currentTodo={currentTodo}
+        />
+      )}
+
       {selectedColumn && (
         <TodoCreateModal
           modalProps={todoCreateModalProps}

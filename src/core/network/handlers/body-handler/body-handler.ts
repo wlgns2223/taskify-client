@@ -32,7 +32,7 @@ export class BodyHandler {
       case HeaderContentType.FORM_DATA:
         const formData = new FormData();
         for (const key in body) {
-          if (Array.isArray(body[key]) || typeof body[key] === "object") {
+          if (Array.isArray(body[key])) {
             formData.append(key, JSON.stringify(body[key]));
           } else {
             formData.append(key, body[key]);

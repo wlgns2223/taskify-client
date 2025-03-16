@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { JhButton } from "../../../core/ui/jh-button";
-import { JHInput } from "../../../core/ui/jh-input";
+import { JhButton } from "../../../../core/ui/jh-button";
+import { JHInput } from "../../../../core/ui/jh-input";
 import Image from "next/image";
-import { useTodoCreateContext } from "../../../libs/dashboard/todo/todo-create-context";
+import { useTodoCreateContext } from "../../../../libs/dashboard/todo/todo-create-context";
 
 export const ImageInput: React.FC = () => {
   const imgInputRef = useRef<HTMLInputElement>(null);

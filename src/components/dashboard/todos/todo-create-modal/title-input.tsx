@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent } from "react";
-import { JHInput } from "../../../core/ui/jh-input";
-import { useTodoCreateContext } from "../../../libs/dashboard/todo/todo-create-context";
+import { JHInput } from "../../../../core/ui/jh-input";
+import { useTodoCreateContext } from "../../../../libs/dashboard/todo/todo-create-context";
 
 export const TodoTitleInput: React.FC = () => {
   const { setTodo, todo } = useTodoCreateContext();

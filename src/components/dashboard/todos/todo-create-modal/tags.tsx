@@ -1,8 +1,8 @@
 import { KeyboardEvent, useRef, useState } from "react";
-import { JHInput } from "../../../core/ui/jh-input";
+import { JHInput } from "../../../../core/ui/jh-input";
 import clsx from "clsx";
 import { Tag } from "./tag";
-import { useTodoCreateContext } from "../../../libs/dashboard/todo/todo-create-context";
+import { useTodoCreateContext } from "../../../../libs/dashboard/todo/todo-create-context";
 
 export const TodoCreateTags: React.FC = () => {
   const { setTodo, todo } = useTodoCreateContext();

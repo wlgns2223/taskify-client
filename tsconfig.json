@@ -27,7 +27,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/core/middleware/auth-api/handle-token",
-    "src/components/dashboard/column-temp.tsx"
+    "src/components/dashboard/column-header.tsx"
   ],
   "exclude": ["node_modules"]
 }

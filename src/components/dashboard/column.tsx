@@ -2,21 +2,25 @@ import { EllipsisHorizontalIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { JhButton } from "../../core/ui/jh-button";
 import { ReadColumnDto } from "../../libs/dashboard/column/dto/columns.dto";
 import { DraggableProvided } from "@hello-pangea/dnd";
-import { ColumnHeader } from "./column-temp";
+import { ColumnHeader } from "./column-header";
 import { Todos } from "./todos/todos";
 import { useFetchTodoWithPagination } from "../../libs/dashboard/todo/hooks/useFetchTodoWithPagination";
 import { JHSuspense } from "../../core/ui/jh-suspense";
+import { Dispatch, SetStateAction } from "react";
+import { Todo } from "../../libs/dashboard/todo/dto/todo.dto";
 
 interface ColumnProps {
   column: ReadColumnDto;
   provided: DraggableProvided;
   setSelectedColumn: (columnId: number) => void;
+  handleClickCurrentTodo: (currentTodo: Todo) => void;
 }
 
 export const Column: React.FC<ColumnProps> = ({
   column,
   provided,
   setSelectedColumn,
+  handleClickCurrentTodo,
 }) => {
   const {
     data: todo,
@@ -45,6 +49,7 @@ export const Column: React.FC<ColumnProps> = ({
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage}
           todo={todo}
+          handleClickCurrentTodo={handleClickCurrentTodo}
         />
       </JHSuspense>
     </>

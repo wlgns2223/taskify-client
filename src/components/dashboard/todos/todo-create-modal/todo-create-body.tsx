@@ -4,7 +4,7 @@ import { TodoCreateContent } from "./content";
 import { TodoCreateDatePicker } from "./date-picker";
 import { TodoCreateTags } from "./tags";
 import { ImageInput } from "./image-input";
-import { MemberSchemaDto } from "../../../libs/member/dto/member.dto";
+import { MemberSchemaDto } from "../../../../libs/member/dto/member.dto";
 
 interface TodoCreateModalProps {
   dashboardMembers: MemberSchemaDto[];

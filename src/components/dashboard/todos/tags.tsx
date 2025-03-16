@@ -5,7 +5,7 @@ interface TagsProps {
   tags: Todo["tags"];
 }
 
-const colors = [
+export const colors = [
   {
     bg: "bg-[#F9EEE3]",
     txt: "text-[#D58D49]",

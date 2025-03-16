@@ -1,10 +1,10 @@
 "use client";
 
-import { BaseModalProps } from "../../../core/types/base-modal";
-import { JhModal } from "../../../core/ui/modal/jh-modal";
+import { BaseModalProps } from "../../../../core/types/base-modal";
+import { JhModal } from "../../../../core/ui/modal/jh-modal";
 import { TodoCreateBody } from "./todo-create-body";
-import { TodoCreateProvider } from "../../../libs/dashboard/todo/todo-create-context";
-import { useCreateTodo } from "../../../libs/dashboard/todo/hooks/useCreateTodo";
+import { TodoCreateProvider } from "../../../../libs/dashboard/todo/todo-create-context";
+import { useCreateTodo } from "../../../../libs/dashboard/todo/hooks/useCreateTodo";
 
 interface TodoCreateModalProps extends BaseModalProps {
   dashboardId: number;

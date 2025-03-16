@@ -7,8 +7,8 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
-import { MemberSchemaDto } from "../../../libs/member/dto/member.dto";
-import { useTodoCreateContext } from "../../../libs/dashboard/todo/todo-create-context";
+import { MemberSchemaDto } from "../../../../libs/member/dto/member.dto";
+import { useTodoCreateContext } from "../../../../libs/dashboard/todo/todo-create-context";
 
 interface MemberListProps {
   members: MemberSchemaDto[];

@@ -4,15 +4,24 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { Tags } from "./tags";
 import { JhButton } from "../../../core/ui/jh-button";
+import { Dispatch, SetStateAction } from "react";
 
 interface TodoCardProps {
   todo: Todo;
+  handleClickCurrentTodo: (currentTodo: Todo) => void;
 }
-export const TodoCard: React.FC<TodoCardProps> = ({ todo }) => {
+export const TodoCard: React.FC<TodoCardProps> = ({
+  todo,
+  handleClickCurrentTodo,
+}) => {
+  const handleClickTodo = () => {
+    handleClickCurrentTodo(todo);
+  };
   return (
     <JhButton
       className=" w-full border border-neutral-200 rounded-md p-4 bg-neutral-50 text-start hover:shadow transition-shadow"
       variants="reset"
+      onClick={handleClickTodo}
     >
       <div className="space-y-2">
         {todo.imageUrl && (
