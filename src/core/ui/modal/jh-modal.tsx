@@ -12,13 +12,14 @@ interface ModalProps extends HTMLProps<HTMLDivElement> {
   closeButtonProps?: JhButtonProps;
   confirmText?: string;
   cancelText?: string;
-  wrapper?: keyof JSX.IntrinsicElements;
+  showButtons?: boolean;
   isOpen: boolean;
 }
 
 export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
   confirmText = "생성",
   cancelText = "취소",
+  showButtons = true,
   confirmButtonProps,
   closeButtonProps,
   children,
@@ -62,31 +63,33 @@ export const JhModal: React.FC<PropsWithChildren<ModalProps>> = ({
                 )}
               >
                 {children}
-                <div className="flex justify-between sm:justify-end gap-3 mt-6">
-                  <JhButton
-                    className={twMerge(
-                      clsx(
-                        "flex-1 sm:flex-none min-w-32",
-                        closeButtonProps?.className
-                      )
-                    )}
-                    variants="outline"
-                    {...closeButtonProps}
-                  >
-                    {cancelText}
-                  </JhButton>
-                  <JhButton
-                    {...confirmButtonProps}
-                    className={twMerge(
-                      clsx(
-                        "flex-1 sm:flex-none min-w-32",
-                        confirmButtonProps?.className
-                      )
-                    )}
-                  >
-                    {confirmText}
-                  </JhButton>
-                </div>
+                {showButtons && (
+                  <div className="flex justify-between sm:justify-end gap-3 mt-6">
+                    <JhButton
+                      className={twMerge(
+                        clsx(
+                          "flex-1 sm:flex-none min-w-32",
+                          closeButtonProps?.className
+                        )
+                      )}
+                      variants="outline"
+                      {...closeButtonProps}
+                    >
+                      {cancelText}
+                    </JhButton>
+                    <JhButton
+                      {...confirmButtonProps}
+                      className={twMerge(
+                        clsx(
+                          "flex-1 sm:flex-none min-w-32",
+                          confirmButtonProps?.className
+                        )
+                      )}
+                    >
+                      {confirmText}
+                    </JhButton>
+                  </div>
+                )}
               </div>
             </TransitionChild>
           </div>

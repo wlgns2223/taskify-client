@@ -110,6 +110,7 @@ const Detail: React.FC<PropsWithChildren<DetailPageProps>> = ({
       </div>
       {currentTodo && (
         <TodoDetailModal
+          handleClose={() => setTodo(null)}
           modalProps={{
             isOpen: !!currentTodo,
             setIsOpen: () => {
